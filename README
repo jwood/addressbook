@@ -5,11 +5,12 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and even generates a PDF of mailing labels for printing.
 
 = Setup
+* Install rails (version 2.2 or higher)
+* Install the pdf-labels gem (version 2.0 or higher)
 * Copy config/database.yml.template to config/database.yml and configure your
 database connections
 * Copy config/app_config.rb.template to config/app_config.rb and setup
 your preferences
-* Install the pdf-labels gem (version 2.0 or higher)
 * Run "rake db:migrate" to setup your database
 
 
