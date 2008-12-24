@@ -1,0 +1,7 @@
+@not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
+page.replace_html('notIncludedList', :partial => 'group_list', 
+  :collection => @not_included, :locals => { :draggable => true } )
+
+@included.sort! { |x,y| x.compare_by_primary_contact(y) }
+page.replace_html('includedList', :partial => 'group_list', 
+  :collection => @included, :locals => { :draggable => true } )

@@ -1,0 +1,80 @@
+<%= error_messages_for 'address' %>
+<% form_remote_tag :url => { :action => :edit_address, :id => address } do -%>
+    
+  <h3>Address Type</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Address Type:</label></td>
+        <td>
+          <%= 
+            select("address", "address_type_id", 
+              AddressType.find(:all).collect {|t| [ t.description, t.id ]}, {}, 
+              :id => "addressType", :onchange => "adjustSelectableContacts();") 
+          %>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Home Phone</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Home Phone:</label></td>
+        <td><%= text_field 'address', 'home_phone', 'size' => 20 %></td>
+      </tr>
+    </table>
+  </div>
+    
+  <h3>Address</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Address Line 1:</label></td>
+        <td><%= text_field 'address', 'address1', 'size' => 40 %></td>
+      </tr>
+      <tr>
+        <td><label>Address Line 2:</label></td>
+        <td><%= text_field 'address', 'address2', 'size' => 40 %></td>
+      </tr>
+      <tr>
+        <td><label>City:</label></td>
+        <td><%= text_field 'address', 'city', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>State:</label></td>
+        <td><%= text_field 'address', 'state', 'size' => 5 %></td>
+      </tr>
+      <tr>
+        <td><label>Zip Code:</label></td>
+        <td><%= text_field 'address', 'zip', 'size' => 15 %></td>
+      </tr>
+    </table>
+  </div>
+
+  <% if !address.id.blank? && !address_contacts.blank? -%>
+    <h3>Address Contacts</h3>
+    <div class="section">
+      <table>
+        <tr>
+          <td><label>Contact 1:</label></td>
+          <td>
+            <%= create_contact_dropdown("contact1", address_contacts) %> 
+          </td>
+        </tr>
+        <%= hidden_tr_if (!address.address_type || (address.address_type && (address.address_type.only_one_main_contact?))), :id => "addressContact2" %>
+          <td><label>Contact 2:</label></td>
+          <td>
+            <%= create_contact_dropdown("contact2", address_contacts) %> 
+          </td>
+        </tr>
+      </table>
+    </div>
+  <% end -%>
+    
+  <br />
+  <%= submit_tag "Save" %>
+<% end -%>
+
+<%= create_cancel_delete_links(address) %>

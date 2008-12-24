@@ -1,0 +1,26 @@
+chicago:
+  id: 1
+  address1: '123 Main St.'
+  address2: 'Apt. 109'
+  city: 'Chicago'
+  state: 'IL'
+  zip: '60606'
+  home_phone: '312-555-1234'
+
+alsip:
+  id: 2
+  address1: '456 Maple Ave.'
+  city: 'Alsip'
+  state: 'IL'
+  zip: '60803'
+  home_phone: '708-111-2222'
+
+tinley_park:
+  id: 3
+  address1: '789 Oakland Pl.'
+  city: 'Tinley Park'
+  state: 'IL'
+  zip: '60477'
+
+phone_only:
+  home_phone: '708-111-3333'

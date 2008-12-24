@@ -1,0 +1,34 @@
+<% content_for(:page_javascript) do %>
+  <script type="text/javascript">
+  window.onload = function() {
+    var last_name = document.getElementById('last_name');
+    last_name.focus();
+  }                              
+  </script>                                                                  
+<% end %>
+
+<body id="linkToAddress">
+  <div align="center">
+    <% form_remote_tag :url => { :controller => 'address', :action => :find_address, :id => @contact }, :method => 'get' do -%>
+      <table>
+        <tr>
+          <td>Last Name:</td>
+          <td><%= text_field_tag :last_name, params[:last_name], :size => 15, :id => 'last_name' %></td>
+        </tr>
+        <tr>
+          <td>City:</td>
+          <td><%= text_field_tag :city, params[:city], :size => 15 %></td>
+        </tr>
+        <tr>
+          <td>Home Phone:</td>
+          <td><%= text_field_tag :home_phone, params[:home_phone], :size => 15 %></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><%= submit_tag "Search" %></td>
+        </tr>
+      </table>
+    <% end -%>
+    <div id="addressSearchResults"></div>
+    <br/>
+  </div>
+</body>

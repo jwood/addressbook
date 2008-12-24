@@ -1,0 +1,10 @@
+# Edit the contact in the list.  If this is a new contact, refresh the 
+# whole contact list.
+page.replace_html('content', :partial => 'contact', :object => @contact)
+update_list(@contact, @contact_list, page)
+
+address = @old_address || @contact.address
+update_list(address, nil, page) unless address.nil?
+
+page['top'].focus
+highlight_in_list(@contact, page) if @saved

@@ -1,0 +1,36 @@
+john_doe:
+  id: 1
+  prefix: 'Mr.'
+  first_name: 'John'
+  middle_name: 'Michael'
+  last_name: 'Doe'
+  birthday: '19780101'
+  work_phone: '873-837-3833'
+  cell_phone: '234-345-6521'
+  email: 'john.doe@doe.com'
+  website: 'http://www.johndoe.com'
+
+jane_doe:
+  id: 2
+  prefix: 'Mrs.'
+  first_name: 'Jane'
+  middle_name: 'Michelle'
+  last_name: 'Doe'
+  birthday: '19780102'
+  work_phone: '873-837-1111'
+  email: 'jane.doe@doe.com'
+
+jimmy_doe:
+  id: 3
+  prefix: 'Mr.'
+  first_name: 'Jimmy'
+  middle_name: 'Mikey'
+  last_name: 'Doe'
+  birthday: '20000103'
+
+billy_bob:
+  id: 4
+  prefix: 'Mr.'
+  first_name: 'Billy'
+  last_name: 'Bob'  
+  

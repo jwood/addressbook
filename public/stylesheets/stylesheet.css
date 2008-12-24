@@ -1,0 +1,184 @@
+/* Settings for the browser window */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: small;
+  color: black;
+  background: white;
+}
+
+/* The main application window */
+#main {
+  height: 95%;
+  width: 95%;
+  border: 2px solid black;
+}
+
+/* The application menu on the left */
+#menu {
+  width: 260px;
+  border-right: 2px solid black;
+}
+
+/* Sections of content within the menu */
+.menuContent {
+  padding: 5px;
+  overflow: auto;
+}
+
+/* The content window on the right */
+#content {
+  padding: 10px;
+  height: 95%;
+  overflow: auto;
+}
+
+/* A section of information in the content window (i.e. Address) */
+.section {
+  margin-left: 30px;
+  width: 475px;
+  border: 1px solid black;
+  padding: 5px;
+  background: #ededed;
+}
+
+/* A table column in the section */
+.section td {
+  padding-right: 10px;
+}
+
+/****************** Is this needed? ******************/
+form {
+  margin-bottom: 0;
+}
+
+/* START - link to address styles */
+#linkToAddress {
+  overflow: auto;
+  width: auto;
+  height: 100%;
+}
+
+#linkToAddressList {
+  text-align: center;
+}
+
+#linkToAddressList table {
+  width: 690px;
+  border: 1px solid black;
+  margin: 5px;
+  background: #ededed;
+}
+
+#linkToAddressList th {
+  text-decoration: underline;
+}
+
+#linkToAddressAddressee {
+  width: 300px;
+}
+
+#linkToAddressAddress {
+  width: 300px;
+}
+
+#linkToAddressCity {
+  width: 80px;
+}
+/* END - link to address styles */
+
+/* BEGIN - Styles for group maintenance */
+#maintainGroup {
+  width: auto;
+  height: 100%;
+}
+
+#maintainGroup table {
+  width: 700px;
+}
+
+#maintainGroup th {
+  font-size: large;
+  width: 300px;
+}
+
+.groupList {
+  height: 470px;
+  overflow: auto;
+  padding-left: 20px;
+}
+
+.groupListAddresses {
+  border: 1px solid black;
+  background: #ededed;
+}
+
+.groupListAddresses ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+.groupListAddresses li {
+  cursor: -moz-grab;
+}
+/* END - styles for group maintenance */
+
+/* The notice to the user, when we send them a message */
+#notice {
+  border: 2px solid red;
+  padding: 1em;
+  margin-bottom: 2em;
+  background-color: #f0f0f0;
+  font: bold smaller sans-serif;
+}
+
+/* START:error styles */
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+/* END:error styles */
+
+/* START:link styles */
+#menu a {
+  color: black;
+  text-decoration: none;
+}
+
+#menu a:hover {
+  text-decoration: underline;
+}
+/* END:link styles */

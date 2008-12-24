@@ -1,0 +1,53 @@
+<%= error_messages_for 'group' %>
+<% form_remote_tag :url => { :action => :edit_group, :id => group } do -%>
+
+  <h3>Group Info</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Name:</label></td>
+        <td><%= text_field 'group', 'name', 'size' => 20 %></td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Group Members</h3>
+  <div class="section">
+    <ul>
+      <div id="groupMembers">
+        <%= 
+          @group.addresses.sort! { |x,y| x.compare_by_primary_contact(y) }
+          render :partial => 'group_list', :collection => @group.addresses,
+            :locals => { :draggable => false } 
+        %>
+      </div>
+    </ul>
+
+    <a href="#" onclick='openWindow("<%= url_for :action => :maintain_group_members, :id => group %>", "maintainGroupMembersPopup", "width=750,height=600");'>Maintain Group Members</a> 
+  </div>
+  
+  <h3>Labels</h3>
+  <div class="section">
+
+    <label>Label Type:</label>
+    <%= 
+      select_tag "label_type", 
+        get_label_options(@label_types),
+        { :id => 'labelTypeSelector', 
+          :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" } 
+    %>
+
+    <span id="createLabelsLink">
+      <%= 
+        link_to "Create Labels", 
+            { :action => :create_labels, :id => @group, :label_type => @label_types.first }, 
+            :popup => ['label_window'] 
+      %>
+    </span>
+  </div>
+  
+  <br />
+  <%= submit_tag "Save" %>
+<% end -%>
+
+<%= create_cancel_delete_links(group) %>

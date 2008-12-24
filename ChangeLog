@@ -1,0 +1,21 @@
+Addressbook ChangeLog
+http://johnpwood.net/projects/webapps/addressbook/
+
+Version 1.2 - 2008-12-23
+------------------------
+ * Moved all application specific config into its own config file
+ * Generified some configuration in preperation for migration to GitHub
+ * Dropped rabels for pdf-labels for label generation
+
+Version 1.1 - 2008-12-21
+------------------------
+ * Some post-release cleanup
+
+Version 1.0 - 2008-12-20
+------------------------
+ * First public release
+
+Version 0.1 - 2008-12-04
+------------------------
+ * Initial release - still plenty of work to be done
+

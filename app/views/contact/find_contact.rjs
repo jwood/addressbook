@@ -1,0 +1,2 @@
+page.replace_html('contactSearchResults', :partial => 'main/contact_list',
+  :collection => @contact_list)

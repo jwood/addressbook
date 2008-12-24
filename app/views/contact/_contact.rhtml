@@ -1,0 +1,86 @@
+<%= error_messages_for 'contact' %>
+<% form_remote_tag :url => { :action => :edit_contact, :id => contact } do -%>
+
+  <h3>Personal Info</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Prefix:</label></td>
+        <td><%= text_field 'contact', 'prefix', 'size' => 5, 'id' => 'top' %></td>
+      </tr>
+        <tr>
+        <td><label>First Name:</label></td>
+        <td><%= text_field 'contact', 'first_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Middle Name:</label></td>
+        <td><%= text_field 'contact', 'middle_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Last Name:</label></td>
+        <td><%= text_field 'contact', 'last_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Birthdate:</label></td>
+        <td><%= text_field 'contact', 'birthday', 'size' => 15 %></td>
+      </tr>
+    </table>
+  </div>
+  
+  <h3>Contact Info</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <% if !contact.address.blank? -%>
+          <td><label>Home Phone:</label></td>
+          <td>
+            <% unless contact.address.home_phone.blank? -%>
+              <%= h(contact.address.home_phone) %> &nbsp;
+            <% end -%> 
+            <%= 
+              link_to_remote "Edit", 
+                :url => { :controller => 'address', :action => :edit_address, :id => contact.address }, 
+                :method => 'get' 
+            %>
+          </td>
+        <% end -%>
+      </tr>
+      <tr>
+        <td><label>Work Phone:</label></td>
+        <td><%= text_field 'contact', 'work_phone', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Cell Phone:</label></td>
+        <td><%= text_field 'contact', 'cell_phone', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Email Address:</label></td>
+        <td><%= text_field 'contact', 'email', 'size' => 30 %></td>
+      </tr>
+      <tr>
+        <td><label>Web Page:</label></td>
+        <td><%= text_field 'contact', 'website', 'size' => 45 %></td>
+      </tr>
+    </table>
+  </div>
+
+  <% unless contact.id.blank? -%>
+    <h3>Address</h3>
+    <div class="section">
+      <% if !contact.address.blank? && !contact.address.address1.blank? -%>
+        <p>
+          <%= h(contact.address.address1) %><br />
+          <%= h(contact.address.address2) + "<br />" unless contact.address.address2.blank? %>
+          <%= h(contact.address.city) + ", " + h(contact.address.state) + " " + h(contact.address.zip) %>
+        </p>
+        <%= add_map_and_directions_links(contact) %> <br />
+      <% end -%>
+      <%= add_address_modification_links(contact) %>
+    </div>
+  <% end -%>
+
+  <br />
+  <%= submit_tag "Save" %>
+<% end -%>
+
+<%= create_cancel_delete_links(contact) %>

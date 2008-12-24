@@ -1,0 +1,31 @@
+#------------------------------------------------------------------------------#
+# This class defines application specific configuration
+#------------------------------------------------------------------------------#
+class AppConfig
+  include Singleton
+
+  #----------------------------------------------------------------------------#
+  # Specifies the user's address in a hash, which is used to generate directions
+  #----------------------------------------------------------------------------#
+  attr_reader :user_address
+
+  #----------------------------------------------------------------------------#
+  # Specifies the password file used to access the application.
+  #----------------------------------------------------------------------------#
+  attr_accessor :htpasswd_file
+
+  def initialize
+    if RAILS_ENV == 'production'
+      @htpasswd_file = '/path/to/my/password_file' 
+    end
+
+    @user_address = {
+      :address => "123 Main St.",
+      :city => "Chicago",
+      :state => "IL",
+      :zip => "60606"
+    }
+  end
+
+end
+

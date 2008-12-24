@@ -1,0 +1,77 @@
+= About
+
+This is the Address Book.  Address Book is a Web 2.0 application for managing
+your personal address book.  It manages phone numbers, birthdays, addresses, 
+and even generates a PDF of mailing labels for printing.
+
+= Setup
+* Copy config/database.yml.template to config/database.yml and configure your
+database connections
+* Copy config/app_config.rb.template to config/app_config.rb and setup
+your preferences
+* Install the pdf-labels gem (version 2.0 or higher)
+* Run "rake db:migrate" to setup your database
+
+
+= Description 
+
+Addressbook is broken out into 3 main sections:
+
+== Contacts
+Contacts is used to manage your, you guessed it, contacts.  All personal 
+information about each contact is stored individually.  Contacts do not store
+address information directly.  Instead, since multiple contacts can have the
+same address, address information is stored seperately, and you can "link"
+a contact to an address.
+
+Contacts can also be searched for by last name in the Search section.  Simply 
+provide the full or partial last name and click search.  You can then select
+the contact from the list of search results that appear below the search box.
+
+== Addresses
+Addresses is used to manage the addresses of your contacts.  Each address has
+an address type (Individual, Family, Married Couple, Unmarried Couple, etc).
+The address type is used to determine the "addressee" of the address.  For
+example, if Joe Smith and Jane Smith are linked to an address, the addressee
+would be the following for the specific address types:
+
+"Individual" - "Joe Smith"
+"Family" - "Mr. & Mrs. Joe & Jane Smith & Family"
+"Married Couple" - "Mr. & Mrs. Joe & Jane Smith"
+"Unmarried Couple" - "Mr. Joe Smith & Ms. Jane Smith"
+
+The home phone is also stored along with the address, since home phones are
+specific to a home.  
+ 
+You can specify the 2 main contacts for an address, in the "Contact 1" and 
+"Contact 2" fields.  The drop down box will only let you select a contact that
+is currently linked to the address.  These contacts are used in constructing
+the addressee (see above).
+ 
+== Groups
+Groups provide a way to organize your contacts.  Each group has a name, and 
+a list of members.  Members can be added via the "Maintain Group Members"
+link.  The maintain group members screen displays all of the addressees,
+broken out into those already included in the group and those not included.
+You can either use the "Add All" and "Remove All" links to add/remove addressees
+to the group, or you can drag and drop specific addressees into the specific
+category.  When you are finished, click the "Done" link.
+ 
+Once you have members in your group, you can create a printable PDF file of
+mailing labels for the members in your group.  The Rabels library is used 
+for this.  Addressbook allows you to choose one of the pre-defined Rabels 
+label specifications to use.  If yours is not there, you can add it to 
+Rabels.  Simply select your label type, and click the Create Labels link.
+When printing the labels, be sure your PDF viewer is set to respect the 
+margins in the document, and not to "center the document in the page" or 
+perform any other types of margin alterations.
+
+ 
+= LICENSE
+MIT License.  See LICENCE for details.
+
+
+= AUTHOR
+Addressbook was written by John Wood.  John can be reached at 
+john_p_wood@yahoo.com.
+

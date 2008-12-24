@@ -1,0 +1,6 @@
+# Remove the contact from the list of contacts and update the address
+# the contact is linked to
+page.replace_html('content', :partial => 'deleted_contact', :object => @contact)
+remove_from_list(@contact, page)
+address = @old_address || @contact.address
+update_list(address, nil, page) unless address.nil?

@@ -1,0 +1,62 @@
+<body>
+  <div id="main" dojoType="LayoutContainer" layoutChildPriority='left-right'>
+    <div id="menu" dojoType="AccordionContainer" layoutAlign="left" labelNodeClass="label" containerNodeClass="accBody">
+
+      <div dojoType="ContentPane" open="true" label="Search" class="menuContent">
+        <% form_remote_tag :url => { :controller => 'contact', :action => :find_contact }, :method => 'get' do %>
+          <table>
+            <tr>
+              <td>Last Name:</td>
+              <td><%= text_field_tag :last_name, params[:last_name], :size => 10 %></td>
+              <td><%= submit_tag "Search" %></td>
+            </tr>
+          </table>
+        <% end -%>
+        <ul>
+          <div id="contactSearchResults"></div>
+        </ul>
+      </div>
+  
+      <div dojoType="ContentPane" label="Contacts" class="menuContent">
+        <ul>
+          <div id="contactList">
+            <%= render :partial => 'contact_list', :collection => @contact_list %>
+          </div>
+        </ul>
+        <% form_remote_tag :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get' do -%>
+          <%= submit_tag "Add Contact" %>
+        <% end -%>
+      </div>
+    
+      <div dojoType="ContentPane" label="Addresses" class="menuContent">
+        <ul>
+          <div id="addressList">
+            <%= render :partial => 'address_list', :collection => @address_list %>
+          </div>
+        </ul>
+        <% form_remote_tag :url => { :controller => 'address', :action => :edit_address }, :method => 'get' do -%>
+          <%= submit_tag "Add Address" %>
+        <% end -%>
+      </div>
+  
+      <div dojoType="ContentPane" label="Groups" class="menuContent">
+        <ul>
+          <div id="groupList">
+            <%= render :partial => 'group_list', :collection => @group_list %>
+          </div>
+        </ul>
+        <% form_remote_tag :url => { :controller => 'group', :action => :edit_group }, :method => 'get' do %>
+          <%= submit_tag "Add Group" %>
+        <% end %>
+      </div>
+  
+    </div>
+    
+    <div dojoType="ContentPane" layoutAlign="client" executeScripts="true">
+      <div id="content">
+        <p>Welcome to the Address Book version 2.0</p>
+      </div>
+    </div>
+    
+  </div>
+</body>
