@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 require 'rubygems'
-require 'rabels'
 
-class AddressTest < Test::Unit::TestCase
+class AddressTest < ActiveSupport::TestCase
   fixtures :contacts, :addresses, :address_types
 
   def setup

@@ -42,7 +42,7 @@ module ContactHelper
     map_link = 'http://maps.google.com/maps?q=' + map_query
     html = "<a href=\"#{map_link}\" target=\"new\">Map</a>"
 
-    user_address = AppConfig.instance.user_address
+    user_address = AppConfig.user_address
     unless user_address.blank?
       directions_query = 'daddr=' +
         contact.address.address1 + ',' +

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AddressTypeTest < Test::Unit::TestCase
+class AddressTypeTest < ActiveSupport::TestCase
   fixtures :address_types
 
   def test_get_type

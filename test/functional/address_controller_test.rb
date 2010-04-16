@@ -4,7 +4,7 @@ require 'address_controller'
 # Re-raise errors caught by the controller.
 class AddressController; def rescue_action(e) raise e end; end
 
-class AddressControllerTest < Test::Unit::TestCase
+class AddressControllerTest < ActionController::TestCase
   fixtures :contacts, :addresses, :address_types
 
   def setup

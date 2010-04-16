@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ContactTest < Test::Unit::TestCase
+class ContactTest < ActiveSupport::TestCase
   fixtures :contacts, :addresses
 
   def test_creation_without_required_info
