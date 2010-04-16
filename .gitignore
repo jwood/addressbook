@@ -1,0 +1,6 @@
+.bundle
+db/development.sqlite3
+db/schema.rb
+log/
+public/mailing_labels.pdf
+
