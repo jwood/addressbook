@@ -43,7 +43,7 @@ Rails::Initializer.run do |config|
   config.action_controller.session = { :session_key => "_myapp_session", :secret => "eba709df22a160581c4806cd0ccf78a877413c87b3521d0873b3591118cac1e56779019f0e0c6ab4259e7e5a4372b64a582d18fd53c60275f9ef1a8c737133ac" }  
   # See Rails::Configuration for more options
 
-  #config.gem 'pdf-labels', :version => '2.0.1'
+  config.gem 'pdf-labels', :version => '2.0.1', :lib => 'pdf/label'
 
   config.app_config.user_address = {
       :address => "123 Main St.",
