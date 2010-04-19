@@ -14,7 +14,7 @@ class AddressControllerTest < ActionController::TestCase
   end
 
   def test_edit_address_get
-    get :edit_address
+    xhr :get, :edit_address
     assert_template 'edit_address'
   end
 
@@ -26,7 +26,7 @@ class AddressControllerTest < ActionController::TestCase
     contact.save
     contact.address.link_contact
 
-    get :edit_address, { :id => address.id }
+    xhr :get, :edit_address, { :id => address.id }
     assert_template 'edit_address'
   end
 
@@ -34,7 +34,7 @@ class AddressControllerTest < ActionController::TestCase
     address = addresses(:chicago)
     address.address_type_id = address_types(:individual)
     address.address2 = 'Apt 109'
-    post :edit_address, { :id => address.id, :address => address.attributes }
+    xhr :post, :edit_address, { :id => address.id, :address => address.attributes }
     assert_template 'edit_address'
     assert_equal(address.address2, assigns(:address).address2)
     assert_equal(true, assigns(:saved))
@@ -42,7 +42,7 @@ class AddressControllerTest < ActionController::TestCase
 
   def test_delete_address
     address = addresses(:chicago)
-    post :delete_address, { :id => address.id }
+    xhr :post, :delete_address, { :id => address.id }
     assert_template 'delete_address'
     assert_equal(address, assigns(:address))
   end
@@ -55,28 +55,28 @@ class AddressControllerTest < ActionController::TestCase
     contact.save
     contact.address.link_contact
 
-    post :find_address, { :last_name => contact.last_name }
+    xhr :post, :find_address, { :last_name => contact.last_name }
     assert_template('find_address')
     assert_equal(address, assigns(:search_results).first)
   end
   
   def test_find_address_by_city
     address = addresses(:chicago)
-    post :find_address, { :city => address.city }
+    xhr :post, :find_address, { :city => address.city }
     assert_template('find_address')
     assert_equal(address, assigns(:search_results).first)
   end
   
   def test_find_address_by_home_phone
     address = addresses(:alsip)
-    post :find_address, { :home_phone => address.home_phone }
+    xhr :post, :find_address, { :home_phone => address.home_phone }
     assert_template('find_address')
     assert_equal(address, assigns(:search_results).first)
   end
 
   def test_find_address_by_city_and_phone
     address = addresses(:chicago)
-    post :find_address, { :city => address.city, :home_phone => address.home_phone }
+    xhr :post, :find_address, { :city => address.city, :home_phone => address.home_phone }
     assert_template('find_address')
     assert_equal(address, assigns(:search_results).first)
   end
@@ -89,7 +89,7 @@ class AddressControllerTest < ActionController::TestCase
     contact.save
     contact.address.link_contact
 
-    post :find_address, { :last_name => contact.last_name, :city => address.city, :home_phone => address.home_phone }
+    xhr :post, :find_address, { :last_name => contact.last_name, :city => address.city, :home_phone => address.home_phone }
     assert_template('find_address')
     assert_equal(address, assigns(:search_results).first)
   end
