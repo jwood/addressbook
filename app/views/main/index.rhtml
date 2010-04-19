@@ -34,9 +34,6 @@
             <%= render :partial => 'address_list', :collection => @address_list %>
           </div>
         </ul>
-        <% form_remote_tag :url => { :controller => 'address', :action => :edit_address }, :method => 'get' do -%>
-          <%= submit_tag "Add Address" %>
-        <% end -%>
       </div>
   
       <div dojoType="ContentPane" label="Groups" class="menuContent">
