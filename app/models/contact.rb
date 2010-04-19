@@ -10,23 +10,25 @@ class Contact < ActiveRecord::Base
   validates_format_of :cell_phone, :with => /^\d\d\d-\d\d\d-\d\d\d\d$/, 
     :message => 'must be in the format of XXX-XXX-XXXX',
     :if => Proc.new { |contact| !contact.cell_phone.blank? }
-  
-  #----------------------------------------------------------------------------#
-  # Remove this contact from the primary and secondary contact fields
-  # of an address before it is destroyed.
-  #----------------------------------------------------------------------------#
+
+  named_scope :with_address, :conditions => 'address_id is not null'
+
   def before_destroy
     self.address = nil
     save
     Address.remove_contact(self)
   end
 
-  #----------------------------------------------------------------------------#
-  # Find the bunch of contacts to be displayed in the contact listing on the
-  # main page.
-  #----------------------------------------------------------------------------#
-  def Contact.find_for_list
+  def self.find_for_list
     self.find(:all, :order => 'last_name, first_name')
-  end    
+  end
+
+  def full_name_last_first
+    "#{last_name}, #{first_name}"
+  end
+
+  def has_address?
+    !address.blank? && !address.is_empty?
+  end
 
 end

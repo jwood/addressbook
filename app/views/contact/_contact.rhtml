@@ -31,12 +31,12 @@
   <div class="section">
     <table>
       <tr>
-        <% if !contact.address.blank? -%>
+        <% unless contact.address.blank? -%>
           <td><label>Home Phone:</label></td>
           <td>
             <% unless contact.address.home_phone.blank? -%>
               <%= h(contact.address.home_phone) %> &nbsp;
-            <% end -%> 
+            <% end -%>
             <%= 
               link_to_remote "Edit", 
                 :url => { :controller => 'address', :action => :edit_address, :id => contact.address }, 
@@ -64,20 +64,42 @@
     </table>
   </div>
 
-  <% unless contact.id.blank? -%>
-    <h3>Address</h3>
-    <div class="section">
-      <% if !contact.address.blank? && !contact.address.address1.blank? -%>
-        <p>
-          <%= h(contact.address.address1) %><br />
-          <%= h(contact.address.address2) + "<br />" unless contact.address.address2.blank? %>
-          <%= h(contact.address.city) + ", " + h(contact.address.state) + " " + h(contact.address.zip) %>
-        </p>
-        <%= add_map_and_directions_links(contact) %> <br />
-      <% end -%>
-      <%= add_address_modification_links(contact) %>
+  <h3>Address</h3>
+  <div class="section">
+    <% if contact.has_address? -%>
+      <p id="address" style="<%= display_style_for_address %>">
+        <%= h(contact.address.address1) %><br />
+        <%= h(contact.address.address2) + "<br />" unless contact.address.address2.blank? %>
+        <%= h(contact.address.city) + ", " + h(contact.address.state) + " " + h(contact.address.zip) %>
+      </p>
+    <% end -%>
+
+    <div id="specifyAddress" style="<%= display_style_for_specify_address %>">
+      <p>
+        <%= radio_button_tag('address_specification_type', 'existing_address', false, :id => 'existing_address') %>
+        <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
+      </p>
+      <p class="addressOption">
+        <%= collection_select(contact, nil, Contact.with_address.all(:order => 'last_name, first_name'), :id, :full_name_last_first) %>
+      </p>
+
+      <p>
+        <%= radio_button_tag('address_specification_type', 'specified_address', !contact.address.blank?, :id => 'specified_address') %>
+        <%= label_tag 'specified_address', 'Associate contact the specified address' %>
+        <%= render :partial => 'shared/address_fields' %>
+      </p>
     </div>
-  <% end -%>
+
+    <% if contact.has_address? -%>
+      <p>
+        <%= link_to_function "Edit Address", "$('specifyAddress').show(); $('address').hide();" %> |
+        <%= link_to_remote("Delete Address",
+              :url => { :action => :remove_address_from_contact, :id => contact },
+              :confirm => "Are you sure you would like to delete the address for #{contact.first_name} #{contact.last_name}?") %> |
+        <%= add_map_and_directions_links(contact) %> <br />
+      </p>
+    <% end -%>
+  </div>
 
   <br />
   <%= submit_tag "Save" %>

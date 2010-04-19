@@ -49,6 +49,10 @@ html, body {
   padding-right: 10px;
 }
 
+.addressOption {
+  padding-left: 30px;
+}
+
 /****************** Is this needed? ******************/
 form {
   margin-bottom: 0;

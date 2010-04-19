@@ -234,6 +234,12 @@ class AddressTest < ActiveSupport::TestCase
     end
   end
 
+  def test_is_empty
+    assert Address.new.is_empty?
+    assert Address.new(:home_phone => '312-555-1212').is_empty?
+    assert !addresses(:alsip).is_empty?
+  end
+
   ##############################################################################
   private
   ##############################################################################

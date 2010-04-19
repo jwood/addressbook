@@ -9,6 +9,7 @@ class ContactController < ApplicationController
   #----------------------------------------------------------------------------#
   def edit_contact
     @contact = params[:id] && Contact.find_by_id(params[:id]) || Contact.new
+    @address = @contact.address || Address.new
     if request.post?
       new_contact = true if params[:id].nil?
       @contact.attributes = params[:contact]
