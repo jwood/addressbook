@@ -93,4 +93,37 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
   end
   
+  def test_edit_that_assigns_a_new_address_to_an_existing_contact
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address_specification_type => "specified_address", :address => {
+        :address1 => "9909 South St.", :address2 => "Apt 2", :city => "Chicago", :state => "IL", :zip => "60606"} }
+    assert_template 'edit_contact'
+    assert_equal('9909 South St.', assigns(:contact).address.address1)
+    assert_equal('Apt 2', assigns(:contact).address.address2)
+    assert_equal('Chicago', assigns(:contact).address.city)
+    assert_equal('IL', assigns(:contact).address.state)
+    assert_equal('60606', assigns(:contact).address.zip)
+    assert_equal(true, assigns(:saved))
+  end
+
+  def test_assining_a_bogus_address_to_an_existing_contact_results_in_an_error
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address_specification_type => "specified_address", :address => {
+        :address1 => "9909 South St.", :city => "", :state => "Don't know", :zip => "lkjasdflkj"} }
+    assert_template 'edit_contact'
+    assert_nil assigns(:contact).address
+    assert assigns(:contact).errors.full_messages.include?("Please specify a valid address")
+    assert_nil assigns(:saved)
+  end
+
+  def test_create_contact_with_address_of_another_contact
+
+  end
+
+  def test_create_contact_with_new_address
+
+  end
+
 end

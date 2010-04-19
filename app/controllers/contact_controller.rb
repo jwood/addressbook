@@ -7,7 +7,7 @@ class ContactController < ApplicationController
       @contact.attributes = params[:contact]
       @contact.address = parse_address
 
-      if @contact.save
+      if @contact.errors.blank? && @contact.save
         @saved = true
       else
         logger.error("Edit contact failed: #{@contact.errors.full_messages}")
@@ -69,6 +69,15 @@ class ContactController < ApplicationController
     if params[:address_specification_type] == 'existing_address'
       other = Contact.find_by_id(params[:other_id])
       other.address
+    elsif params[:address_specification_type] == 'specified_address'
+      address = Address.new(params[:address])
+      if address.valid?
+        address.save
+        address
+      else
+        @contact.errors.add_to_base("Please specify a valid address")
+        nil
+      end
     end
   end
   
