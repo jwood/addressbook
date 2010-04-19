@@ -15,6 +15,7 @@ class ContactController < ApplicationController
     end
     @address = @contact.address || Address.new
     @contact_list = Contact.find_for_list if new_contact
+    @address_list = Address.find_for_list if @new_address
   end
   
   def delete_contact
@@ -73,6 +74,7 @@ class ContactController < ApplicationController
       address = Address.new(params[:address])
       if address.valid?
         address.save
+        @new_address = true
         address
       else
         @contact.errors.add_to_base("Please specify a valid address")
