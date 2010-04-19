@@ -80,7 +80,7 @@
         <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
       </p>
       <p class="addressOption">
-        <%= collection_select(contact, nil, Contact.with_address.all(:order => 'last_name, first_name'), :id, :full_name_last_first) %>
+        <%= select_tag 'other_id', options_from_collection_for_select(Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
       </p>
 
       <p>

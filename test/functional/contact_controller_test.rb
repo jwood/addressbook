@@ -67,7 +67,7 @@ class ContactControllerTest < ActionController::TestCase
     xhr :post, :remove_address_from_contact, { :id => contact.id }
     assert_nil(assigns(:contact).address)
     assert_equal(true, assigns(:saved))
-    assert_redirected_to(:controller => 'contact', :action => 'edit_contact', :id => contact.id)
+    assert_response :success
   end
   
   def test_find_contact
@@ -80,6 +80,17 @@ class ContactControllerTest < ActionController::TestCase
   def test_link_to_address
     post :link_to_address
     assert_template 'link_to_address'
+  end
+
+  def test_edit_that_associates_contact_with_the_address_of_another_contact
+    contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
+
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address_specification_type => "existing_address", :other_id => contacts(:jane_doe).id }
+    assert_template 'edit_contact'
+    assert_equal(addresses(:alsip), assigns(:contact).address)
+    assert_equal(true, assigns(:saved))
   end
   
 end

@@ -1,30 +1,22 @@
-#------------------------------------------------------------------------------#
-# This class serves up the actions that act on contacts.
-#------------------------------------------------------------------------------#
 class ContactController < ApplicationController
 
-  #----------------------------------------------------------------------------#
-  # Creates/Reads/Updates contacts.  When a new contact is created, the entire
-  # contact list is handed back.
-  #----------------------------------------------------------------------------#
   def edit_contact
     @contact = params[:id] && Contact.find_by_id(params[:id]) || Contact.new
-    @address = @contact.address || Address.new
     if request.post?
       new_contact = true if params[:id].nil?
       @contact.attributes = params[:contact]
+      @contact.address = parse_address
+
       if @contact.save
         @saved = true
       else
         logger.error("Edit contact failed: #{@contact.errors.full_messages}")
       end
     end
+    @address = @contact.address || Address.new
     @contact_list = Contact.find_for_list if new_contact
   end
   
-  #----------------------------------------------------------------------------#
-  # Deletes a contact
-  #----------------------------------------------------------------------------#
   def delete_contact
     @contact = Contact.find_by_id(params[:id])
     @contact.address.unlink_contact(@contact) unless @contact.address.nil?
@@ -33,9 +25,6 @@ class ContactController < ApplicationController
     @contact.destroy if @contact
   end
   
-  #----------------------------------------------------------------------------#
-  # Add address info to a contact
-  #----------------------------------------------------------------------------#
   def add_address_to_contact
     @contact = Contact.find_by_id(params[:id])
     @contact.address.unlink_contact(@contact) unless @contact.address.blank?
@@ -48,9 +37,6 @@ class ContactController < ApplicationController
     end
   end
   
-  #----------------------------------------------------------------------------#
-  # Remove address info for a contact
-  #----------------------------------------------------------------------------#
   def remove_address_from_contact
     @contact = Contact.find_by_id(params[:id])
     @old_address_id = @contact.address_id
@@ -61,23 +47,29 @@ class ContactController < ApplicationController
     else
       logger.error("Remove address to contact failed: #{@contact.errors.full_messages}")
     end
-    redirect_to(:action => 'edit_contact', :id => @contact)
+
+    render :edit_contact do |page|
+      page.redirect_to(:action => 'edit_contact', :id => @contact)
+    end
   end
-  
-  #----------------------------------------------------------------------------#
-  # Find a contact by last name (full or partial)
-  #----------------------------------------------------------------------------#
+
   def find_contact
     @contact_list = Contact.find(:all, 
       :conditions => ["last_name like ?", params[:last_name] << "%"],
       :order => 'last_name, first_name')
   end
   
-  #----------------------------------------------------------------------------#
-  # Get the form to link a contact to an address
-  #----------------------------------------------------------------------------#
   def link_to_address
     @contact = Contact.find_by_id(params[:id])
-  end    
+  end
+
+  private
+
+  def parse_address
+    if params[:address_specification_type] == 'existing_address'
+      other = Contact.find_by_id(params[:other_id])
+      other.address
+    end
+  end
   
 end

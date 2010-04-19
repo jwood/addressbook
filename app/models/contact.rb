@@ -31,4 +31,8 @@ class Contact < ActiveRecord::Base
     !address.blank? && !address.is_empty?
   end
 
+  def after_save
+    address.link_contact if address
+  end
+
 end
