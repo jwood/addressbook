@@ -119,11 +119,25 @@ class ContactControllerTest < ActionController::TestCase
   end
 
   def test_create_contact_with_address_of_another_contact
+    contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :contact => contact.attributes,
+      :address_specification_type => "existing_address", :other_id => contacts(:jane_doe).id }
+    assert_template 'edit_contact'
+    assert_equal(addresses(:alsip), assigns(:contact).address)
+    assert_equal(true, assigns(:saved))
   end
 
   def test_create_contact_with_new_address
-
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :contact => contact.attributes,
+      :address_specification_type => "specified_address", :address => {
+        :address1 => "9909 South St.", :city => "", :state => "Don't know", :zip => "lkjasdflkj"} }
+    assert_template 'edit_contact'
+    assert_nil assigns(:contact).address
+    assert assigns(:contact).errors.full_messages.include?("Please specify a valid address")
+    assert_nil assigns(:saved)
   end
 
 end
