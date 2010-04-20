@@ -31,19 +31,9 @@
   <div class="section">
     <table>
       <tr>
-        <% unless contact.address.blank? -%>
-          <td><label>Home Phone:</label></td>
-          <td>
-            <% unless contact.address.home_phone.blank? -%>
-              <%= h(contact.address.home_phone) %> &nbsp;
-            <% end -%>
-            <%= 
-              link_to_remote "Edit", 
-                :url => { :controller => 'address', :action => :edit_address, :id => contact.address }, 
-                :method => 'get' 
-            %>
-          </td>
-        <% end -%>
+        <td><label>Home Phone:</label></td>
+        <td><%= text_field 'address', 'home_phone', 'size' => 20 %></td>
+        </td>
       </tr>
       <tr>
         <td><label>Work Phone:</label></td>

@@ -97,13 +97,14 @@ class ContactControllerTest < ActionController::TestCase
     contact = contacts(:john_doe)
     xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
       :address_specification_type => "specified_address", :address => {
-        :address1 => "9909 South St.", :address2 => "Apt 2", :city => "Chicago", :state => "IL", :zip => "60606"} }
+        :address1 => "9909 South St.", :address2 => "Apt 2", :city => "Chicago", :state => "IL", :zip => "60606", :home_phone => '312-222-1221'} }
     assert_template 'edit_contact'
     assert_equal('9909 South St.', assigns(:contact).address.address1)
     assert_equal('Apt 2', assigns(:contact).address.address2)
     assert_equal('Chicago', assigns(:contact).address.city)
     assert_equal('IL', assigns(:contact).address.state)
     assert_equal('60606', assigns(:contact).address.zip)
+    assert_equal('312-222-1221', assigns(:contact).address.home_phone)
     assert_equal(true, assigns(:saved))
   end
 
