@@ -26,18 +26,6 @@ class ContactController < ApplicationController
     @contact.destroy if @contact
   end
   
-  def add_address_to_contact
-    @contact = Contact.find_by_id(params[:id])
-    @contact.address.unlink_contact(@contact) unless @contact.address.blank?
-    @contact.address = Address.find_by_id(params[:address_id]) 
-    if @contact.save
-      @saved = true
-      @contact.address.link_contact
-    else
-      logger.error("Add address to contact failed: #{@contact.errors.full_messages}")
-    end
-  end
-  
   def remove_address_from_contact
     @contact = Contact.find_by_id(params[:id])
     @old_address_id = @contact.address_id
@@ -60,10 +48,6 @@ class ContactController < ApplicationController
       :order => 'last_name, first_name')
   end
   
-  def link_to_address
-    @contact = Contact.find_by_id(params[:id])
-  end
-
   private
 
   def parse_address

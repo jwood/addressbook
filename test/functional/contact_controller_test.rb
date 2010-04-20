@@ -34,35 +34,10 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(contact, assigns(:contact))
   end
   
-  def test_add_address_to_contact
-    contact = contacts(:john_doe)
-    address = addresses(:chicago)  
-    xhr :post, :add_address_to_contact, { :id => contact.id, :address_id => address.id }
-    assert_template 'add_address_to_contact'
-    assert_equal(address.id, assigns(:contact).address.id)
-    assert_equal(true, assigns(:saved))
-  end
-
-  def test_add_address_to_contact_with_existing_address
-    contact = contacts(:john_doe)
-    address = addresses(:chicago)
-    xhr :post, :add_address_to_contact, { :id => contact.id, :address_id => address.id }
-
-    address = addresses(:tinley_park)
-    xhr :post, :add_address_to_contact, { :id => contact.id, :address_id => address.id }
-
-    chicago_from_db = Address.find(addresses(:chicago).id)
-    assert_equal(nil, chicago_from_db.primary_contact)
-
-    tinley_park_from_db = Address.find(addresses(:tinley_park).id)
-    assert_equal(contact, tinley_park_from_db.primary_contact)
-  end
-  
   def test_remove_address_from_contact
     contact = contacts(:john_doe)
-    address = addresses(:chicago)  
-    xhr :post, :add_address_to_contact, { :id => contact.id, :address_id => address.id }
-    assert_equal(address.id, assigns(:contact).address.id)
+    address = addresses(:chicago)
+    contact.update_attribute(:address, address)
     
     xhr :post, :remove_address_from_contact, { :id => contact.id }
     assert_nil(assigns(:contact).address)
@@ -77,11 +52,6 @@ class ContactControllerTest < ActionController::TestCase
     assigns(:contact_list).each { |c| assert_equal('Doe', c.last_name) }
   end
   
-  def test_link_to_address
-    post :link_to_address
-    assert_template 'link_to_address'
-  end
-
   def test_edit_that_associates_contact_with_the_address_of_another_contact
     contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 

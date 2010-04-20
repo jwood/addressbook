@@ -1,7 +1,0 @@
-# Update the contact display to include the address that was just added
-contact_html = render(:partial => 'contact', :object => @contact)
-address_html = create_link_to(@contact.address)
-
-page.call('updateInOriginalWindow', 'content', contact_html, 'linkToAddressPopup')
-page.call('updateInOriginalWindow', create_id_for(@contact.address), address_html, 'linkToAddressPopup')
-page.call('closeWindow', 'linkToAddressPopup')

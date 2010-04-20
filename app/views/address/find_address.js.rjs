@@ -1,3 +1,0 @@
-# Display the address search results
-page.replace_html('addressSearchResults', :partial => 'find_address', 
-  :object => { "contact" => @contact, "search_results" => @search_results } )
