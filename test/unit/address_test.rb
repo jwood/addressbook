@@ -194,7 +194,10 @@ class AddressTest < ActiveSupport::TestCase
   def test_delete_with_contacts_nullifies_contacts_address_id
     setup_link_unlink_test
     @address.destroy
-    [@jimmy, @john, @jane].each { |contact| assert_nil(contact.address) }
+    [@jimmy, @john, @jane].each do |contact|
+      contact.reload
+      assert_nil(contact.address)
+    end
   end
 
   def test_compare_with_no_primary_contacts
