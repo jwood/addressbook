@@ -140,4 +140,18 @@ class ContactControllerTest < ActionController::TestCase
     assert_nil assigns(:saved)
   end
 
+  def test_update_contact_with_new_address
+    contacts(:john_doe).update_attribute(:address, addresses(:alsip))
+    assert(addresses(:alsip).contacts.include?(contacts(:john_doe)))
+
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address_specification_type => "specified_address", :address => {
+        :address1 => "123 Main St", :city => "Chicago", :state => "IL", :zip => "60606"} }
+    assert_template 'edit_contact'
+    assert_equal(addresses(:alsip).id, assigns(:contact).address.id)
+    assert_equal('Chicago', assigns(:contact).address.city)
+    assert_equal(true, assigns(:saved))
+  end
+
 end

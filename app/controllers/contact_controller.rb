@@ -73,9 +73,15 @@ class ContactController < ApplicationController
     elsif params[:address_specification_type] == 'specified_address'
       address = Address.new(params[:address])
       if address.valid?
-        address.save
-        @new_address = true
-        address
+        if @contact.address.nil?
+          address.save
+          @new_address = true
+          address
+        else
+          @contact.address.attributes = address.attributes
+          @contact.address.save
+          @contact.address
+        end
       else
         @contact.errors.add_to_base("Please specify a valid address")
         nil
