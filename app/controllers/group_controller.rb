@@ -33,14 +33,6 @@ class GroupController < ApplicationController
   end
 
   #----------------------------------------------------------------------------#
-  # Displays the dialog to maintain the list of group members
-  #----------------------------------------------------------------------------#
-  def maintain_group_members
-    @group = Group.find_by_id(params[:id])
-    include_common_data
-  end
-  
-  #----------------------------------------------------------------------------#
   # Adds an address to a group
   #----------------------------------------------------------------------------#
   def add_address_to_group
@@ -80,15 +72,6 @@ class GroupController < ApplicationController
     @group.addresses = Address.find_all_eligible_for_group
     include_common_data
     render(:action => 'update_address_group_lists')
-  end
-  
-  #----------------------------------------------------------------------------#
-  # Collect the necessary information to re-display the group information after
-  # the member maintenance
-  #----------------------------------------------------------------------------#
-  def finish_maintaining_group
-    @group = Group.find_by_id(params[:id])
-    include_common_data
   end
   
   #----------------------------------------------------------------------------#

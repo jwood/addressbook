@@ -19,32 +19,6 @@ adjustSelectableContacts = function() {
   }
 }
 
-/* 
- * Opens a popup window and stores a reference to the main window 
- */
-openWindow = function(url, name, dimensions) {
-  var w = window.open(url, name, dimensions);
-  w.dummy = window;
-}
-
-/* 
- * Updates the passed in id in the main window with the html passed in 
- */
-updateInOriginalWindow = function(id, html, popup_name) {
-  var w = window.open("", popup_name);
-  var otherBrowser = w.dummy;
-  var element = otherBrowser.document.getElementById(id);
-  Element.update(element, html);
-}
-
-/* 
- * Closes the specified popup window
- */
-closeWindow = function(name) {
-  var w = window.open("", name);
-  w.close();
-}
-
 /*
  * Updates the create labels link to specify the proper label type
  */

@@ -28,12 +28,6 @@ class GroupControllerTest < ActionController::TestCase
     assert_equal(group, assigns(:group))
   end
   
-  def test_maintain_group_members
-    group = groups(:group_1)
-    post :maintain_group_members, { :id => group.id }
-    assert_template 'maintain_group_members'
-  end
-  
   def test_add_address_to_group
     group = groups(:group_1)
     address = addresses(:chicago)
@@ -75,12 +69,6 @@ class GroupControllerTest < ActionController::TestCase
     assert_equal(0, assigns(:included).size)
     @eligible_for_group.each { |a| assert assigns(:not_included).include?(a) }
     assert_equal(@eligible_for_group.size, assigns(:not_included).size)
-  end
-
-  def test_finish_maintaining_group
-    group = groups(:group_1)
-    xhr :get, :finish_maintaining_group, { :id => group.id }
-    assert_template 'finish_maintaining_group'
   end
 
   def test_create_labels

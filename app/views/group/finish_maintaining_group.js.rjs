@@ -1,5 +1,0 @@
-@included.sort! { |x,y| x.compare_by_primary_contact(y) }
-group_member_html = render(:partial => 'group_list', :collection => @included, 
-  :locals => { :draggable => false } ) 
-page.call('updateInOriginalWindow', 'groupMembers', group_member_html, 'maintainGroupMembersPopup')
-page.call('closeWindow', 'maintainGroupMembersPopup')
