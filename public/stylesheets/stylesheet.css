@@ -53,6 +53,10 @@ html, body {
   padding-left: 30px;
 }
 
+.spinner_img {
+  float: right;
+}
+
 /****************** Is this needed? ******************/
 form {
   margin-bottom: 0;
