@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-require 'rubygems'
-
 class AddressTest < ActiveSupport::TestCase
   fixtures :contacts, :addresses, :address_types
 

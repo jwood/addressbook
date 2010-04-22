@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'contact_controller'
-
-# Re-raise errors caught by the controller.
-class ContactController; def rescue_action(e) raise e end; end
 
 class ContactControllerTest < ActionController::TestCase
   fixtures :contacts, :addresses
-  
-  def setup
-    @controller = ContactController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
   
   def test_edit_contact_get
     xhr :get, :edit_contact

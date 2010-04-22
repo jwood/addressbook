@@ -1,17 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'address_controller'
-
-# Re-raise errors caught by the controller.
-class AddressController; def rescue_action(e) raise e end; end
 
 class AddressControllerTest < ActionController::TestCase
   fixtures :contacts, :addresses, :address_types
-
-  def setup
-    @controller = AddressController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-  end
 
   def test_edit_address_get
     xhr :get, :edit_address

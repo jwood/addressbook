@@ -1,17 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'group_controller'
-
-# Re-raise errors caught by the controller.
-class GroupController; def rescue_action(e) raise e end; end
 
 class GroupControllerTest < ActionController::TestCase
   fixtures :addresses, :groups
   
   def setup
-    @controller = GroupController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-
     @eligible_for_group = [ addresses(:chicago), addresses(:tinley_park), addresses(:alsip) ]
   end
 
