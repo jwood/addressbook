@@ -13,19 +13,25 @@
 
   <h3>Group Members</h3>
   <div class="section">
-    <ul>
-      <div id="groupMembers">
-        <%= 
-          @group.addresses.sort! { |x,y| x.compare_by_primary_contact(y) }
-          render :partial => 'group_list', :collection => @group.addresses,
-            :locals => { :draggable => false } 
-        %>
-      </div>
-    </ul>
+    <div id="displayGroupMembers">
+      <ul>
+        <div id="groupMembers">
+          <%=
+            @group.addresses.sort! { |x,y| x.compare_by_primary_contact(y) }
+            render :partial => 'group_list', :collection => @group.addresses,
+              :locals => { :draggable => false }
+          %>
+        </div>
+      </ul>
 
-    <a href="#" onclick='openWindow("<%= url_for :action => :maintain_group_members, :id => group %>", "maintainGroupMembersPopup", "width=750,height=600");'>Maintain Group Members</a> 
+      <%= link_to_function "Maintain Group Members", "Element.hide('displayGroupMembers'); Element.show('editGroupMembers');" %>
+    </div>
+
+    <div id="editGroupMembers" style="display:none;">
+      <%= render :partial => 'maintain_group_members' %>
+    </div>
   </div>
-  
+
   <h3>Labels</h3>
   <div class="section">
 

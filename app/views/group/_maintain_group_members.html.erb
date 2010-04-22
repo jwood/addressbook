@@ -1,0 +1,47 @@
+<div align="center">
+  <table>
+    <tr>
+      <th>Not Included</th>
+      <th>&nbsp;</th>
+      <th>Included</th>
+    </tr>
+
+    <tr>
+
+      <td width="45%" id="notIncludedListCell" class="groupListAddresses">
+        <ul>
+          <div id="notIncludedList" class="groupList">
+            <%=
+              @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
+              render :partial => 'group_list', :collection => @not_included,
+                :locals => { :draggable => true }
+            %>
+          </div>
+        </ul>
+      </td>
+
+      <td width="10%" style="text-align:center;">
+        <%= link_to_remote "<<", :url => { :action => :remove_all_addresses, :id => @group } %><br/>
+        < <br/>
+        > <br/>
+        <%= link_to_remote ">>", :url => { :action => :add_all_addresses, :id => @group } %><br/>
+      </td>
+
+      <td width="45%" id="includedListCell" class="groupListAddresses">
+        <ul>
+          <div id="includedList" class="groupList">
+            <%=
+              @included.sort! { |x,y| x.compare_by_primary_contact(y) }
+              render :partial => 'group_list', :collection => @included,
+                :locals => { :draggable => true }
+            %>
+          </div>
+        </ul>
+      </td>
+
+    </tr>
+  </table>
+</div>
+
+<%= drop_receiving_element("notIncludedListCell", :url => { :controller => "group", :action => "remove_address_from_group", :group_id => @group } ) %>
+<%= drop_receiving_element("includedListCell", :url => { :controller => "group", :action => "add_address_to_group", :group_id => @group } ) %>
