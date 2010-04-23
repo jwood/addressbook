@@ -98,18 +98,18 @@ form {
 /* END - link to address styles */
 
 /* BEGIN - Styles for group maintenance */
-#maintainGroup {
-  width: auto;
-  height: 100%;
+.selectGroupAddresses {
+  width: 235px;
+  height: 455px;
 }
 
-#maintainGroup table {
-  width: 700px;
+#maintainGroupTable td {
+  border: none;
 }
 
-#maintainGroup th {
-  font-size: large;
-  width: 300px;
+#maintainGroupControls {
+  text-align: center;
+  width: 55px;
 }
 
 .groupList {
@@ -121,6 +121,7 @@ form {
 .groupListAddresses {
   border: 1px solid black;
   background: #ededed;
+  width: 235px;
 }
 
 .groupListAddresses ul {

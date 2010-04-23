@@ -1,5 +1,5 @@
 <div align="center">
-  <table>
+  <table id="maintainGroupTable">
     <tr>
       <th>Not Included</th>
       <th>&nbsp;</th>
@@ -8,32 +8,34 @@
 
     <tr>
 
-      <td width="45%" id="notIncludedListCell" class="groupListAddresses">
+      <td id="notIncludedListCell" class="groupListAddresses">
         <ul>
-          <div id="notIncludedList" class="groupList">
+          <div id="notIncludedList">
             <%=
               @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
-              render :partial => 'group_list', :collection => @not_included,
-                :locals => { :draggable => true }
+              select_tag('not_included',
+                options_from_collection_for_select(@not_included, 'id', 'addressee_for_display'),
+                :multiple => true, :class => 'selectGroupAddresses' )
             %>
           </div>
         </ul>
       </td>
 
-      <td width="10%" style="text-align:center;">
+      <td id="maintainGroupControls">
         <%= link_to_remote "<<", :url => { :action => :remove_all_addresses, :id => @group } %><br/>
         < <br/>
         > <br/>
         <%= link_to_remote ">>", :url => { :action => :add_all_addresses, :id => @group } %><br/>
       </td>
 
-      <td width="45%" id="includedListCell" class="groupListAddresses">
+      <td id="includedListCell" class="groupListAddresses">
         <ul>
-          <div id="includedList" class="groupList">
+          <div id="includedList">
             <%=
               @included.sort! { |x,y| x.compare_by_primary_contact(y) }
-              render :partial => 'group_list', :collection => @included,
-                :locals => { :draggable => true }
+              select_tag('included',
+                options_from_collection_for_select(@included, 'id', 'addressee_for_display'),
+                :multiple => true, :class => 'selectGroupAddresses')
             %>
           </div>
         </ul>
