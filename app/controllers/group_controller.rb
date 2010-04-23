@@ -1,13 +1,7 @@
-#------------------------------------------------------------------------------#
-# This class serves up the actions that act on groups.
-#------------------------------------------------------------------------------#
 class GroupController < ApplicationController
   require 'rubygems'
   require 'pdf/label'
 
-  #----------------------------------------------------------------------------#
-  # Creates/Reads/Updates groups
-  #----------------------------------------------------------------------------#
   def edit_group
     @group = params[:id] && Group.find_by_id(params[:id]) || Group.new
     if request.post?
@@ -23,18 +17,12 @@ class GroupController < ApplicationController
     include_common_data
   end
   
-  #----------------------------------------------------------------------------#
-  # Deletes an existing group
-  #----------------------------------------------------------------------------#
   def delete_group
     @group = Group.find_by_id(params[:id])
     @group.destroy if @group
     include_common_data
   end
 
-  #----------------------------------------------------------------------------#
-  # Adds an address to a group
-  #----------------------------------------------------------------------------#
   def add_address_to_group
     address = Address.find_by_id(params[:id])
     @group = Group.find_by_id(params[:group_id])
@@ -43,9 +31,6 @@ class GroupController < ApplicationController
     render(:action => 'update_address_group_lists')
   end
 
-  #----------------------------------------------------------------------------#
-  # Removes an address from a group
-  #----------------------------------------------------------------------------#
   def remove_address_from_group
     address = Address.find_by_id(params[:id])
     @group = Group.find_by_id(params[:group_id])
@@ -54,9 +39,6 @@ class GroupController < ApplicationController
     render(:action => 'update_address_group_lists')
   end
   
-  #----------------------------------------------------------------------------#
-  # Remove all addresses from the group
-  #----------------------------------------------------------------------------#
   def remove_all_addresses
     @group = Group.find_by_id(params[:id])
     @group.addresses.clear
@@ -64,9 +46,6 @@ class GroupController < ApplicationController
     render(:action => 'update_address_group_lists')
   end
   
-  #----------------------------------------------------------------------------#
-  # Add all addresses to the group
-  #----------------------------------------------------------------------------#
   def add_all_addresses
     @group = Group.find_by_id(params[:id])
     @group.addresses = Address.find_all_eligible_for_group
@@ -74,9 +53,6 @@ class GroupController < ApplicationController
     render(:action => 'update_address_group_lists')
   end
   
-  #----------------------------------------------------------------------------#
-  # Create a PDF of mailing labels for the addresses in the group
-  #----------------------------------------------------------------------------#
   def create_labels
     @group = Group.find_by_id(params[:id])
     p = Pdf::Label::Batch.new(params[:label_type].sub(' ', '  '))
@@ -100,27 +76,19 @@ class GroupController < ApplicationController
     redirect_to('/mailing_labels.pdf')
   end
   
-  ##############################################################################
-  private 
-  ##############################################################################
-  
-  #----------------------------------------------------------------------------#
-  # Gets the list of addresses not included in this group that can be added
-  #----------------------------------------------------------------------------#
-  def get_not_included_addresses
-    addresses = Address.find_all_eligible_for_group
-    included_addresses = @group.addresses
-    included_addresses.each { |a| addresses.delete(a) }
-    addresses
-  end
-  
-  #----------------------------------------------------------------------------#
-  # Set common data that is needed by all group actions
-  #----------------------------------------------------------------------------#
-  def include_common_data
-    @included = @group.addresses
-    @not_included = get_not_included_addresses
-    @label_types = Pdf::Label::Batch.all_template_names.sort!
-  end
+  private
+
+    def get_not_included_addresses
+      addresses = Address.find_all_eligible_for_group
+      included_addresses = @group.addresses
+      included_addresses.each { |a| addresses.delete(a) }
+      addresses
+    end
+
+    def include_common_data
+      @included = @group.addresses
+      @not_included = get_not_included_addresses
+      @label_types = Pdf::Label::Batch.all_template_names.sort!
+    end
 
 end
