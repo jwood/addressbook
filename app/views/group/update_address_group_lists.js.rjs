@@ -1,7 +1,11 @@
 @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
-page.replace_html('notIncludedList', :partial => 'group_list', 
-  :collection => @not_included, :locals => { :draggable => true } )
+html = select_tag('not_included',
+  options_from_collection_for_select(@not_included, 'id', 'addressee_for_display'),
+  :multiple => true, :class => 'selectGroupAddresses')
+page.replace_html('not_included', html)
 
 @included.sort! { |x,y| x.compare_by_primary_contact(y) }
-page.replace_html('includedList', :partial => 'group_list', 
-  :collection => @included, :locals => { :draggable => true } )
+html = select_tag('included',
+  options_from_collection_for_select(@included, 'id', 'addressee_for_display'),
+  :multiple => true, :class => 'selectGroupAddresses')
+page.replace_html('includedList', html)
