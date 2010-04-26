@@ -2,6 +2,8 @@ class GroupController < ApplicationController
   require 'rubygems'
   require 'pdf/label'
 
+  before_render :include_common_data
+
   def edit_group
     @group = params[:id] && Group.find_by_id(params[:id]) || Group.new
     if request.post?
@@ -14,20 +16,17 @@ class GroupController < ApplicationController
       end
     end
     @group_list = Group.find_for_list if new_group
-    include_common_data
   end
   
   def delete_group
     @group = Group.find_by_id(params[:id])
     @group.destroy if @group
-    include_common_data
   end
 
   def add_address_to_group
     address = Address.find_by_id(params[:id])
     @group = Group.find_by_id(params[:group_id])
     @group.addresses << address unless @group.addresses.include?(address)
-    include_common_data
     render(:action => 'update_address_group_lists')
   end
 
@@ -35,21 +34,18 @@ class GroupController < ApplicationController
     address = Address.find_by_id(params[:id])
     @group = Group.find_by_id(params[:group_id])
     @group.addresses.delete(address)
-    include_common_data
     render(:action => 'update_address_group_lists')
   end
   
   def remove_all_addresses
     @group = Group.find_by_id(params[:id])
     @group.addresses.clear
-    include_common_data
     render(:action => 'update_address_group_lists')
   end
   
   def add_all_addresses
     @group = Group.find_by_id(params[:id])
     @group.addresses = Address.find_all_eligible_for_group
-    include_common_data
     render(:action => 'update_address_group_lists')
   end
   
@@ -72,7 +68,6 @@ class GroupController < ApplicationController
 
     app_root = File::join RAILS_ROOT, "public"
     p.save_as("#{app_root}/mailing_labels.pdf")
-    include_common_data
     redirect_to('/mailing_labels.pdf')
   end
   
