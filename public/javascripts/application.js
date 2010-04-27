@@ -29,3 +29,34 @@ updateCreateLabelsLink = function(url) {
     '>Create Labels</a>';
   Element.update('createLabelsLink', newLinkHtml);
 }
+
+/*
+ * Functions used while maintaining group members
+ */
+function includeSelectedMembers() {
+  $('not_included').childElements().each(function(s) {
+    if (s.selected == true) {
+      $('included').insert({'bottom': s});
+    }
+  });
+}
+
+function excludeSelectedMembers() {
+  $('included').childElements().each(function(s) {
+    if (s.selected == true) {
+      $('not_included').insert({'bottom': s});
+    }
+  });
+}
+
+function includeAllMembers() {
+  $('not_included').childElements().each(function(s) {
+    $('included').insert({'bottom': s});
+  });
+}
+
+function excludeAllMembers() {
+  $('included').childElements().each(function(s) {
+    $('not_included').insert({'bottom': s});
+  });
+}

@@ -22,10 +22,10 @@
       </td>
 
       <td id="maintainGroupControls">
-        <%= link_to_remote "<<", :url => { :action => :remove_all_addresses, :id => @group } %><br/>
-        < <br/>
-        > <br/>
-        <%= link_to_remote ">>", :url => { :action => :add_all_addresses, :id => @group } %><br/>
+        <%= link_to_function "<<", 'excludeAllMembers()' %><br/>
+        <%= link_to_function "<", 'excludeSelectedMembers()' %><br/>
+        <%= link_to_function ">", 'includeSelectedMembers()' %><br/>
+        <%= link_to_function ">>", 'includeAllMembers()' %><br/>
       </td>
 
       <td id="includedListCell" class="groupListAddresses">

@@ -28,25 +28,25 @@ class GroupControllerTest < ActionController::TestCase
     assert_equal(group, assigns(:group))
   end
   
-  def test_add_address_to_group
+  def test_add_addresses_to_group
     group = groups(:group_1)
-    address = addresses(:chicago)
-    xhr :post, :add_address_to_group, { :id => address.id, :group_id => group.id }
+    xhr :post, :add_addresses_to_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
     assert_template 'update_address_group_lists'
-    assert(assigns(:included).include?(address))
-    @eligible_for_group.each { |a| assert assigns(:not_included).include?(a) unless a == addresses(:chicago) }
+    assert assigns(:included).include?(addresses(:chicago))
+    assert assigns(:included).include?(addresses(:alsip))
+    assert assigns(:not_included).include?(addresses(:tinley_park))
   end
   
-  def test_remove_address_from_group
+  def test_remove_addresses_from_group
     group = groups(:group_1)
-    address = addresses(:chicago)
-    xhr :post, :add_address_to_group, { :id => address.id, :group_id => group.id }
-    assert(assigns(:included).include?(address))
+    xhr :post, :add_addresses_to_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
+    assert assigns(:included).include?(addresses(:chicago))
+    assert assigns(:included).include?(addresses(:alsip))
 
-    xhr :post, :remove_address_from_group, { :id => address.id, :group_id => group.id }
+    xhr :post, :remove_addresses_from_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
     assert_template 'update_address_group_lists'
-    assert(!assigns(:included).include?(address))
-    @eligible_for_group.each { |a| assert assigns(:not_included).include?(a) }
+    assert !assigns(:included).include?(addresses(:chicago))
+    assert !assigns(:included).include?(addresses(:alsip))
   end
   
   def test_add_all_addresses_to_group

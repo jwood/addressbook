@@ -23,17 +23,18 @@ class GroupController < ApplicationController
     @group.destroy if @group
   end
 
-  def add_address_to_group
-    address = Address.find_by_id(params[:id])
+  def add_addresses_to_group
     @group = Group.find_by_id(params[:group_id])
-    @group.addresses << address unless @group.addresses.include?(address)
+    group_address_ids = @group.address_ids
+    addresses_to_add = Address.find(params[:ids].reject{|id| group_address_ids.include?(id)})
+    @group.addresses << addresses_to_add
     render(:action => 'update_address_group_lists')
   end
 
-  def remove_address_from_group
-    address = Address.find_by_id(params[:id])
+  def remove_addresses_from_group
     @group = Group.find_by_id(params[:group_id])
-    @group.addresses.delete(address)
+    addresses_to_remove = Address.find(params[:ids])
+    @group.addresses.delete(addresses_to_remove)
     render(:action => 'update_address_group_lists')
   end
   
