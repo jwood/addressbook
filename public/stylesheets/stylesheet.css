@@ -11,14 +11,15 @@ html, body {
 
 /* The main application window */
 #main {
-  height: 95%;
-  width: 95%;
+  height: 97%;
+  width: 98%;
   border: 2px solid black;
 }
 
 /* The application menu on the left */
 #menu {
   width: 350px;
+  height: 100%;
   border-right: 2px solid black;
 }
 
