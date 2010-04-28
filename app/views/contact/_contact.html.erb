@@ -76,7 +76,9 @@
       <p>
         <%= radio_button_tag('address_specification_type', 'specified_address', !contact.address.blank?, :id => 'specified_address') %>
         <%= label_tag 'specified_address', 'Associate contact the specified address' %>
-        <%= render :partial => 'shared/address_fields' %>
+        <div class="addressOption">
+          <%= render :partial => 'shared/address_fields' %>
+        </div>
       </p>
     </div>
 
