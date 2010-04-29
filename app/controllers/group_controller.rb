@@ -9,6 +9,7 @@ class GroupController < ApplicationController
     if request.post?
       new_group = true if params[:id].nil?
       @group.attributes = params[:group]
+      @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
       if @group.save
         @saved = true
       else

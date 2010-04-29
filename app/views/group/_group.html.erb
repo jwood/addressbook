@@ -55,7 +55,7 @@
   <% end -%>
   
   <br />
-  <%= submit_tag "Save" %>
+  <%= submit_tag "Save", :onclick => "selectAllIncludedGroupMembers();" %>
 <% end -%>
 
 <%= create_cancel_delete_links(group) %>

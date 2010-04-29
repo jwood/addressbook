@@ -60,3 +60,9 @@ function excludeAllMembers() {
     $('not_included').insert({'bottom': s});
   });
 }
+
+function selectAllIncludedGroupMembers() {
+  $('included').childElements().each(function(s) {
+    s.selected = true;
+  });
+}
