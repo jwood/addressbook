@@ -14,8 +14,10 @@
 <%= javascript_include_tag :defaults %>
 <%= yield :page_javascript %>
 
-<script type="text/javascript" src="/javascripts/dojo.xd.js" djConfig="parseOnLoad: true"></script>
-<script type="text/javascript">
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
+<!--<script src="/javascripts/dojo.xd.js" djConfig="parseOnLoad: true"></script>-->
+
+<script>
   dojo.require("dijit.layout.AccordionContainer");
   dojo.require("dijit.layout.ContentPane");
   dojo.require("dijit.layout.BorderContainer");
