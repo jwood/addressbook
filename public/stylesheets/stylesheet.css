@@ -57,46 +57,6 @@ html, body {
   float: right;
 }
 
-/****************** Is this needed? ******************/
-form {
-  margin-bottom: 0;
-}
-
-/* START - link to address styles */
-#linkToAddress {
-  overflow: auto;
-  width: auto;
-  height: 100%;
-}
-
-#linkToAddressList {
-  text-align: center;
-}
-
-#linkToAddressList table {
-  width: 690px;
-  border: 1px solid black;
-  margin: 5px;
-  background: #ededed;
-}
-
-#linkToAddressList th {
-  text-decoration: underline;
-}
-
-#linkToAddressAddressee {
-  width: 300px;
-}
-
-#linkToAddressAddress {
-  width: 300px;
-}
-
-#linkToAddressCity {
-  width: 80px;
-}
-/* END - link to address styles */
-
 /* BEGIN - Styles for group maintenance */
 .selectGroupAddresses {
   width: 235px;
@@ -112,15 +72,9 @@ form {
   width: 55px;
 }
 
-.groupList {
-  height: 470px;
-  overflow: auto;
-  padding-left: 20px;
-}
-
 .groupListAddresses {
   border: 1px solid black;
-  background: #ededed;
+  background: #e1ebfb;
   width: 235px;
 }
 
