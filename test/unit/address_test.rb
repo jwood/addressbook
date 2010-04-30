@@ -241,6 +241,11 @@ class AddressTest < ActiveSupport::TestCase
     assert !addresses(:alsip).is_empty?
   end
 
+  def test_mailing_address
+    assert_equal "123 Main St., Apt. 109, Chicago, IL 60606", addresses(:chicago).mailing_address
+    assert_equal "456 Maple Ave., Alsip, IL 60803", addresses(:alsip).mailing_address
+  end
+
   ##############################################################################
   private
   ##############################################################################

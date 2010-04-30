@@ -14,7 +14,7 @@
             <%=
               @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
               select_tag('not_included',
-                options_from_collection_for_select(@not_included, 'id', 'addressee_for_display'),
+                options_for_group_members(@not_included),
                 :multiple => true, :class => 'selectGroupAddresses', :onDblclick => "includeSelectedMembers();" )
             %>
           </div>
@@ -35,7 +35,7 @@
             <%=
               @included.sort! { |x,y| x.compare_by_primary_contact(y) }
               select_tag('included',
-                options_from_collection_for_select(@included, 'id', 'addressee_for_display'),
+                options_for_group_members(@included),
                 :multiple => true, :class => 'selectGroupAddresses', :onDblclick => "excludeSelectedMembers();")
             %>
           </div>

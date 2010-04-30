@@ -35,6 +35,12 @@ class Address < ActiveRecord::Base
     end
   end
 
+  def mailing_address
+    ma = address1
+    ma << ", #{address2}" unless address2.blank?
+    ma << ", #{city}, #{state} #{zip}"
+  end
+
   #----------------------------------------------------------------------------#
   # Unlink a contact from this address
   #----------------------------------------------------------------------------#
