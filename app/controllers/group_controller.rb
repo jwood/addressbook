@@ -24,33 +24,6 @@ class GroupController < ApplicationController
     @group.destroy if @group
   end
 
-  def add_addresses_to_group
-    @group = Group.find_by_id(params[:group_id])
-    group_address_ids = @group.address_ids
-    addresses_to_add = Address.find(params[:ids].reject{|id| group_address_ids.include?(id)})
-    @group.addresses << addresses_to_add
-    render(:action => 'update_address_group_lists')
-  end
-
-  def remove_addresses_from_group
-    @group = Group.find_by_id(params[:group_id])
-    addresses_to_remove = Address.find(params[:ids])
-    @group.addresses.delete(addresses_to_remove)
-    render(:action => 'update_address_group_lists')
-  end
-  
-  def remove_all_addresses
-    @group = Group.find_by_id(params[:id])
-    @group.addresses.clear
-    render(:action => 'update_address_group_lists')
-  end
-  
-  def add_all_addresses
-    @group = Group.find_by_id(params[:id])
-    @group.addresses = Address.find_all_eligible_for_group
-    render(:action => 'update_address_group_lists')
-  end
-  
   def create_labels
     @group = Group.find_by_id(params[:id])
     p = Pdf::Label::Batch.new(params[:label_type].sub(' ', '  '))

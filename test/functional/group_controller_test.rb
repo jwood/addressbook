@@ -28,53 +28,19 @@ class GroupControllerTest < ActionController::TestCase
     assert_equal(group, assigns(:group))
   end
   
-  def test_add_addresses_to_group
+  def test_modify_group_members
     group = groups(:group_1)
-    xhr :post, :add_addresses_to_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
-    assert_template 'update_address_group_lists'
+    xhr :post, :edit_group, :included => [addresses(:chicago).id, addresses(:alsip).id], :id => group.id
+    assert_template 'edit_group'
     assert assigns(:included).include?(addresses(:chicago))
     assert assigns(:included).include?(addresses(:alsip))
     assert assigns(:not_included).include?(addresses(:tinley_park))
   end
   
-  def test_remove_addresses_from_group
-    group = groups(:group_1)
-    xhr :post, :add_addresses_to_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
-    assert assigns(:included).include?(addresses(:chicago))
-    assert assigns(:included).include?(addresses(:alsip))
-
-    xhr :post, :remove_addresses_from_group, { :ids => [addresses(:chicago).id, addresses(:alsip).id], :group_id => group.id }
-    assert_template 'update_address_group_lists'
-    assert !assigns(:included).include?(addresses(:chicago))
-    assert !assigns(:included).include?(addresses(:alsip))
-  end
-  
-  def test_add_all_addresses_to_group
-    group = groups(:group_1)
-    xhr :post, :add_all_addresses, { :id => group.id }
-
-    assert_template 'update_address_group_lists'
-    @eligible_for_group.each { |a| assert assigns(:included).include?(a) }
-    assert_equal(0, assigns(:not_included).size)
-    assert_equal(@eligible_for_group.size, assigns(:included).size)
-  end
-  
-  def test_remove_all_address_from_group
-    group = groups(:group_1)
-    xhr :post, :add_all_addresses, { :id => group.id }
-    @eligible_for_group.each { |a| assert assigns(:included).include?(a) }
-    assert_equal(@eligible_for_group.size, assigns(:included).size)
-
-    xhr :post, :remove_all_addresses, { :id => group.id }
-    assert_equal(0, assigns(:included).size)
-    @eligible_for_group.each { |a| assert assigns(:not_included).include?(a) }
-    assert_equal(@eligible_for_group.size, assigns(:not_included).size)
-  end
-
   def test_create_labels
     group = groups(:group_1)
-    xhr :post, :add_all_addresses, { :id => group.id }
-    assert_equal(@eligible_for_group.size, assigns(:included).size)
+    group.addresses << @eligible_for_group
+    group.save
 
     get :create_labels, { :id => group.id, :label_type => 'Avery 8660' }
     assert_response :redirect
