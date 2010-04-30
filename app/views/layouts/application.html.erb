@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <title>Address Book</title>
 
-  <%= stylesheet_link_tag 'stylesheet', 'soria' %>
+  <%= stylesheet_link_tag 'stylesheet', 'http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/soria/soria.css' %>
 </head>
 
 <body class="soria">
@@ -15,7 +15,6 @@
 <%= yield :page_javascript %>
 
 <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
-<!--<script src="/javascripts/dojo.xd.js" djConfig="parseOnLoad: true"></script>-->
 
 <script>
   dojo.require("dijit.layout.AccordionContainer");
