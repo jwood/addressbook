@@ -1,11 +1,22 @@
 class ContactController < ApplicationController
 
   def edit_contact
+    render_target = 'edit_contact'
     @contact = params[:id] && Contact.find_by_id(params[:id]) || Contact.new
+
     if request.post?
       new_contact = true if params[:id].nil?
       @contact.attributes = params[:contact]
-      @contact.address = parse_address
+
+      new_address = parse_address
+      if new_address != @contact.address
+        if @contact.address && @contact.address.contacts.size > 1
+          @contact.address.attributes = new_address.attributes
+          render_target = 'edit_contact'
+        else
+          @contact.address.nil? ? @contact.address = new_address : @contact.address.attributes = new_address.attributes
+        end
+      end
 
       if @contact.errors.blank? && @contact.save
         @saved = true
@@ -13,9 +24,12 @@ class ContactController < ApplicationController
         logger.error("Edit contact failed: #{@contact.errors.full_messages}")
       end
     end
+
     @address = @contact.address || Address.new
     @contact_list = Contact.find_for_list if new_contact
     @address_list = Address.find_for_list if @new_address
+
+    render :template => "contact/#{render_target}"
   end
   
   def delete_contact
@@ -57,15 +71,8 @@ class ContactController < ApplicationController
     elsif params[:address_specification_type] == 'specified_address'
       address = Address.new(params[:address])
       if address.valid?
-        if @contact.address.nil?
-          address.save
-          @new_address = true
-          address
-        else
-          @contact.address.attributes = address.attributes
-          @contact.address.save
-          @contact.address
-        end
+        @new_address = true if @contact.address.nil?
+        address
       else
         @contact.errors.add_to_base("Please specify a valid address")
         nil

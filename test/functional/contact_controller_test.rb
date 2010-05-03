@@ -115,4 +115,21 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
   end
 
+  test "edit the address of a contact that currently has the same address as another contact" do
+    contacts(:john_doe).update_attribute(:address, addresses(:alsip))
+    contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
+
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address_specification_type => "specified_address", :address => {
+        :address1 => "123 Main St", :city => "Chicago", :state => "IL", :zip => "60606"} }
+    assert_template 'edit_contact'
+
+    assert_equal(addresses(:alsip).id, assigns(:contact).address.id)
+    assert_equal(addresses(:alsip), contacts(:john_doe).address)
+    assert_equal(addresses(:alsip), contacts(:jane_doe).address)
+    assert_equal('Chicago', assigns(:contact).address.city)
+    assert_equal(true, assigns(:saved))
+  end
+
 end
