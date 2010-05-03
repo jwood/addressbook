@@ -1,7 +1,5 @@
-#------------------------------------------------------------------------------#
-# This class represents an address
-#------------------------------------------------------------------------------#
 class Address < ActiveRecord::Base
+
   has_and_belongs_to_many :groups
   has_many :contacts, :dependent => :nullify
   belongs_to :address_type
@@ -13,9 +11,6 @@ class Address < ActiveRecord::Base
     :message => 'must be in the format of XXX-XXX-XXXX',
     :if => Proc.new { |address| !address.home_phone.blank? }
   
-  #----------------------------------------------------------------------------#
-  # Gets the addressee name of the address for display in the application
-  #----------------------------------------------------------------------------#
   def addressee_for_display
     if self.primary_contact.nil? && self.secondary_contact.nil?
       return format_address_with_no_contacts
@@ -24,9 +19,6 @@ class Address < ActiveRecord::Base
     end
   end
 
-  #----------------------------------------------------------------------------#
-  # Gets the addressee name of the address
-  #----------------------------------------------------------------------------#
   def addressee
     if self.primary_contact.nil? && self.secondary_contact.nil?
       return format_address_with_no_contacts
@@ -41,9 +33,6 @@ class Address < ActiveRecord::Base
     ma << ", #{city}, #{state} #{zip}"
   end
 
-  #----------------------------------------------------------------------------#
-  # Unlink a contact from this address
-  #----------------------------------------------------------------------------#
   def unlink_contact(contact)
     self.primary_contact = nil if self.primary_contact == contact
     self.secondary_contact = nil if self.secondary_contact == contact
@@ -52,29 +41,18 @@ class Address < ActiveRecord::Base
     adjust_primary_secondary_contacts
   end
 
-  #----------------------------------------------------------------------------#
-  # Link a contact to this address
-  #----------------------------------------------------------------------------#
   def link_contact
     adjust_primary_secondary_contacts
   end
 
-  #----------------------------------------------------------------------------#
-  # Remove this contact from any addresses he is associated with as a primary
-  # or secondary contact
-  #----------------------------------------------------------------------------#
-  def Address.remove_contact(contact)
+  def self.remove_contact(contact)
     addresses = self.find(:all)
     addresses.each do |a|
       a.unlink_contact(contact) if a.primary_contact == contact || a.secondary_contact == contact
     end
   end
 
-  #----------------------------------------------------------------------------#
-  # Find the bunch of addresses to be displayed in the address listing on the
-  # main page.
-  #----------------------------------------------------------------------------#
-  def Address.find_for_list
+  def self.find_for_list
     address_list = self.find(:all)
     address_list.sort! do |a1, a2| 
       result = 0
@@ -91,16 +69,10 @@ class Address < ActiveRecord::Base
     address_list
   end
 
-  #----------------------------------------------------------------------------#
-  # Find all addresses than can be added to a group.
-  #----------------------------------------------------------------------------#
-  def Address.find_all_eligible_for_group
+  def self.find_all_eligible_for_group
     self.find(:all, :conditions => ["address1 <> ''"])
   end
   
-  #----------------------------------------------------------------------------#
-  # Compare address objects by the names of the primary contact
-  #----------------------------------------------------------------------------#
   def compare_by_primary_contact(other)
     raise ArgumentError unless other.class == self.class
     return -1 if other.nil?
@@ -117,69 +89,58 @@ class Address < ActiveRecord::Base
     id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
   end
 
-  ##############################################################################
-  private 
-  ##############################################################################
-  
-  #----------------------------------------------------------------------------#
-  # Adjust the primary and secondary contacts
-  #----------------------------------------------------------------------------#
-  def adjust_primary_secondary_contacts
-    # Get the first 2 contacts linked to this address
-    primary_contacts = self.contacts.first(2)
+  private
 
-    # Set contact1 to the first person in the contacts list if it is blank
-    if self.primary_contact.blank? && primary_contacts[0]
-      self.primary_contact = primary_contacts[0]
-    elsif !primary_contacts[0]
-      self.primary_contact = nil
-    end
+    def adjust_primary_secondary_contacts
+      # Get the first 2 contacts linked to this address
+      primary_contacts = self.contacts.first(2)
 
-    # Set contact2 to the second person in the contacts list if it is blank
-    if self.secondary_contact.blank? && primary_contacts[1]
-      self.secondary_contact = primary_contacts[1]
-    elsif !primary_contacts[1]
-      self.secondary_contact = nil
-    end
-    
-    # If contact1 == contact2, fix it
-    if self.primary_contact == self.secondary_contact && self.primary_contact && self.secondary_contact
-      if self.primary_contact == primary_contacts[0]
-        self.primary_contact = primary_contacts[1]
-      else
+      # Set contact1 to the first person in the contacts list if it is blank
+      if self.primary_contact.blank? && primary_contacts[0]
         self.primary_contact = primary_contacts[0]
+      elsif !primary_contacts[0]
+        self.primary_contact = nil
+      end
+
+      # Set contact2 to the second person in the contacts list if it is blank
+      if self.secondary_contact.blank? && primary_contacts[1]
+        self.secondary_contact = primary_contacts[1]
+      elsif !primary_contacts[1]
+        self.secondary_contact = nil
+      end
+
+      # If contact1 == contact2, fix it
+      if self.primary_contact == self.secondary_contact && self.primary_contact && self.secondary_contact
+        if self.primary_contact == primary_contacts[0]
+          self.primary_contact = primary_contacts[1]
+        else
+          self.primary_contact = primary_contacts[0]
+        end
+      end
+
+      # Set the address type to individual if one contact, and family if there are two
+      self.address_type = AddressType.individual if !self.primary_contact.blank? && self.secondary_contact.blank?
+      self.address_type = AddressType.family if !self.primary_contact.blank? && !self.secondary_contact.blank?
+
+      save
+    end
+
+    def verify_required_info
+      if self.home_phone.blank? &&
+          (self.address1.blank? || self.city.blank? || self.state.blank? || self.zip.blank?)
+        errors.add_to_base("You must specify a phone number or a full address")
       end
     end
-    
-    # Set the address type to individual if one contact, and family if there are two
-    self.address_type = AddressType.individual if !self.primary_contact.blank? && self.secondary_contact.blank?
-    self.address_type = AddressType.family if !self.primary_contact.blank? && !self.secondary_contact.blank?
-    
-    save
-  end
 
-  #----------------------------------------------------------------------------#
-  # Verify that the required info was provided
-  #----------------------------------------------------------------------------#
-  def verify_required_info
-    if self.home_phone.blank? &&
-      (self.address1.blank? || self.city.blank? || self.state.blank? || self.zip.blank?)
-      errors.add_to_base("You must specify a phone number or a full address")
+    def format_address_with_no_contacts
+      if !self.address1.blank?
+        addressee =  "#{self.address1}"
+        addressee << " #{self.address2}" if !self.address2.blank?
+        addressee << ", #{self.city}, #{self.state} #{self.zip}"
+        return addressee
+      else
+        return self.home_phone
+      end
     end
-  end
-
-  #----------------------------------------------------------------------------#
-  # Format an address that has not contacts
-  #----------------------------------------------------------------------------#
-  def format_address_with_no_contacts
-    if !self.address1.blank?
-      addressee =  "#{self.address1}"
-      addressee << " #{self.address2}" if !self.address2.blank?
-      addressee << ", #{self.city}, #{self.state} #{self.zip}"
-      return addressee
-    else
-      return self.home_phone
-    end
-  end
 
 end

@@ -1,19 +1,10 @@
-Major Bugs
---------------
-* Addressee doesn't stay visible when dragging
-* Some aspects don't work in Internet Explorer
-
-
 Minor Bugs
 ------------
 * When a contact is deleted, any addresses where the contact is a primary contact
   are not updated with the new addressee in the address list
-* Add some form of indication that an AJAX request is in progress
-
 
 Enhancements
 ------------
 * Make the primary and secondary contacts links to the actual contact
 * Allow user to select font color, size, weight, and alignment for labels
-* Get rid of the drag/drop stuff for maintaining group members.  Replace with selection list, and buttons (to add, remove, add all, remove all).
-* Add tooltip to display the address of somebody in the group list (to determine which person or address you want for people with the same name).
+
