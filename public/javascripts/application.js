@@ -1,6 +1,6 @@
-dojo.require("dojo.widget.AccordionContainer");
-dojo.require("dojo.widget.ContentPane");
-dojo.require("dojo.widget.LayoutContainer");
+dojo.require("dijit.layout.AccordionContainer");
+dojo.require("dijit.layout.ContentPane");
+dojo.require("dijit.layout.BorderContainer");
 
 /* 
  * Code to disable/enable the second contact for an address 
