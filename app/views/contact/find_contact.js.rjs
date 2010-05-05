@@ -1,2 +1,5 @@
-page.replace_html('contactSearchResults', :partial => 'main/contact_list',
-  :collection => @contact_list)
+if @contact_list.blank?
+  page.replace_html('contactSearchResults', "<p><em>No results found</em></p>")
+else
+  page.replace_html('contactSearchResults', :partial => 'main/contact_list', :collection => @contact_list)
+end
