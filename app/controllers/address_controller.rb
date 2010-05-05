@@ -1,11 +1,5 @@
-#------------------------------------------------------------------------------#
-# This class serves up the actions that act on addresses.
-#------------------------------------------------------------------------------#
 class AddressController < ApplicationController
 
-  #----------------------------------------------------------------------------#
-  # Creates/Reads/Updates addresses
-  #----------------------------------------------------------------------------#
   def edit_address
     @address = params[:id] && Address.find_by_id(params[:id]) || Address.new
     @address_contacts = !@address.id.nil? && Contact.find_all_by_address_id(@address.id) || []
@@ -22,9 +16,6 @@ class AddressController < ApplicationController
     @address_list = Address.find_for_list if new_address
   end
   
-  #----------------------------------------------------------------------------#
-  # Deletes an address
-  #----------------------------------------------------------------------------#
   def delete_address
     @address = Address.find_by_id(params[:id])
     @address.destroy if @address

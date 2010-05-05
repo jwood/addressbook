@@ -85,6 +85,7 @@
     <% if contact.has_address? -%>
       <p>
         <%= link_to_function "Edit Address", "$('specifyAddress').show(); $('address').hide();" %> |
+        <%= link_to_remote("Address Details", :url => { :controller => :address, :action => :edit_address, :id => contact }) %> |
         <%= link_to_remote("Delete Address",
               :url => { :action => :remove_address_from_contact, :id => contact },
               :confirm => "Are you sure you would like to delete the address for #{contact.first_name} #{contact.last_name}?") %> |
