@@ -246,28 +246,36 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal "456 Maple Ave., Alsip, IL 60803", addresses(:alsip).mailing_address
   end
 
-  ##############################################################################
-  private
-  ##############################################################################
+  test "should be able to determine if one address is different from another" do
+    assert addresses(:alsip).different_from(addresses(:chicago))
+    assert addresses(:alsip).different_from(nil)
+    assert addresses(:alsip).different_from(Address.new)
+    assert addresses(:alsip).different_from(Address.new(addresses(:alsip).attributes.merge(:address2 => 'Apt 102')))
 
-  def setup_link_unlink_test
-    @john = contacts(:john_doe)
-    @jane = contacts(:jane_doe)
-    @jimmy = contacts(:jimmy_doe)
-
-    assert_equal(0, @address.contacts.size)
-
-    [@john, @jane, @jimmy].each do |contact|
-      contact.address_id = @address.id
-      contact.save
-      @address.contacts << contact
-      @address.save
-      @address.link_contact
-    end
-
-    assert_equal(3, @address.contacts.size)
-    assert_equal(@john.id, @address.contact1_id)
-    assert_equal(@jane.id, @address.contact2_id)
+    assert !addresses(:alsip).different_from(addresses(:alsip))
+    assert !addresses(:alsip).different_from(Address.new(addresses(:alsip).attributes.merge(:id => nil)))
   end
+
+  private
+
+    def setup_link_unlink_test
+      @john = contacts(:john_doe)
+      @jane = contacts(:jane_doe)
+      @jimmy = contacts(:jimmy_doe)
+
+      assert_equal(0, @address.contacts.size)
+
+      [@john, @jane, @jimmy].each do |contact|
+        contact.address_id = @address.id
+        contact.save
+        @address.contacts << contact
+        @address.save
+        @address.link_contact
+      end
+
+      assert_equal(3, @address.contacts.size)
+      assert_equal(@john.id, @address.contact1_id)
+      assert_equal(@jane.id, @address.contact2_id)
+    end
   
 end

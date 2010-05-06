@@ -128,8 +128,42 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(addresses(:alsip).id, assigns(:contact).address.id)
     assert_equal(addresses(:alsip), contacts(:john_doe).address)
     assert_equal(addresses(:alsip), contacts(:jane_doe).address)
-    assert_equal('Chicago', assigns(:contact).address.city)
+    assert_equal('Chicago', session[:changed_address].city)
     assert_equal(true, assigns(:saved))
+  end
+
+  test "confirm that a change of address for multiple contacts should be performed for all contacts" do
+    contacts(:john_doe).update_attribute(:address, addresses(:alsip))
+    contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
+
+    address = addresses(:alsip)
+    address.update_attribute(:city, 'Chicago')
+    session[:changed_address] = address
+
+    xhr :post, :change_address_for_contact, { :id => contacts(:john_doe), :submit_id => 'yes' }
+    assert_response :success
+    assert_template 'edit_contact'
+
+    assert_equal 'Chicago', contacts(:john_doe).address.city
+    assert_equal 'Chicago', contacts(:jane_doe).address.city
+    assert_nil assigns(:address_list)
+  end
+
+  test "confirm that a change of address for multiple contacts should only be performed for the given contact" do
+    contacts(:john_doe).update_attribute(:address, addresses(:alsip))
+    contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
+
+    address = addresses(:alsip)
+    address.update_attribute(:city, 'Chicago')
+    session[:changed_address] = address
+
+    xhr :post, :change_address_for_contact, { :id => contacts(:john_doe), :submit_id => 'no' }
+    assert_response :success
+    assert_template 'edit_contact'
+
+    assert_equal 'Chicago', contacts(:john_doe).address.city
+    assert_equal addresses(:alsip), contacts(:jane_doe).address
+    assert_not_nil assigns(:address_list)
   end
 
 end

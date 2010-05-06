@@ -27,6 +27,16 @@ class Address < ActiveRecord::Base
     end
   end
 
+  def different_from(other)
+    if other.nil? || (address1 != other.address1 || address2 != other.address2 ||
+                       city != other.city || state != other.state ||
+                       zip != other.zip || home_phone != other.home_phone)
+      true
+    else
+      false
+    end
+  end
+
   def mailing_address
     ma = address1
     ma << ", #{address2}" unless address2.blank?
@@ -60,7 +70,7 @@ class Address < ActiveRecord::Base
         result = 1
       elsif a2.primary_contact.nil?
         result = -1
-      elsif
+      else
         result = a1.primary_contact.last_name <=> a2.primary_contact.last_name
         result = a1.primary_contact.first_name <=> a2.primary_contact.first_name if result == 0
       end

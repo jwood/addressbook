@@ -150,3 +150,13 @@ a, a:visited {
   text-decoration: underline;
 }
 /* END:link styles */
+
+#multipleAddressConfirmation {
+  width: 400px;
+  height: 250px;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}

@@ -1,0 +1,37 @@
+<a id="multipleAddressConfirmationLink" href="#multipleAddressConfirmation" style="display:none"></a>
+<div style="display:none">
+    <div id="multipleAddressConfirmation">
+        <% form_remote_tag :url => {:action => :change_address_for_contact, :id => @contact}, :html => {:id => 'multipleAddressConfirmationForm'} do -%>
+            <p>
+                The following contacts live at this address and have this phone number:
+                <p>
+                    <% @contact.address.contacts.each do |contact| -%>
+                        <strong><%= contact.full_name_last_first %></strong><br/>
+                    <% end -%>
+                </p>
+            </p>
+            <p>Would you like to change the address and phone number for all of them?<p>
+            <p>
+                <%= hidden_field_tag 'submit_id' %>
+                <%= submit_tag "Yes, change for all", :onclick => '$("submit_id").value = "yes"; jQuery.fancybox.close();' %>
+                <%= submit_tag "No, just change #{@contact.first_name}", :onclick => '$("submit_id").value = "no"; jQuery.fancybox.close();' %><br/>
+            </p>
+            <p>
+                <%= link_to_function 'Cancel', 'jQuery.fancybox.close();' %>              
+            </p>
+        <% end -%>
+    </div>
+</div>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery("a#multipleAddressConfirmationLink").fancybox({
+        'width' : 400,
+        'height' : 250,
+        'autoDimensions' : false,
+        'hideOnOverlayClick' : false,
+        'enableEscapeButton' : true,
+        'showCloseButton' : false
+    });
+});
+</script>

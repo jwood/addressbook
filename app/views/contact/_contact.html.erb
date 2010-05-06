@@ -99,3 +99,5 @@
 <% end -%>
 
 <%= create_cancel_delete_links(contact) %>
+
+<%= render :partial => "multiple_address_confirmation_form" unless @contact.address.nil? %>

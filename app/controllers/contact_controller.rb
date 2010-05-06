@@ -9,12 +9,16 @@ class ContactController < ApplicationController
       @contact.attributes = params[:contact]
 
       new_address = parse_address
-      if new_address != @contact.address
+      if new_address && new_address.valid? && new_address.different_from(@contact.address)
         if @contact.address && @contact.address.contacts.size > 1
-          @contact.address.attributes = new_address.attributes
-          render_target = 'edit_contact'
+          session[:changed_address] = new_address
+          render_target = 'edit_contact_with_shared_address'
         else
-          @contact.address.nil? ? @contact.address = new_address : @contact.address.attributes = new_address.attributes
+          if @contact.address.nil? || params[:address_specification_type] == 'existing_address'
+            @contact.address = new_address
+          else
+            @contact.address.attributes = new_address.attributes
+          end
         end
       end
 
@@ -30,6 +34,24 @@ class ContactController < ApplicationController
     @address_list = Address.find_for_list if @new_address
 
     render :template => "contact/#{render_target}"
+  end
+
+  def change_address_for_contact
+    @contact = Contact.find_by_id(params[:id])
+    changed_address = session[:changed_address]
+
+    if params[:submit_id] == 'yes'
+      @contact.address.attributes = changed_address.attributes
+      @contact.address.save if @contact.address.valid?
+    else
+      new_address = true
+      @contact.address = changed_address
+      @contact.save
+    end
+
+    @address = @contact.address || Address.new
+    @address_list = Address.find_for_list if new_address
+    render :template => 'contact/edit_contact'
   end
   
   def delete_contact
