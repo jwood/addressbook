@@ -1,6 +1,3 @@
-#------------------------------------------------------------------------------#
-# This class represents a contact
-#------------------------------------------------------------------------------#
 class Contact < ActiveRecord::Base
   belongs_to :address
 
@@ -20,7 +17,7 @@ class Contact < ActiveRecord::Base
   end
 
   def self.find_for_list
-    self.find(:all, :order => 'last_name, first_name')
+    Contact.find(:all, :order => 'last_name, first_name')
   end
 
   def full_name_last_first

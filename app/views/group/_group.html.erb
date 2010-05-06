@@ -19,8 +19,7 @@
           <div id="groupMembers">
             <%=
               @group.addresses.sort! { |x,y| x.compare_by_primary_contact(y) }
-              render :partial => 'group_list', :collection => @group.addresses,
-                :locals => { :draggable => false }
+              render :partial => 'group_list', :collection => @group.addresses
             %>
           </div>
         </ul>
@@ -37,19 +36,15 @@
     <div class="section">
 
       <label>Label Type:</label>
-      <%=
-        select_tag "label_type",
+      <%= select_tag "label_type",
           get_label_options(@label_types),
           { :id => 'labelTypeSelector',
-            :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" }
-      %>
+            :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" } %>
 
       <span id="createLabelsLink">
-        <%=
-          link_to "Create Labels",
+        <%= link_to "Create Labels",
               { :action => :create_labels, :id => @group, :label_type => @label_types.first },
-              :popup => ['label_window']
-        %>
+              :popup => ['label_window'] %>
       </span>
     </div>
   <% end -%>

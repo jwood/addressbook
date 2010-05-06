@@ -1,6 +1,3 @@
-# Edit the address in the list.  If this is a new address, refresh the 
-# whole address list.
-page.replace_html('content', :partial => 'address', 
-  :locals => { :address => @address, :address_contacts => @address_contacts } )
+page.replace_html('content', :partial => 'address', :locals => { :address => @address})
 update_list(@address, @address_list, page)
 highlight_in_list(@address, page) if @saved

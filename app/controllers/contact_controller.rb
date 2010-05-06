@@ -2,7 +2,7 @@ class ContactController < ApplicationController
 
   def edit_contact
     render_target = 'edit_contact'
-    @contact = params[:id] && Contact.find_by_id(params[:id]) || Contact.new
+    @contact = Contact.find_by_id(params[:id]) || Contact.new
 
     if request.post?
       new_contact = true if params[:id].nil?
@@ -31,7 +31,6 @@ class ContactController < ApplicationController
 
     @address = @contact.address || Address.new
     @contact_list = Contact.find_for_list if new_contact
-    @address_list = Address.find_for_list if @new_address
 
     render :template => "contact/#{render_target}"
   end
@@ -66,6 +65,7 @@ class ContactController < ApplicationController
     @contact = Contact.find_by_id(params[:id])
     @old_address_id = @contact.address_id
     @contact.address = nil
+
     if @contact.save
       @saved = true
       Address.find_by_id(@old_address_id).unlink_contact(@contact)
@@ -73,9 +73,7 @@ class ContactController < ApplicationController
       logger.error("Remove address to contact failed: #{@contact.errors.full_messages}")
     end
 
-    render :edit_contact do |page|
-      page.redirect_to(:action => 'edit_contact', :id => @contact)
-    end
+    render :template => 'contact/edit_contact'
   end
 
   def find_contact
@@ -86,20 +84,19 @@ class ContactController < ApplicationController
   
   private
 
-  def parse_address
-    if params[:address_specification_type] == 'existing_address'
-      other = Contact.find_by_id(params[:other_id])
-      other.address
-    elsif params[:address_specification_type] == 'specified_address'
-      address = Address.new(params[:address])
-      if address.valid?
-        @new_address = true if @contact.address.nil?
-        address
-      else
-        @contact.errors.add_to_base("Please specify a valid address")
-        nil
+    def parse_address
+      if params[:address_specification_type] == 'existing_address'
+        other = Contact.find_by_id(params[:other_id])
+        other.address
+      elsif params[:address_specification_type] == 'specified_address'
+        address = Address.new(params[:address])
+        if address.valid?
+          address
+        else
+          @contact.errors.add_to_base("Please specify a valid address")
+          nil
+        end
       end
     end
-  end
   
 end

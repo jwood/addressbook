@@ -32,20 +32,20 @@
     <%= render :partial => 'shared/address_fields' %>
   </div>
 
-  <% if !address.id.blank? && !address_contacts.blank? -%>
+  <% if !address.id.blank? && !address.contacts.blank? -%>
     <h3>Address Contacts</h3>
     <div class="section">
       <table>
         <tr>
           <td><label>Contact 1:</label></td>
           <td>
-            <%= create_contact_dropdown("contact1", address_contacts) %> 
+            <%= create_contact_dropdown("contact1") %>
           </td>
         </tr>
         <%= hidden_tr_if (!address.address_type || (address.address_type && (address.address_type.only_one_main_contact?))), :id => "addressContact2" %>
           <td><label>Contact 2:</label></td>
           <td>
-            <%= create_contact_dropdown("contact2", address_contacts) %> 
+            <%= create_contact_dropdown("contact2") %>
           </td>
         </tr>
       </table>

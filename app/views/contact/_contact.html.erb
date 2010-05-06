@@ -70,11 +70,13 @@
         <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
       </p>
       <p class="addressOption">
-        <%= select_tag 'other_id', options_from_collection_for_select(Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
+        <%= select_tag 'other_id', options_from_collection_for_select(
+              Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
       </p>
 
       <p>
-        <%= radio_button_tag('address_specification_type', 'specified_address', !contact.address.blank?, :id => 'specified_address') %>
+        <%= radio_button_tag('address_specification_type', 'specified_address',
+              !contact.address.blank?, :id => 'specified_address') %>
         <%= label_tag 'specified_address', 'Associate contact the specified address' %>
         <div class="addressOption">
           <%= render :partial => 'shared/address_fields' %>

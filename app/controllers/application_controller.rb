@@ -1,6 +1,3 @@
-#------------------------------------------------------------------------------#
-# This class contains methods used by all controllers.
-#------------------------------------------------------------------------------#
 require 'app_config'
 
 class ApplicationController < ActionController::Base

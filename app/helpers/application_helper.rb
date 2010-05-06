@@ -1,11 +1,5 @@
-#------------------------------------------------------------------------------#
-# This class contains helper methods available to all views.
-#------------------------------------------------------------------------------#
 module ApplicationHelper
 
-  #----------------------------------------------------------------------------#
-  # This method creates the cancel and delete links for each object type
-  #----------------------------------------------------------------------------#
   def create_cancel_delete_links(object)
     obj_type = object.class.to_s.downcase
     unless object.id.blank?
@@ -31,18 +25,11 @@ module ApplicationHelper
     end
   end
 
-  #----------------------------------------------------------------------------#
-  # Create an id for an item in its respective list.
-  #----------------------------------------------------------------------------#
   def create_id_for(object)
     obj_type = object.class.to_s.downcase
     "#{obj_type}_#{object.id}"
   end
 
-  #----------------------------------------------------------------------------#
-  # Create a link to the specified object type using the parameters from the
-  # specified object.
-  #----------------------------------------------------------------------------#
   def create_link_to(object)
     obj_type = object.class.to_s.downcase
     if obj_type == 'contact'
@@ -63,9 +50,6 @@ module ApplicationHelper
     html << "</li>"
   end
   
-  #----------------------------------------------------------------------------#
-  # Update the listing for the specified type
-  #----------------------------------------------------------------------------#
   def update_list(object, object_list, page)
     obj_type = object.class.to_s.downcase
     unless(object.nil? || object.id.blank?)
@@ -77,16 +61,10 @@ module ApplicationHelper
     end
   end
 
-  #----------------------------------------------------------------------------#
-  # Remove the specified item from the appropriate list
-  #----------------------------------------------------------------------------#
   def remove_from_list(object, page)
     page.replace(create_id_for(object), '')
   end
   
-  #----------------------------------------------------------------------------#
-  # Highlight the specified item in the appropriate list
-  #----------------------------------------------------------------------------#
   def highlight_in_list(object, page)
     page.visual_effect(:highlight, create_id_for(object), :duration => 2)
   end

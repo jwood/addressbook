@@ -1,3 +1,2 @@
-# Remove the address from the list of addresses
 page.replace_html('content', :partial => 'deleted_address', :object => @address)
 remove_from_list(@address, page)

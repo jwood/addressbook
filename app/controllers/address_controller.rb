@@ -1,8 +1,8 @@
 class AddressController < ApplicationController
 
   def edit_address
-    @address = params[:id] && Address.find_by_id(params[:id]) || Address.new
-    @address_contacts = !@address.id.nil? && Contact.find_all_by_address_id(@address.id) || []
+    @address = Address.find_by_id(params[:id]) || Address.new
+
     if request.post?
       new_address = true if params[:id].nil?
       @address.attributes = params[:address]

@@ -28,6 +28,7 @@ class AddressControllerTest < ActionController::TestCase
     assert_template 'edit_address'
     assert_equal(address.address2, assigns(:address).address2)
     assert_equal(true, assigns(:saved))
+    assert_nil assigns(:address_list)
   end
 
   def test_delete_address

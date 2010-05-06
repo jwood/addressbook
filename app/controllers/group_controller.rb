@@ -1,21 +1,23 @@
 class GroupController < ApplicationController
-  require 'rubygems'
   require 'pdf/label'
 
   before_render :include_common_data
 
   def edit_group
-    @group = params[:id] && Group.find_by_id(params[:id]) || Group.new
+    @group = Group.find_by_id(params[:id]) || Group.new
+
     if request.post?
       new_group = true if params[:id].nil?
       @group.attributes = params[:group]
       @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
+
       if @group.save
         @saved = true
       else
         logger.error("Edit group failed: #{@group.errors.full_messages}")
       end
     end
+
     @group_list = Group.find_for_list if new_group
   end
   

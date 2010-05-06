@@ -1,13 +1,6 @@
-#------------------------------------------------------------------------------#
-# Helper methods for the contact views
-#------------------------------------------------------------------------------#
 module ContactHelper
   require 'app_config'
 
-  #----------------------------------------------------------------------------#
-  # Add links to get map of contact's address and diretion's to contact's
-  # address
-  #----------------------------------------------------------------------------#
   def add_map_and_directions_links(contact)
     map_query = contact.address.address1 + ',' +
                 contact.address.city + ',' +
