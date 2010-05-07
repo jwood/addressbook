@@ -65,7 +65,7 @@
     <% end -%>
 
     <div id="specifyAddress" style="<%= display_style_for_specify_address %>">
-      <% if Address.all.size > 1 -%>
+      <% if Address.all.size > 0 -%>
         <p>
           <%= radio_button_tag('address_specification_type', 'existing_address', false, :id => 'existing_address') %>
           <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
