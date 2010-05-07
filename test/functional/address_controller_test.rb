@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AddressControllerTest < ActionController::TestCase
-  fixtures :contacts, :addresses, :address_types
+  fixtures :all
 
-  def test_edit_address_get
+  test "should be able to get a form to create a new address" do
     xhr :get, :edit_address
     assert_template 'edit_address'
   end
 
-  def test_edit_address_get_with_one_contact
+  test "should be able to get an address with a single contact" do
     contact = contacts(:billy_bob)
     address = addresses(:chicago)
 
@@ -20,10 +20,11 @@ class AddressControllerTest < ActionController::TestCase
     assert_template 'edit_address'
   end
 
-  def test_edit_address_post
+  test "should be able to edit an address" do
     address = addresses(:chicago)
     address.address_type = address_types(:individual)
     address.address2 = 'Apt 109'
+
     xhr :post, :edit_address, { :id => address.id, :address => address.attributes }
     assert_template 'edit_address'
     assert_equal(address.address2, assigns(:address).address2)
@@ -31,7 +32,7 @@ class AddressControllerTest < ActionController::TestCase
     assert_nil assigns(:address_list)
   end
 
-  def test_delete_address
+  test "should be able to delete an address" do
     address = addresses(:chicago)
     xhr :post, :delete_address, { :id => address.id }
     assert_template 'delete_address'

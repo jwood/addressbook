@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class MainControllerTest < ActionController::TestCase
 
-  def test_index
+  test "should be able to get the index page of the app" do
     get :index
     assert_template 'index'
 

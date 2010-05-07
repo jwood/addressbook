@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ContactControllerTest < ActionController::TestCase
-  fixtures :contacts, :addresses
+  fixtures :all
   
-  def test_edit_contact_get
+  test "should be able to get a form to create a new contact" do
     xhr :get, :edit_contact
     assert_template 'edit_contact'
   end
 
-  def test_edit_contact_post
+  test "should be able to edit a contact" do
     contact = contacts(:john_doe)
     contact.middle_name = 'Patrick'
     xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes }
@@ -17,14 +17,14 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
   end
   
-  def test_delete_contact
+  test "should be able to delete a contact" do
     contact = contacts(:john_doe)
     xhr :post, :delete_contact, { :id => contact.id }
     assert_template 'delete_contact'
     assert_equal(contact, assigns(:contact))
   end
   
-  def test_remove_address_from_contact
+  test "should be able to remove an address from a contact" do
     contact = contacts(:john_doe)
     address = addresses(:chicago)
     contact.update_attribute(:address, address)
@@ -35,14 +35,14 @@ class ContactControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_find_contact
+  test "should be able to find a contact by partial last name" do
     xhr :post, :find_contact, { :last_name => 'd' }
     assert_equal(3, assigns(:contact_list).size)
     assert_template 'find_contact'
     assigns(:contact_list).each { |c| assert_equal('Doe', c.last_name) }
   end
   
-  def test_edit_that_associates_contact_with_the_address_of_another_contact
+  test "should be able to associate a contact with the address of another contact" do
     contacts(:john_doe).update_attribute(:address, addresses(:chicago))
     contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 
@@ -54,8 +54,8 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
     assert_nil Address.find_by_id(addresses(:chicago).id)
   end
-  
-  def test_edit_that_assigns_a_new_address_to_an_existing_contact
+
+  test "should be able to assign a new address to an existing contact" do
     contact = contacts(:john_doe)
     xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
       :address_specification_type => "specified_address", :address => {
@@ -70,7 +70,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
   end
 
-  def test_assining_a_bogus_address_to_an_existing_contact_results_in_an_error
+  test "assigning a bogus address to an existing contact should result in an error" do
     contact = contacts(:john_doe)
     xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
       :address_specification_type => "specified_address", :address => {
@@ -81,7 +81,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_nil assigns(:saved)
   end
 
-  def test_create_contact_with_address_of_another_contact
+  test "should be able to create a new contact, associating them with the address of another contact" do
     contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 
     contact = contacts(:john_doe)
@@ -92,7 +92,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(true, assigns(:saved))
   end
 
-  def test_create_contact_with_new_address
+  test "should be able to create a new contact with the specified address" do
     contact = contacts(:john_doe)
     xhr :post, :edit_contact, { :contact => contact.attributes,
       :address_specification_type => "specified_address", :address => {
@@ -103,7 +103,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_nil assigns(:saved)
   end
 
-  def test_update_contact_with_new_address
+  test "should be able to update an existing contact with a new address" do
     contacts(:john_doe).update_attribute(:address, addresses(:alsip))
     assert(addresses(:alsip).contacts.include?(contacts(:john_doe)))
 

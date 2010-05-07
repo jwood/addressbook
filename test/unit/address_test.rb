@@ -1,110 +1,110 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class AddressTest < ActiveSupport::TestCase
-  fixtures :contacts, :addresses, :address_types
+  fixtures :all
 
   def setup
     @address = addresses(:chicago)
     @num_address_fixtures = 4
   end
-  
-  def test_creation_without_required_info
+
+  test "should not be able to create an address without all required info" do
     address = Address.new
     assert !address.valid?
     assert address.errors.on(:base).include?('You must specify a phone number or a full address')
   end
 
-  def test_update_with_invalid_phone_number
+  test "should not be able to update an address with an invalid phone number" do
     @address.home_phone = '(312) 222-3333'
     assert !@address.valid?
     assert @address.errors.on(:home_phone).include?('must be in the format of XXX-XXX-XXXX')
   end
-  
-  def test_addressee_with_no_contacts
+
+  test "an adress with no contacts should simply list the street address as the addressee" do
     assert_equal('123 Main St. Apt. 109, Chicago, IL 60606', @address.addressee)
   end
-  
-  def test_addressee_with_phone_only
+
+  test "an address with no street address and no contacts should list the phone number as the addressee" do
     address = addresses(:phone_only)
     assert_equal('708-111-3333', address.addressee)
   end
 
-  def test_addressee_with_individual
+  test "an address for a single contact should list that contact's name as the addressee" do
     @address.primary_contact = contacts(:john_doe)
     @address.address_type = address_types(:individual)
     assert_equal('Mr. John Doe', @address.addressee)
   end
-  
-  def test_addressee_with_married_couple
+
+  test "an address for a married couple should list both the contacts' names as the addressee" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:married_couple)
     assert_equal('Mr. & Mrs. John & Jane Doe', @address.addressee)
   end
-  
-  def test_addressee_with_family
+
+  test "an address for a family should list the family name as the addressee" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:family)
     assert_equal('The Doe Family', @address.addressee)
   end
-  
-  def test_addressee_with_unmarried_couple
+
+  test "an address for an unmarried couple should list both contacts first and last names as the addressee" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:unmarried_couple)
     assert_equal('Mr. John Doe & Mrs. Jane Doe', @address.addressee)
   end
 
-  def test_addressee_with_single_parent
+  test "an address for a single parent should list the family name as the addressee" do
     @address.primary_contact = contacts(:john_doe)
     @address.address_type = address_types(:single_parent)
     assert_equal('The Doe Family', @address.addressee)
   end
-  
-  def test_addressee_for_display_with_no_contacts
+
+  test "an address with no contacts should list the street address as the addressee for display" do
     assert_equal('123 Main St. Apt. 109, Chicago, IL 60606', @address.addressee_for_display)
   end
-  
-  def test_addressee_for_display_with_phone_only
+
+  test "an address with only a phone number should list the phone number as the addressee for display" do
     address = addresses(:phone_only)
     assert_equal('708-111-3333', address.addressee_for_display)
   end
 
-  def test_addressee_for_display_with_individual
+  test "an address for an individual should list that contact's name as the addressee for display" do
     @address.primary_contact = contacts(:john_doe)
     @address.address_type = address_types(:individual)
     assert_equal('Doe, Mr. John', @address.addressee_for_display)
   end
 
-  def test_addressee_for_display_with_married_couple
+  test "an address for a married couple should list both contacts as the addressee for display" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:married_couple)
     assert_equal('Doe, Mr. & Mrs. John & Jane', @address.addressee_for_display)
   end
-  
-  def test_addressee_for_display_with_family
+
+  test "an address for a family should list the primary contacts and family name as the addressee for display" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:family)
     assert_equal('Doe, Mr. & Mrs. John & Jane & Family', @address.addressee_for_display)
   end
-  
-  def test_addressee_for_display_with_unmarried_couple
+
+  test "an address for an unmarried couple should list both contacts first and last names as the addressee for display" do
     @address.primary_contact = contacts(:john_doe)
     @address.secondary_contact = contacts(:jane_doe)
     @address.address_type = address_types(:unmarried_couple)
     assert_equal('Doe, Mr. John Doe & Mrs. Jane', @address.addressee_for_display)
   end
 
-  def test_addressee_for_display_with_single_parent
+  test "an address for a single parent should list the contact name and the family name in the addressee for display" do
     @address.primary_contact = contacts(:john_doe)
     @address.address_type = address_types(:single_parent)
     assert_equal('Doe, Mr. John & Family', @address.addressee_for_display)
   end
 
-  def test_find_for_list
+  test "should be able to find all addresses to list in the app" do
     chicago = addresses(:chicago)
     chicago.primary_contact = contacts(:john_doe)
     chicago.secondary_contact = contacts(:jane_doe)
@@ -126,7 +126,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(addresses(:phone_only), addresses[3])
   end
 
-  def test_find_all_eligible_for_group
+  test "should be able to find all addresses eligible to be a member in a group" do
     addresses = Address.find_all_eligible_for_group
     assert_equal(@num_address_fixtures - 1, addresses.size)
     assert(addresses.include?(addresses(:chicago)))
@@ -135,8 +135,8 @@ class AddressTest < ActiveSupport::TestCase
 
     assert(!addresses.include?(addresses(:phone_only)))
   end
-  
-  def test_unlink_contact_with_only_one_contact
+
+  test "should be able to unlink a contact from an address and delete the address if it only contains one contact" do
     john = contacts(:john_doe)
 
     assert_equal(0, @address.contacts.size)
@@ -150,7 +150,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_nil Address.find_by_id(@address.id)
   end
 
-  def test_link_and_unlink_contact_where_secondary_moves_out
+  test "should be able to unlink the secondary contact from an address, adjusting the main contacts accordingly" do
     setup_link_unlink_test
 
     # Jane moves out
@@ -162,7 +162,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(@jimmy.id, @address.contact2_id)
   end
   
-  def test_link_and_unlink_contact_where_primary_moves_out
+  test "should be able to unlink the primary contact from an address, adjusting the main contacts accordingly" do
     setup_link_unlink_test
 
     # John moves out
@@ -174,7 +174,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(@jane.id, @address.contact2_id)
   end
 
-  def test_link_and_unlink_contact_where_primary_and_secondary_move_out
+  test "should be able to unlink the secondary and primary contacts from an address, adjusting the main contacts accordingly" do
     setup_link_unlink_test
 
     # John moves out
@@ -189,7 +189,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(@jimmy.id, @address.contact1_id)
   end
 
-  def test_delete_with_contacts_nullifies_contacts_address_id
+  test "should nullify the contact's address id if an address is deleted" do
     setup_link_unlink_test
     @address.destroy
     [@jimmy, @john, @jane].each do |contact|
@@ -198,13 +198,13 @@ class AddressTest < ActiveSupport::TestCase
     end
   end
 
-  def test_compare_with_no_primary_contacts
+  test "addresses with no primary contacts should be considered equal when sorted" do
     chicago = addresses(:chicago)
     alsip = addresses(:alsip)
     assert_equal(0, chicago.compare_by_primary_contact(alsip))
   end
 
-  def test_compare_with_one_primary_contact_on_each_side
+  test "addresses with primary contacts should appear before addresses without primary contacts when sorted" do
     chicago = addresses(:chicago)
     alsip = addresses(:alsip)
 
@@ -217,7 +217,7 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(1, chicago.compare_by_primary_contact(alsip))
   end
 
-  def test_compare_by_primary_contact
+  test "addresses that both contain primary contacts should be sorted by the name of their primary contacts" do
     chicago = addresses(:chicago)
     chicago.primary_contact = contacts(:john_doe)
 
@@ -229,19 +229,19 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(1, chicago.compare_by_primary_contact(alsip))
   end
 
-  def test_compare_with_non_address
+  test "should not be able to compare an address with something that is not an Address" do
     assert_raise ArgumentError do
       @address.compare_by_primary_contact("not an address")
     end
   end
 
-  def test_is_empty
+  test "addresses with no information or only a home phone number should be considered empty" do
     assert Address.new.is_empty?
     assert Address.new(:home_phone => '312-555-1212').is_empty?
     assert !addresses(:alsip).is_empty?
   end
 
-  def test_mailing_address
+  test "should be able to get the mailing address for an address" do
     assert_equal "123 Main St., Apt. 109, Chicago, IL 60606", addresses(:chicago).mailing_address
     assert_equal "456 Maple Ave., Alsip, IL 60803", addresses(:alsip).mailing_address
   end

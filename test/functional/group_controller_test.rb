@@ -1,18 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupControllerTest < ActionController::TestCase
-  fixtures :addresses, :groups
+  fixtures :all
   
   def setup
     @eligible_for_group = [ addresses(:chicago), addresses(:tinley_park), addresses(:alsip) ]
   end
 
-  def test_edit_group_get
+  test "should be able to get a blank form to create a new group" do
     xhr :get, :edit_group
     assert_template 'edit_group'
   end
 
-  def test_edit_group_post
+  test "should be able to edit a group" do
     group = groups(:group_1)
     group.name = 'New Name'
     xhr :post, :edit_group, { :id => group.id, :group => group.attributes }
@@ -20,15 +20,15 @@ class GroupControllerTest < ActionController::TestCase
     assert_equal(group.name, assigns(:group).name)
     assert_equal(true, assigns(:saved))
   end
-  
-  def test_delete_group
+
+  test "should be able to delete a group" do
     group = groups(:group_1)
     xhr :post, :delete_group, { :id => group.id }
     assert_template 'delete_group'
     assert_equal(group, assigns(:group))
   end
-  
-  def test_modify_group_members
+
+  test "should be able to modify the members of a group" do
     group = groups(:group_1)
     xhr :post, :edit_group, :included => [addresses(:chicago).id, addresses(:alsip).id], :id => group.id
     assert_template 'edit_group'
@@ -36,8 +36,8 @@ class GroupControllerTest < ActionController::TestCase
     assert assigns(:included).include?(addresses(:alsip))
     assert assigns(:not_included).include?(addresses(:tinley_park))
   end
-  
-  def test_create_labels
+
+  test "should be able to create mailing lables for group members" do
     group = groups(:group_1)
     group.addresses << @eligible_for_group
     group.save
