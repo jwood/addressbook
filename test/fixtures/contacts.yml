@@ -1,5 +1,4 @@
 john_doe:
-  id: 1
   prefix: 'Mr.'
   first_name: 'John'
   middle_name: 'Michael'
@@ -11,7 +10,6 @@ john_doe:
   website: 'http://www.johndoe.com'
 
 jane_doe:
-  id: 2
   prefix: 'Mrs.'
   first_name: 'Jane'
   middle_name: 'Michelle'
@@ -21,7 +19,6 @@ jane_doe:
   email: 'jane.doe@doe.com'
 
 jimmy_doe:
-  id: 3
   prefix: 'Mr.'
   first_name: 'Jimmy'
   middle_name: 'Mikey'
@@ -29,7 +26,6 @@ jimmy_doe:
   birthday: '20000103'
 
 billy_bob:
-  id: 4
   prefix: 'Mr.'
   first_name: 'Billy'
   last_name: 'Bob'  

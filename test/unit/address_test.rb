@@ -122,8 +122,8 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal(@num_address_fixtures, addresses.size)
     assert_equal(addresses(:alsip), addresses[0])
     assert_equal(addresses(:chicago), addresses[1])
-    assert_equal(addresses(:phone_only), addresses[2])
-    assert_equal(addresses(:tinley_park), addresses[3])
+    assert_equal(addresses(:tinley_park), addresses[2])
+    assert_equal(addresses(:phone_only), addresses[3])
   end
 
   def test_find_all_eligible_for_group

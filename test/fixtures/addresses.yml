@@ -1,5 +1,4 @@
 chicago:
-  id: 1
   address1: '123 Main St.'
   address2: 'Apt. 109'
   city: 'Chicago'
@@ -8,7 +7,6 @@ chicago:
   home_phone: '312-555-1234'
 
 alsip:
-  id: 2
   address1: '456 Maple Ave.'
   city: 'Alsip'
   state: 'IL'
@@ -16,7 +14,6 @@ alsip:
   home_phone: '708-111-2222'
 
 tinley_park:
-  id: 3
   address1: '789 Oakland Pl.'
   city: 'Tinley Park'
   state: 'IL'

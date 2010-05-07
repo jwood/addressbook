@@ -22,7 +22,7 @@ class AddressControllerTest < ActionController::TestCase
 
   def test_edit_address_post
     address = addresses(:chicago)
-    address.address_type_id = address_types(:individual)
+    address.address_type = address_types(:individual)
     address.address2 = 'Apt 109'
     xhr :post, :edit_address, { :id => address.id, :address => address.attributes }
     assert_template 'edit_address'
