@@ -47,6 +47,7 @@ class ContactController < ApplicationController
       @contact.address.save if @contact.address.valid?
     else
       new_address = true
+      @contact.address.unlink_contact(@contact) unless @contact.address.nil?
       @contact.address = changed_address
       @contact.save
     end
