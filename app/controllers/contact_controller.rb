@@ -16,6 +16,7 @@ class ContactController < ApplicationController
         else
           if @contact.address.nil? || params[:address_specification_type] == 'existing_address'
             @contact.address = new_address
+            new_address_saved = true
           else
             @contact.address.attributes = new_address.attributes
           end
@@ -31,6 +32,7 @@ class ContactController < ApplicationController
 
     @address = @contact.address || Address.new
     @contact_list = Contact.find_for_list if new_contact
+    @address_list = Address.find_for_list if new_address_saved
 
     render :template => "contact/#{render_target}"
   end
