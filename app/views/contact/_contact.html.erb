@@ -65,14 +65,16 @@
     <% end -%>
 
     <div id="specifyAddress" style="<%= display_style_for_specify_address %>">
-      <p>
-        <%= radio_button_tag('address_specification_type', 'existing_address', false, :id => 'existing_address') %>
-        <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
-      </p>
-      <p class="addressOption">
-        <%= select_tag 'other_id', options_from_collection_for_select(
-              Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
-      </p>
+      <% if Address.all.size > 1 -%>
+        <p>
+          <%= radio_button_tag('address_specification_type', 'existing_address', false, :id => 'existing_address') %>
+          <%= label_tag 'existing_address', 'Associate contact with an existing address' %>
+        </p>
+        <p class="addressOption">
+          <%= select_tag 'other_id', options_from_collection_for_select(
+                Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
+        </p>
+      <% end -%>
 
       <p>
         <%= radio_button_tag('address_specification_type', 'specified_address',
