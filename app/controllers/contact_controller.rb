@@ -15,6 +15,7 @@ class ContactController < ApplicationController
           render_target = 'edit_contact_with_shared_address'
         else
           if @contact.address.nil? || params[:address_specification_type] == 'existing_address'
+            @contact.address.unlink_contact(@contact) unless @contact.address.nil?
             @contact.address = new_address
             new_address_saved = true
           else

@@ -43,6 +43,7 @@ class ContactControllerTest < ActionController::TestCase
   end
   
   def test_edit_that_associates_contact_with_the_address_of_another_contact
+    contacts(:john_doe).update_attribute(:address, addresses(:chicago))
     contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 
     contact = contacts(:john_doe)
@@ -51,6 +52,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_template 'edit_contact'
     assert_equal(addresses(:alsip), assigns(:contact).address)
     assert_equal(true, assigns(:saved))
+    assert_nil Address.find_by_id(addresses(:chicago).id)
   end
   
   def test_edit_that_assigns_a_new_address_to_an_existing_contact
