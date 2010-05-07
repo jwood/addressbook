@@ -48,7 +48,12 @@ class Address < ActiveRecord::Base
     self.secondary_contact = nil if self.secondary_contact == contact
     contacts.delete(contact)
     save
-    adjust_primary_secondary_contacts
+
+    if contacts.size > 0
+      adjust_primary_secondary_contacts
+    else
+      self.destroy
+    end
   end
 
   def link_contact

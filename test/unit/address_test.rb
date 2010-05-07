@@ -147,7 +147,7 @@ class AddressTest < ActiveSupport::TestCase
     john.address_id = nil; john.save
     @address.unlink_contact(john)
 
-    assert_equal(0, @address.contacts.size)
+    assert_nil Address.find_by_id(@address.id)
   end
 
   def test_link_and_unlink_contact_where_secondary_moves_out
