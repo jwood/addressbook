@@ -50,9 +50,9 @@ module ApplicationHelper
     html << "</li>"
   end
   
-  def update_list(object, object_list, page)
-    obj_type = object.class.to_s.downcase
-    unless(object.nil? || object.id.blank?)
+  def update_list(object, object_list, page, force=false)
+    if (!object.nil? && !object.id.blank?) || force
+      obj_type = object.class.to_s.downcase
       if !object_list.nil?
         page.replace_html("#{obj_type}List", :partial => "main/#{obj_type}_list", :collection => object_list)
       else

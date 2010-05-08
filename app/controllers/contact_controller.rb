@@ -63,6 +63,7 @@ class ContactController < ApplicationController
     @old_address = Address.new
     @old_address.attributes = @contact.address.attributes unless @contact.address.nil?
     @contact.destroy if @contact
+    @address_list = Address.find_for_list if @contact.address.nil?
   end
   
   def remove_address_from_contact
