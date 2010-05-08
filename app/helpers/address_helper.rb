@@ -1,7 +1,7 @@
 module AddressHelper
 
   def hidden_tr_if(condition, attributes = {})
-    attributes["style"] = "visibility:hidden;" if condition
+    attributes["style"] = "display:none;" if condition
     attrs = tag_options(attributes.stringify_keys)
     "<tr #{attrs}>"
   end
