@@ -1,8 +1,6 @@
 class GroupController < ApplicationController
   require 'pdf/label'
 
-  before_render :include_common_data
-
   def edit_group
     @group = Group.find_by_id(params[:id]) || Group.new
 
@@ -19,11 +17,13 @@ class GroupController < ApplicationController
     end
 
     @group_list = Group.find_for_list if new_group
+    include_common_data
   end
   
   def delete_group
     @group = Group.find_by_id(params[:id])
     @group.destroy if @group
+    include_common_data
   end
 
   def create_labels
@@ -46,6 +46,7 @@ class GroupController < ApplicationController
     app_root = File::join RAILS_ROOT, "public"
     p.save_as("#{app_root}/mailing_labels.pdf")
     redirect_to('/mailing_labels.pdf')
+    include_common_data
   end
   
   private
