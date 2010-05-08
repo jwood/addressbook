@@ -2,7 +2,7 @@ page.replace_html('content', :partial => 'deleted_contact', :object => @contact)
 remove_from_list(@contact, page)
 address = @old_address || @contact.address
 
-if !@address_list.blank?
+if !@address_list.nil?
   update_list(address, @address_list, page, true)
 elsif !address.nil?
   update_list(address, nil, page)
