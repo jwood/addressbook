@@ -45,12 +45,7 @@ Rails::Initializer.run do |config|
 
   config.gem 'pdf-labels', :version => '2.0.1', :lib => 'pdf/label'
 
-  config.app_config.user_address = {
-      :address => "123 Main St.",
-      :city => "Chicago",
-      :state => "IL",
-      :zip => "60606"
-    }
+  eval(IO.read(RAILS_ROOT + '/config/app_config.rb'), binding, RAILS_ROOT + '/config/app_config.rb')
 end
 
 # Add new inflection rules using the following format 

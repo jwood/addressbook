@@ -17,4 +17,3 @@ config.action_controller.perform_caching             = true
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-config.app_config.htpasswd_file = '/path/to/my/password_file'
