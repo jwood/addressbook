@@ -103,6 +103,25 @@ class ContactControllerTest < ActionController::TestCase
     assert_nil assigns(:saved)
   end
 
+  test "should be able to create a contact with no address" do
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :contact => contact.attributes }
+    assert_template 'edit_contact'
+    assert_not_nil assigns(:contact)
+    assert_nil assigns(:contact).address
+    assert assigns(:saved)
+  end
+
+  test "should be able to create a contact with only a home phone number, and no address" do
+    contact = contacts(:john_doe)
+    xhr :post, :edit_contact, { :id => contact.id, :contact => contact.attributes,
+      :address => { :home_phone => '555-232-2323', :address1 => '', :city => '', :state => '', :zip => '' } }
+    assert_template 'edit_contact'
+    assert_not_nil assigns(:contact)
+    assert_equal '555-232-2323', assigns(:contact).address.home_phone
+    assert assigns(:saved)
+  end
+
   test "should be able to update an existing contact with a new address" do
     contacts(:john_doe).update_attribute(:address, addresses(:alsip))
     assert(addresses(:alsip).contacts.include?(contacts(:john_doe)))

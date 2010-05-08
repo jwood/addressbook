@@ -93,7 +93,7 @@ class ContactController < ApplicationController
       if params[:address_specification_type] == 'existing_address'
         other = Contact.find_by_id(params[:other_id])
         other.address
-      elsif params[:address_specification_type] == 'specified_address'
+      elsif specified_address?
         address = Address.new(params[:address])
         if address.valid?
           address
@@ -102,6 +102,11 @@ class ContactController < ApplicationController
           nil
         end
       end
+    end
+
+    def specified_address?
+      params[:address_specification_type] == 'specified_address' ||
+              (params[:address] && params[:address][:home_phone] && !params[:address][:home_phone].blank?)
     end
   
 end
