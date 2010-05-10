@@ -11,7 +11,7 @@ html, body {
 
 /* The main application window */
 #main {
-  height: 97%;
+  height: 96%;
   width: 98%;
   border: 2px solid black;
 }
@@ -19,8 +19,7 @@ html, body {
 /* The application menu on the left */
 #menu {
   width: 350px;
-  height: 100%;
-  border-right: 2px solid black;
+  height: 98%;
 }
 
 /* Sections of content within the menu */
