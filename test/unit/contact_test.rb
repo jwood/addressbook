@@ -50,4 +50,15 @@ class ContactTest < ActiveSupport::TestCase
     assert_equal '3125551213', contact.cell_phone
   end
 
+  test "assigning a contact to a new address should first unlink the contact from an existing address" do
+    contact = contacts(:john_doe)
+    contact.update_attribute(:address, addresses(:chicago))
+    contact.assign_address(addresses(:alsip))
+    contact.save!
+
+    contact.reload
+    assert_equal addresses(:alsip), contact.address
+    assert_nil Address.find_by_id(addresses(:chicago))
+  end
+
 end

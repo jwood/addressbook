@@ -37,6 +37,11 @@ class Contact < ActiveRecord::Base
     self.work_phone = Phone.sanitize(self.work_phone)
   end
 
+  def assign_address(new_address)
+    self.address.unlink_contact(self) unless self.address.nil?
+    self.address = new_address
+  end
+
   private
 
     def validate_phone_numbers
