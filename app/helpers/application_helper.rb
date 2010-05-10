@@ -45,8 +45,8 @@ module ApplicationHelper
     html << "\">"
     html << link_to_remote(link, 
         :url => { :controller => obj_type, :action => "edit_#{obj_type}", :id => object },
-        :method => 'get', :complete => "$('#{obj_type}_spinner').style.visibility = 'hidden';", 
-        :loading => "$('#{obj_type}_spinner').style.visibility = 'visible';")
+        :method => 'get', :complete => "$('spinner').style.visibility = 'hidden';",
+        :loading => "$('spinner').style.visibility = 'visible';")
     html << "</li>"
   end
   

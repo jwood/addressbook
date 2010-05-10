@@ -3,14 +3,13 @@
 
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
       <% form_remote_tag :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
-           :complete => "$('search_spinner').style.visibility = 'hidden';",
-           :loading => "$('search_spinner').style.visibility = 'visible';" do %>
+           :complete => "$('spinner').style.visibility = 'hidden';",
+           :loading => "$('spinner').style.visibility = 'visible';" do %>
         <table>
           <tr>
             <td>Last Name:</td>
             <td><%= text_field_tag :last_name, params[:last_name], :size => 10 %></td>
             <td><%= submit_tag "Search" %></td>
-            <td><img alt="spinner" id="search_spinner" class="spinner_img" src="/images/spinner.gif" style="visibility:hidden;"/></td>
           </tr>
         </table>
       <% end -%>
@@ -20,7 +19,6 @@
     </div>
 
     <div dojoType="dijit.layout.AccordionPane" title="Contacts" class="menuContent">
-      <img alt="spinner" id="contact_spinner" class="spinner_img" src="/images/spinner.gif" style="visibility:hidden;"/>
       <ul>
         <div id="contactList">
           <%= render :partial => 'contact_list', :collection => @contact_list %>
@@ -32,7 +30,6 @@
     </div>
 
     <div dojoType="dijit.layout.AccordionPane" title="Addresses" class="menuContent">
-      <img alt="spinner" id="address_spinner" class="spinner_img" src="/images/spinner.gif" style="visibility:hidden;"/>
       <ul>
         <div id="addressList">
           <%= render :partial => 'address_list', :collection => @address_list %>
@@ -41,7 +38,6 @@
     </div>
 
     <div dojoType="dijit.layout.AccordionPane" title="Groups" class="menuContent">
-      <img alt="spinner" id="group_spinner" class="spinner_img" src="/images/spinner.gif" style="visibility:hidden;"/>
       <ul>
         <div id="groupList">
           <%= render :partial => 'group_list', :collection => @group_list %>

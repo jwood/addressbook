@@ -34,6 +34,10 @@ html, body {
   overflow: auto;
 }
 
+#content h3 {
+  padding-top: 5px;
+}
+
 /* A section of information in the content window (i.e. Address) */
 .section {
   margin-left: 30px;
@@ -54,8 +58,12 @@ html, body {
   padding-left: 30px;
 }
 
-.spinner_img {
-  float: right;
+#spinner {
+  position: absolute;
+  margin-left: 370px;
+  margin-top: 15px;
+  padding-bottom: 5px;
+  z-index: 10;
 }
 
 /* BEGIN - Styles for group maintenance */
