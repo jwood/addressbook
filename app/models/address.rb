@@ -11,19 +11,11 @@ class Address < ActiveRecord::Base
   validate :verify_required_info, :validate_phone_numbers
   
   def addressee_for_display
-    if primary_contact.nil? && secondary_contact.nil?
-      format_address_with_no_contacts
-    else
-      address_type.format_address_for_display(self)
-    end
+    no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_display(self)
   end
 
   def addressee
-    if primary_contact.nil? && secondary_contact.nil?
-      format_address_with_no_contacts
-    else
-      address_type.format_address_for_label(self)
-    end
+    no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_label(self)
   end
 
   def different_from(other)
@@ -47,12 +39,7 @@ class Address < ActiveRecord::Base
     self.secondary_contact = nil if self.secondary_contact == contact
     contacts.delete(contact)
     save
-
-    if contacts.size > 0
-      adjust_primary_secondary_contacts
-    else
-      self.destroy
-    end
+    contacts.size > 0 ? adjust_primary_secondary_contacts : self.destroy
   end
 
   def link_contact
@@ -67,7 +54,6 @@ class Address < ActiveRecord::Base
   def self.find_for_list
     address_list = Address.find(:all, :include => [:primary_contact, :secondary_contact, :address_type])
     address_list.sort! do |a1, a2|
-      result = 0
       if a1.primary_contact.nil?
         result = 1
       elsif a2.primary_contact.nil?
@@ -101,11 +87,11 @@ class Address < ActiveRecord::Base
     id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
   end
 
-  def sanitize_phone_numbers
-    self.home_phone = Phone.sanitize(self.home_phone)
-  end
-
   private
+
+    def sanitize_phone_numbers
+      self.home_phone = Phone.sanitize(self.home_phone)
+    end
 
     def validate_phone_numbers
       if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
@@ -165,6 +151,10 @@ class Address < ActiveRecord::Base
       else
         return home_phone
       end
+    end
+
+    def no_contacts?
+      primary_contact.nil? && secondary_contact.nil?
     end
 
 end
