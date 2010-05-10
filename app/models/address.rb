@@ -67,10 +67,10 @@ class Address < ActiveRecord::Base
   end
 
   def self.find_for_list
-    address_list = Address.find(:all)
-    address_list.sort! do |a1, a2| 
+    address_list = Address.find(:all, :include => [:primary_contact, :secondary_contact, :address_type])
+    address_list.sort! do |a1, a2|
       result = 0
-      if a1.primary_contact.nil? 
+      if a1.primary_contact.nil?
         result = 1
       elsif a2.primary_contact.nil?
         result = -1
