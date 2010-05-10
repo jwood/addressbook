@@ -42,6 +42,8 @@ html, body {
   border: 1px solid black;
   padding: 5px;
   background: #e1ebfb;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
 }
 
 /* A table column in the section */
