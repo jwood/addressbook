@@ -105,3 +105,16 @@
 <%= create_cancel_delete_links(contact) %>
 
 <%= render :partial => "multiple_address_confirmation_form" unless @contact.address.nil? %>
+
+<script>
+jQuery(document).ready(function() {
+  jQuery('#other_id').click(function() { selectExistingAddressOption(); });
+
+  jQuery('#address_home_phone').keydown(function() { selectSpecifiedAddressOption(); });
+  jQuery('#address_address1').keydown(function() { selectSpecifiedAddressOption(); });
+  jQuery('#address_address2').keydown(function() { selectSpecifiedAddressOption(); });
+  jQuery('#address_city').keydown(function() { selectSpecifiedAddressOption(); });
+  jQuery('#address_state').keydown(function() { selectSpecifiedAddressOption(); });
+  jQuery('#address_zip').keydown(function() { selectSpecifiedAddressOption(); });
+});
+</script>

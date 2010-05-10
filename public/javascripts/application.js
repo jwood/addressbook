@@ -66,3 +66,11 @@ function selectAllIncludedGroupMembers() {
     s.selected = true;
   });
 }
+
+function selectExistingAddressOption() {
+  $('existing_address').checked = true;
+}
+
+function selectSpecifiedAddressOption() {
+  $('specified_address').checked = true;
+}
