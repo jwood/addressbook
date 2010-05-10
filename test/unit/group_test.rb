@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'fileutils'
 
 class GroupTest < ActiveSupport::TestCase
   fixtures :all
@@ -8,6 +9,18 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal(2, groups.size)
     assert_equal(groups(:group_1), groups[0])
     assert_equal(groups(:group_2), groups[1])
+  end
+
+  test "should be able to create mailing lables for group members" do
+    group = groups(:group_1)
+    group.addresses << [addresses(:chicago), addresses(:tinley_park), addresses(:alsip)]
+    group.save
+
+    label_file = File.join(Group::LABELS_PATH, Group::LABELS_FILE)
+    FileUtils.rm_f label_file
+    assert !File.exist?(label_file)
+    group.create_labels('Avery 8660')
+    assert File.exist?(label_file)
   end
 
 end
