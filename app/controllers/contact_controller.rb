@@ -57,10 +57,9 @@ class ContactController < ApplicationController
   
   def delete_contact
     @contact = Contact.find_by_id(params[:id])
-    @contact.address.unlink_contact(@contact) unless @contact.address.nil?
     @old_address = Address.new
-    @old_address.attributes = @contact.address.attributes unless @contact.address.nil?
-    @contact.destroy if @contact
+    @old_address.attributes = @contact.address.ergo.attributes
+    @contact.ergo.destroy
     @address_list = Address.find_for_list if @contact.address.nil?
   end
   

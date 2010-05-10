@@ -22,6 +22,18 @@ class ContactControllerTest < ActionController::TestCase
     xhr :post, :delete_contact, { :id => contact.id }
     assert_template 'delete_contact'
     assert_equal(contact, assigns(:contact))
+    assert_nil Contact.find_by_id(contacts(:john_doe))
+  end
+
+  test "should unlink the contact from its address when deleting the contact" do
+    contact = contacts(:john_doe)
+    contact.update_attribute(:address, addresses(:alsip))
+
+    xhr :post, :delete_contact, { :id => contact.id }
+    assert_template 'delete_contact'
+    assert_equal(contact, assigns(:contact))
+    assert_nil Contact.find_by_id(contacts(:john_doe))
+    assert_nil Address.find_by_id(addresses(:alsip))
   end
   
   test "should be able to remove an address from a contact" do

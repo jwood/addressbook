@@ -18,7 +18,7 @@ class AddressController < ApplicationController
   
   def delete_address
     @address = Address.find_by_id(params[:id])
-    @address.destroy if @address
+    @address.ergo.destroy
   end
   
 end

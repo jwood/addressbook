@@ -60,10 +60,8 @@ class Address < ActiveRecord::Base
   end
 
   def self.remove_contact(contact)
-    addresses = Address.find(:all)
-    addresses.each do |a|
-      a.unlink_contact(contact) if a.primary_contact == contact || a.secondary_contact == contact
-    end
+    addresses = Address.find(:all, :conditions => ['contact1_id = ? || contact2_id = ?', contact.id, contact.id])
+    addresses.each { |a| a.unlink_contact(contact) }
   end
 
   def self.find_for_list
