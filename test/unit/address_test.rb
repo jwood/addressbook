@@ -15,9 +15,9 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "should not be able to update an address with an invalid phone number" do
-    @address.home_phone = '(312) 222-3333'
+    @address.home_phone = '(312) xxx-3333'
     assert !@address.valid?
-    assert @address.errors.on(:home_phone).include?('must be in the format of XXX-XXX-XXXX')
+    assert @address.errors.on(:home_phone).include?('is not valid')
   end
 
   test "an adress with no contacts should simply list the street address as the addressee" do
@@ -254,6 +254,13 @@ class AddressTest < ActiveSupport::TestCase
 
     assert !addresses(:alsip).different_from(addresses(:alsip))
     assert !addresses(:alsip).different_from(Address.new(addresses(:alsip).attributes.merge(:id => nil)))
+  end
+
+  test "should scrub the phone numbers before saving them to the database" do
+    address = addresses(:alsip)
+    address.home_phone = '(312) 555.1213'
+    address.save!
+    assert_equal '3125551213', address.home_phone
   end
 
   private

@@ -66,7 +66,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal('Chicago', assigns(:contact).address.city)
     assert_equal('IL', assigns(:contact).address.state)
     assert_equal('60606', assigns(:contact).address.zip)
-    assert_equal('312-222-1221', assigns(:contact).address.home_phone)
+    assert_equal('3122221221', assigns(:contact).address.home_phone)
     assert_equal(true, assigns(:saved))
   end
 
@@ -118,7 +118,7 @@ class ContactControllerTest < ActionController::TestCase
       :address => { :home_phone => '555-232-2323', :address1 => '', :city => '', :state => '', :zip => '' } }
     assert_template 'edit_contact'
     assert_not_nil assigns(:contact)
-    assert_equal '555-232-2323', assigns(:contact).address.home_phone
+    assert_equal '5552322323', assigns(:contact).address.home_phone
     assert assigns(:saved)
   end
 

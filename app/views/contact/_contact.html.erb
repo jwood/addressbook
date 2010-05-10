@@ -32,16 +32,16 @@
     <table>
       <tr>
         <td><label>Home Phone:</label></td>
-        <td><%= text_field 'address', 'home_phone', 'size' => 20 %></td>
+        <td><%= text_field_tag 'address[home_phone]', Phone.format(@address.ergo.home_phone), 'size' => 20 %></td>
         </td>
       </tr>
       <tr>
         <td><label>Work Phone:</label></td>
-        <td><%= text_field 'contact', 'work_phone', 'size' => 20 %></td>
+        <td><%= text_field_tag 'contact[work_phone]', Phone.format(@contact.work_phone), 'size' => 20 %></td>
       </tr>
       <tr>
         <td><label>Cell Phone:</label></td>
-        <td><%= text_field 'contact', 'cell_phone', 'size' => 20 %></td>
+        <td><%= text_field_tag 'contact[cell_phone]', Phone.format(@contact.cell_phone), 'size' => 20 %></td>
       </tr>
       <tr>
         <td><label>Email Address:</label></td>

@@ -25,8 +25,10 @@ class ContactTest < ActiveSupport::TestCase
   test "should not be able to update a contact with an invalid phone number" do
     contact = contacts(:john_doe)
     contact.cell_phone = 'abcd'
+    contact.work_phone = '972-2ou234=234'
     assert !contact.valid?
-    assert contact.errors.on(:cell_phone).include?('must be in the format of XXX-XXX-XXXX')
+    assert contact.errors.on(:cell_phone).include?('is not valid')
+    assert contact.errors.on(:work_phone).include?('is not valid')
   end
 
   test "should be able to find all contacts for listing in the app" do
@@ -36,6 +38,16 @@ class ContactTest < ActiveSupport::TestCase
     assert_equal(contacts(:jane_doe), contacts[1])
     assert_equal(contacts(:jimmy_doe), contacts[2])
     assert_equal(contacts(:john_doe), contacts[3])
+  end
+
+  test "should scrub the phone numbers before saving them to the database" do
+    contact = contacts(:john_doe)
+    contact.work_phone = '312-555-1212'
+    contact.cell_phone = '(312) 555.1213'
+    contact.save!
+
+    assert_equal '3125551212', contact.work_phone
+    assert_equal '3125551213', contact.cell_phone
   end
 
 end

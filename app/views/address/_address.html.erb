@@ -22,7 +22,7 @@
     <table>
       <tr>
         <td><label>Home Phone:</label></td>
-        <td><%= text_field 'address', 'home_phone', 'size' => 20 %></td>
+        <td><%= text_field_tag 'address[home_phone]', Phone.format(@address.home_phone), 'size' => 20 %></td>
       </tr>
     </table>
   </div>

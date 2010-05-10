@@ -6,10 +6,9 @@ class Address < ActiveRecord::Base
   belongs_to :primary_contact, :class_name => 'Contact', :foreign_key => "contact1_id"
   belongs_to :secondary_contact, :class_name => 'Contact', :foreign_key => "contact2_id"
 
-  validate :verify_required_info
-  validates_format_of :home_phone, :with => /^\d\d\d-\d\d\d-\d\d\d\d$/, 
-    :message => 'must be in the format of XXX-XXX-XXXX',
-    :if => Proc.new { |address| !address.home_phone.blank? }
+  before_save :sanitize_phone_numbers
+
+  validate :verify_required_info, :validate_phone_numbers
   
   def addressee_for_display
     if primary_contact.nil? && secondary_contact.nil?
@@ -104,7 +103,17 @@ class Address < ActiveRecord::Base
     id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
   end
 
+  def sanitize_phone_numbers
+    self.home_phone = Phone.sanitize(self.home_phone)
+  end
+
   private
+
+    def validate_phone_numbers
+      if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
+        errors.add(:home_phone, "is not valid")
+      end
+    end
 
     def adjust_primary_secondary_contacts
       # Get the first 2 contacts linked to this address

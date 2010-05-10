@@ -44,6 +44,7 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
 
   config.gem 'pdf-labels', :version => '2.0.1', :lib => 'pdf/label'
+  config.gem 'facets', :version => '2.4.4'
 
   eval(IO.read(RAILS_ROOT + '/config/app_config.rb'), binding, RAILS_ROOT + '/config/app_config.rb')
 end
