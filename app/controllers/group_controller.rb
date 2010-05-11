@@ -34,16 +34,9 @@ class GroupController < ApplicationController
   
   private
 
-    def get_not_included_addresses
-      addresses = Address.find_all_eligible_for_group
-      included_addresses = @group.addresses
-      included_addresses.each { |a| addresses.delete(a) }
-      addresses
-    end
-
     def include_common_data
-      @included = @group.addresses
-      @not_included = get_not_included_addresses
+      @included = @group.addresses(:include => [:contacts, :address_type])
+      @not_included = @group.addresses_not_included
       @label_types = Pdf::Label::Batch.all_template_names.sort!
     end
 

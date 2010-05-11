@@ -29,4 +29,8 @@ class Group < ActiveRecord::Base
     p.save_as("#{LABELS_PATH}/#{LABELS_FILE}")
   end
 
+  def addresses_not_included
+    Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', self.address_ids])
+  end
+
 end

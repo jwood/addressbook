@@ -18,8 +18,8 @@
         <ul>
           <div id="groupMembers">
             <%=
-              @group.addresses.sort! { |x,y| x.compare_by_primary_contact(y) }
-              render :partial => 'group_list', :collection => @group.addresses
+              @included.sort! { |x,y| x.compare_by_primary_contact(y) }
+              render :partial => 'group_list', :collection => @included
             %>
           </div>
         </ul>

@@ -23,4 +23,15 @@ class GroupTest < ActiveSupport::TestCase
     assert File.exist?(label_file)
   end
 
+  test "shoud be able to find all addresses eligible for group membership, but not in the group" do
+    group = groups(:group_1)
+    group.addresses = [addresses(:alsip)]
+    group.save
+
+    not_included = group.addresses_not_included
+    assert_equal 2, not_included.size
+    assert not_included.include?(addresses(:chicago))
+    assert not_included.include?(addresses(:tinley_park))
+  end
+
 end

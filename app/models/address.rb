@@ -9,6 +9,8 @@ class Address < ActiveRecord::Base
   before_save :sanitize_phone_numbers
 
   validate :verify_required_info, :validate_phone_numbers
+
+  named_scope :eligible_for_group, :conditions => "address1 <> ''"
   
   def addressee_for_display
     no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_display(self)
@@ -67,10 +69,6 @@ class Address < ActiveRecord::Base
     address_list
   end
 
-  def self.find_all_eligible_for_group
-    Address.find(:all, :conditions => ["address1 <> ''"])
-  end
-  
   def compare_by_primary_contact(other)
     raise ArgumentError unless other.class == self.class
     return -1 if other.nil?

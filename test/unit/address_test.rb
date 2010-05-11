@@ -127,7 +127,7 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "should be able to find all addresses eligible to be a member in a group" do
-    addresses = Address.find_all_eligible_for_group
+    addresses = Address.eligible_for_group
     assert_equal(@num_address_fixtures - 1, addresses.size)
     assert(addresses.include?(addresses(:chicago)))
     assert(addresses.include?(addresses(:alsip)))
