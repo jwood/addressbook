@@ -1,6 +1,6 @@
 ## About
 
-This is Address Book.  Address Book is a web pplication for managing
+This is Address Book.  Address Book is a web application for managing
 your personal address book.  It manages phone numbers, birthdays, addresses, 
 and more.
 
@@ -65,3 +65,4 @@ MIT License.  See LICENCE for details.
 John Wood  
 [http://johnpwood.net](http://johnpwood.net)  
 [john_p_wood@yahoo.com](mailto:john_p_wood@yahoo.com)  
+
