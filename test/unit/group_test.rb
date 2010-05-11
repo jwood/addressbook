@@ -34,4 +34,14 @@ class GroupTest < ActiveSupport::TestCase
     assert not_included.include?(addresses(:tinley_park))
   end
 
+  test "shoud be able to find all addresses eligible for group membership for a group with no current members" do
+    group = groups(:group_1)
+
+    not_included = group.addresses_not_included
+    assert_equal 3, not_included.size
+    assert not_included.include?(addresses(:chicago))
+    assert not_included.include?(addresses(:tinley_park))
+    assert not_included.include?(addresses(:alsip))
+  end
+
 end

@@ -13,7 +13,12 @@ class Group < ActiveRecord::Base
   end
 
   def addresses_not_included
-    Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', self.address_ids])
+    included_ids = self.address_ids
+    if included_ids.blank?
+      Address.eligible_for_group
+    else
+      Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', included_ids])
+    end
   end
 
   def create_labels(label_type)
