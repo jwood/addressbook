@@ -63,5 +63,5 @@ MIT License.  See LICENCE for details.
 
 ## AUTHOR
 John Wood  
-http://johnpwood.net  
-john_p_wood@yahoo.com  
+[http://johnpwood.net](http://johnpwood.net)  
+[john_p_wood@yahoo.com](mailto:john_p_wood@yahoo.com)  
