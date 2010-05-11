@@ -1,8 +1,3 @@
-Minor Bugs
-------------
-* When a contact is deleted, any addresses where the contact is a primary contact
-  are not updated with the new addressee in the address list
-
 Enhancements
 ------------
 * Make the primary and secondary contacts links to the actual contact

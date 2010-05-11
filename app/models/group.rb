@@ -12,6 +12,10 @@ class Group < ActiveRecord::Base
     Group.find(:all, :order => 'name')
   end
 
+  def addresses_not_included
+    Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', self.address_ids])
+  end
+
   def create_labels(label_type)
     p = Pdf::Label::Batch.new(label_type.sub(' ', '  '))
 
@@ -29,10 +33,6 @@ class Group < ActiveRecord::Base
     end
 
     p.save_as("#{LABELS_PATH}/#{LABELS_FILE}")
-  end
-
-  def addresses_not_included
-    Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', self.address_ids])
   end
 
 end

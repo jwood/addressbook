@@ -1,5 +1,6 @@
+require 'app_config'
+
 module ContactHelper
-  require 'app_config'
 
   def add_map_and_directions_links(contact)
     map_query = contact.address.address1 + ',' +

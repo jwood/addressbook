@@ -5,7 +5,7 @@ dojo.require("dijit.layout.BorderContainer");
 /* 
  * Code to disable/enable the second contact for an address 
  */
-adjustSelectableContacts = function() {
+var adjustSelectableContacts = function() {
   var INDIVIDUAL = 1;
   var SINGLE_PARENT = 5;
   var addressContact2 = document.getElementById("addressContact2");
@@ -22,7 +22,7 @@ adjustSelectableContacts = function() {
 /*
  * Updates the create labels link to specify the proper label type
  */
-updateCreateLabelsLink = function(url) {
+var updateCreateLabelsLink = function(url) {
   var selector = document.getElementById('labelTypeSelector');
   var newLinkHtml = '<a href="' + url + '?label_type=' + selector.value + 
     '" onclick="window.open(this.href,\'label_window\',\'label_window\');return false;"' + 

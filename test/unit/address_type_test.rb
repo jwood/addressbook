@@ -27,4 +27,5 @@ class AddressTypeTest < ActiveSupport::TestCase
     assert(!address_types(:married_couple).only_one_main_contact?)
     assert(!address_types(:unmarried_couple).only_one_main_contact?)
   end
+
 end

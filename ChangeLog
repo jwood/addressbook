@@ -1,6 +1,13 @@
 Addressbook ChangeLog
 http://johnpwood.net/projects/webapps/addressbook/
 
+Version 2.0 - 2010-05-11
+------------------------
+ * Major cleanup
+ * Fixed many of the awkward navigation and usage issues
+ * Fixed some outstanding bugs
+ * Upgraded to latest releases of Rails and Dojo
+
 Version 1.2 - 2008-12-23
 ------------------------
  * Moved all application specific config into its own config file
