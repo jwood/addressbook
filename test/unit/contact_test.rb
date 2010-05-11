@@ -61,4 +61,14 @@ class ContactTest < ActiveSupport::TestCase
     assert_nil Address.find_by_id(addresses(:chicago))
   end
 
+  test "should be able to remove an address from a contact" do
+    contact = contacts(:john_doe)
+    contact.update_attribute(:address, addresses(:chicago))
+    assert addresses(:chicago).contacts.include?(contact)
+
+    old_address_id = addresses(:chicago).id
+    assert_equal old_address_id, contact.remove_address
+    assert !addresses(:chicago).contacts(true).include?(contact)
+  end
+
 end

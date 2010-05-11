@@ -9,42 +9,30 @@ class ContactController < ApplicationController
       @contact.attributes = params[:contact]
 
       new_address = parse_address
-      if new_address && new_address.valid? && new_address.different_from(@contact.address)
-        if @contact.address && @contact.address.contacts.size > 1
+      if new_address && new_address.valid? && new_address.different_from?(@contact.address)
+        if changing_address_for_multiple_contacts?
           session[:changed_address] = new_address
           render_target = 'edit_contact_with_shared_address'
         else
-          if @contact.address.nil? || params[:address_specification_type] == 'existing_address'
-            @contact.assign_address(new_address)
-            new_address_saved = true
-          else
-            @contact.address.attributes = new_address.attributes
-          end
+          assigning_new_address_object = params[:address_specification_type] == 'existing_address' ? true : false
+          new_address_saved = assign_address_to_contact(new_address, assigning_new_address_object)
         end
       end
 
       @saved = @contact.errors.blank? && @contact.save
+      @contact_list = Contact.find_for_list if new_contact
+      @address_list = Address.find_for_list if new_address_saved
     end
 
     @address = @contact.address || Address.new
-    @contact_list = Contact.find_for_list if new_contact
-    @address_list = Address.find_for_list if new_address_saved
-
     render :template => "contact/#{render_target}"
   end
 
   def change_address_for_contact
     @contact = Contact.find_by_id(params[:id])
-    changed_address = session[:changed_address]
-
-    if params[:submit_id] == 'yes'
-      @contact.address.attributes = changed_address.attributes
-      @contact.address.save if @contact.address.valid?
-    else
-      @contact.assign_address(changed_address)
-      @contact.save
-      new_address = true
-    end
+    assigning_new_address_object = params[:submit_id] == 'no' ? true : false
+    new_address = assign_address_to_contact(session[:changed_address], assigning_new_address_object)
+    @contact.save
 
     @address = @contact.address || Address.new
     @address_list = Address.find_for_list if new_address
@@ -61,16 +49,8 @@ class ContactController < ApplicationController
   
   def remove_address_from_contact
     @contact = Contact.find_by_id(params[:id])
-    @old_address_id = @contact.address_id
-    @contact.address = nil
-
-    if @contact.save
-      @saved = true
-      Address.find_by_id(@old_address_id).unlink_contact(@contact)
-    else
-      logger.error("Remove address to contact failed: #{@contact.errors.full_messages}")
-    end
-
+    @old_address_id = @contact.remove_address
+    @saved = true unless @old_address_id.nil?
     render :template => 'contact/edit_contact'
   end
 
@@ -81,6 +61,20 @@ class ContactController < ApplicationController
   end
   
   private
+
+    def changing_address_for_multiple_contacts?
+      @contact.address && @contact.address.contacts.size > 1
+    end
+
+    def assign_address_to_contact(new_address, assigning_new_address_object)
+      if @contact.address.nil? || assigning_new_address_object
+        @contact.assign_address(new_address)
+        true
+      else
+        @contact.address.attributes = new_address.attributes
+        false
+      end
+    end
 
     def parse_address
       if params[:address_specification_type] == 'existing_address'

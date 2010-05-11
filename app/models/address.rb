@@ -20,7 +20,7 @@ class Address < ActiveRecord::Base
     no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_label(self)
   end
 
-  def different_from(other)
+  def different_from?(other)
     if other.nil? || (address1 != other.address1 || address2 != other.address2 ||
                       city != other.city || state != other.state ||
                       zip != other.zip || home_phone != other.home_phone)

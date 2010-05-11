@@ -29,6 +29,18 @@ class Contact < ActiveRecord::Base
     self.address = new_address
   end
 
+  def remove_address
+    old_address_id = self.address_id
+    self.address = nil
+
+    if save
+      Address.find_by_id(old_address_id).unlink_contact(self)
+      old_address_id
+    else
+      nil
+    end
+  end
+
   private
 
     def link_contact_to_address

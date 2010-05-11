@@ -247,13 +247,13 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "should be able to determine if one address is different from another" do
-    assert addresses(:alsip).different_from(addresses(:chicago))
-    assert addresses(:alsip).different_from(nil)
-    assert addresses(:alsip).different_from(Address.new)
-    assert addresses(:alsip).different_from(Address.new(addresses(:alsip).attributes.merge(:address2 => 'Apt 102')))
+    assert addresses(:alsip).different_from?(addresses(:chicago))
+    assert addresses(:alsip).different_from?(nil)
+    assert addresses(:alsip).different_from?(Address.new)
+    assert addresses(:alsip).different_from?(Address.new(addresses(:alsip).attributes.merge(:address2 => 'Apt 102')))
 
-    assert !addresses(:alsip).different_from(addresses(:alsip))
-    assert !addresses(:alsip).different_from(Address.new(addresses(:alsip).attributes.merge(:id => nil)))
+    assert !addresses(:alsip).different_from?(addresses(:alsip))
+    assert !addresses(:alsip).different_from?(Address.new(addresses(:alsip).attributes.merge(:id => nil)))
   end
 
   test "should scrub the phone numbers before saving them to the database" do

@@ -34,6 +34,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_equal(contact, assigns(:contact))
     assert_nil Contact.find_by_id(contacts(:john_doe))
     assert_nil Address.find_by_id(addresses(:alsip))
+    assert !addresses(:alsip).different_from?(assigns(:old_address))
   end
   
   test "should be able to remove an address from a contact" do
