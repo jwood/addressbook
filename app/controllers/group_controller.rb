@@ -7,12 +7,7 @@ class GroupController < ApplicationController
       new_group = true if params[:id].nil?
       @group.attributes = params[:group]
       @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
-
-      if @group.save
-        @saved = true
-      else
-        logger.error("Edit group failed: #{@group.errors.full_messages}")
-      end
+      @saved = @group.save
     end
 
     @group_list = Group.find_for_list if new_group

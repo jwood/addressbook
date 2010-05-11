@@ -23,11 +23,7 @@ class ContactController < ApplicationController
         end
       end
 
-      if @contact.errors.blank? && @contact.save
-        @saved = true
-      else
-        logger.error("Edit contact failed: #{@contact.errors.full_messages}")
-      end
+      @saved = @contact.errors.blank? && @contact.save
     end
 
     @address = @contact.address || Address.new

@@ -90,7 +90,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_template 'edit_contact'
     assert_nil assigns(:contact).address
     assert assigns(:contact).errors.full_messages.include?("Please specify a valid address")
-    assert_nil assigns(:saved)
+    assert !assigns(:saved)
   end
 
   test "should be able to create a new contact, associating them with the address of another contact" do
@@ -112,7 +112,7 @@ class ContactControllerTest < ActionController::TestCase
     assert_template 'edit_contact'
     assert_nil assigns(:contact).address
     assert assigns(:contact).errors.full_messages.include?("Please specify a valid address")
-    assert_nil assigns(:saved)
+    assert !assigns(:saved)
   end
 
   test "should be able to create a contact with no address" do
