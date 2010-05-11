@@ -42,7 +42,7 @@
             <%= create_contact_dropdown("contact1") %>
           </td>
         </tr>
-        <%= hidden_tr_if (!address.address_type || (address.address_type && (address.address_type.only_one_main_contact?))), :id => "addressContact2" %>
+        <%= hidden_tr_if (!address.address_type || address.address_type.only_one_main_contact?), :id => "addressContact2" %>
           <td><label>Contact 2:</label></td>
           <td>
             <%= create_contact_dropdown("contact2") %>

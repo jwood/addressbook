@@ -15,17 +15,17 @@
 
       <p>
         <%= hidden_field_tag 'submit_id' %>
-        <%= submit_tag "Yes, change for all", :onclick => '$("submit_id").value = "yes"; jQuery.fancybox.close();' %>
-        <%= submit_tag "No, just change #{@contact.first_name}", :onclick => '$("submit_id").value = "no"; jQuery.fancybox.close();' %>
+        <%= submit_tag "Yes, change for all", :onclick => 'changeAddressForAll();' %>
+        <%= submit_tag "No, just change #{@contact.first_name}", :onclick => 'changeAddressForSpecified();' %>
         <br/>
       </p>
 
-      <p><%= link_to_function 'Cancel', 'jQuery.fancybox.close();' %></p>
+      <p><%= link_to_function 'Cancel', 'closeFancybox();' %></p>
     <% end -%>
   </div>
 </div>
 
-<script type="text/javascript">
+<script>
   jQuery(document).ready(function() {
     jQuery("a#multipleAddressConfirmationLink").fancybox({
       'width' : 400,

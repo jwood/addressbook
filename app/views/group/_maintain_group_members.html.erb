@@ -7,7 +7,6 @@
     </tr>
 
     <tr>
-
       <td id="notIncludedListCell" class="groupListAddresses">
         <ul>
           <div id="notIncludedList">
@@ -15,18 +14,18 @@
               @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
               select_tag('not_included',
                 options_for_group_members(@not_included),
-                :multiple => true, :class => 'selectGroupAddresses', :onDblclick => "includeSelectedMembers();" )
+                :multiple => true, :class => 'selectGroupAddresses', :onDblclick => "includeSelectedMembers();")
             %>
           </div>
         </ul>
       </td>
 
       <td id="maintainGroupControls">
-        <%= link_to_function "<<", 'excludeAllMembers()' %><br/>
-        <%= link_to_function "<", 'excludeSelectedMembers()' %><br/>
+        <%= link_to_function "<<", 'excludeAllMembers();' %><br/>
+        <%= link_to_function "<", 'excludeSelectedMembers();' %><br/>
         <br/>
-        <%= link_to_function ">", 'includeSelectedMembers()' %><br/>
-        <%= link_to_function ">>", 'includeAllMembers()' %><br/>
+        <%= link_to_function ">", 'includeSelectedMembers();' %><br/>
+        <%= link_to_function ">>", 'includeAllMembers();' %><br/>
       </td>
 
       <td id="includedListCell" class="groupListAddresses">
@@ -41,7 +40,6 @@
           </div>
         </ul>
       </td>
-
     </tr>
   </table>
 </div>

@@ -24,7 +24,7 @@
           </div>
         </ul>
 
-        <%= link_to_function "Maintain Group Members", "Element.hide('displayGroupMembers'); Element.show('editGroupMembers');" %>
+        <%= link_to_function "Maintain Group Members", "displayMaintainGroupMembers();" %>
       </div>
 
       <div id="editGroupMembers" style="display:none;">
@@ -34,17 +34,13 @@
 
     <h3>Labels</h3>
     <div class="section">
-
       <label>Label Type:</label>
-      <%= select_tag "label_type",
-          get_label_options(@label_types),
-          { :id => 'labelTypeSelector',
-            :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" } %>
+      <%= select_tag "label_type", get_label_options(@label_types),
+            { :id => 'labelTypeSelector',
+              :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" } %>
 
       <span id="createLabelsLink">
-        <%= link_to "Create Labels",
-              { :action => :create_labels, :id => @group, :label_type => @label_types.first },
-              :popup => ['label_window'] %>
+        <%= link_to "Create Labels", { :action => :create_labels, :id => @group, :label_type => @label_types.first } %>
       </span>
     </div>
   <% end -%>

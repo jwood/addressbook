@@ -5,7 +5,7 @@ dojo.require("dijit.layout.BorderContainer");
 /* 
  * Code to disable/enable the second contact for an address 
  */
-var adjustSelectableContacts = function() {
+function adjustSelectableContacts() {
   var INDIVIDUAL = 1;
   var SINGLE_PARENT = 5;
   var addressContact2 = document.getElementById("addressContact2");
@@ -22,7 +22,7 @@ var adjustSelectableContacts = function() {
 /*
  * Updates the create labels link to specify the proper label type
  */
-var updateCreateLabelsLink = function(url) {
+function updateCreateLabelsLink(url) {
   var selector = document.getElementById('labelTypeSelector');
   var newLinkHtml = '<a href="' + url + '?label_type=' + selector.value + 
     '" onclick="window.open(this.href,\'label_window\',\'label_window\');return false;"' + 
@@ -73,4 +73,28 @@ function selectExistingAddressOption() {
 
 function selectSpecifiedAddressOption() {
   $('specified_address').checked = true;
+}
+
+function editAddress() {
+  $('specifyAddress').show();
+  $('address').hide();
+}
+
+function changeAddressForAll() {
+  $("submit_id").value = "yes";
+  closeFancybox();
+}
+
+function changeAddressForSpecified() {
+  $("submit_id").value = "no";
+  closeFancybox();
+}
+
+function closeFancybox() {
+  jQuery.fancybox.close();
+}
+
+function displayMaintainGroupMembers() {
+  Element.hide('displayGroupMembers');
+  Element.show('editGroupMembers');
 }

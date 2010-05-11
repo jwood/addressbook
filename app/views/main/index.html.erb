@@ -1,6 +1,5 @@
 <div id="main" dojoType="dijit.layout.BorderContainer">
   <div id="menu" dojoType="dijit.layout.AccordionContainer" region="leading">
-
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
       <% form_remote_tag :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
            :complete => "$('spinner').style.visibility = 'hidden';",
@@ -47,7 +46,6 @@
         <%= submit_tag "Add Group" %>
       <% end %>
     </div>
-
   </div>
 
   <div dojoType="dijit.layout.ContentPane" region="center">
