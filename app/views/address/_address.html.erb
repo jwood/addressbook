@@ -9,7 +9,7 @@
         <td>
           <%= 
             select("address", "address_type_id", 
-              AddressType.find(:all).collect {|t| [ t.description, t.id ]}, {}, 
+              AddressType.valid_address_types_for_address(@address).collect {|t| [ t.description, t.id ]}, {}, 
               :id => "addressType", :onchange => "adjustSelectableContacts();") 
           %>
         </td>
