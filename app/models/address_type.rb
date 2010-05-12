@@ -49,4 +49,12 @@ class AddressType < ActiveRecord::Base
     (get_type == :individual || get_type == :single_parent) ? true : false
   end
 
+  def self.valid_address_types_for_address(address)
+    if address.only_has_one_contact?
+      AddressType.find(:all, :conditions => "description = 'Individual' or description = 'Single Parent'")
+    else
+      AddressType.find(:all)
+    end
+  end
+
 end

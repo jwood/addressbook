@@ -28,4 +28,27 @@ class AddressTypeTest < ActiveSupport::TestCase
     assert(!address_types(:unmarried_couple).only_one_main_contact?)
   end
 
+  test "should be able to determine the address types for an address with one contact" do
+    contact = contacts(:john_doe)
+    contact.assign_address(addresses(:chicago))
+    contact.save
+
+    address_types = AddressType.valid_address_types_for_address(addresses(:chicago)).map(&:get_type)
+    assert address_types.include?(:individual)
+    assert address_types.include?(:single_parent)
+  end
+
+  test "should be able to determine the address types for an address with multiple contacts" do
+    contact = contacts(:john_doe)
+    contact.assign_address(addresses(:chicago))
+    contact.save
+
+    contact = contacts(:jane_doe)
+    contact.assign_address(addresses(:chicago))
+    contact.save
+
+    address_types = AddressType.valid_address_types_for_address(addresses(:chicago))
+    assert_equal AddressType.all, address_types
+  end
+
 end
