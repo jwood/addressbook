@@ -264,18 +264,27 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "should be able to easily tell if an address only has one contact" do
-    contact = contacts(:john_doe)
-    contact.assign_address(addresses(:chicago))
-    contact.save
+    assign_contact_to_address(contacts(:john_doe), addresses(:chicago))
     assert addresses(:chicago).only_has_one_contact?
 
-    contact = contacts(:jane_doe)
-    contact.assign_address(addresses(:chicago))
-    contact.save
+    assign_contact_to_address(contacts(:jane_doe), addresses(:chicago))
     assert !addresses(:chicago).only_has_one_contact?
   end
 
+  test "should not be able to edit the address type of an address without the required primary and secondary contacts" do
+    assign_contact_to_address(contacts(:john_doe), addresses(:chicago))
+    address = addresses(:chicago)
+    address.address_type = AddressType.family
+    assert !address.valid?
+    assert address.errors.full_messages.include?("This address type requires primary and secondary contacts be specified")
+  end
+
   private
+
+    def assign_contact_to_address(contact, address)
+      contact.assign_address(address)
+      contact.save
+    end
 
     def setup_link_unlink_test
       @john = contacts(:john_doe)

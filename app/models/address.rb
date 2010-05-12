@@ -8,7 +8,7 @@ class Address < ActiveRecord::Base
 
   before_save :sanitize_phone_numbers
 
-  validate :verify_required_info, :validate_phone_numbers
+  validate :verify_required_info, :validate_phone_numbers, :verify_number_of_contacts_valid_for_address_type
 
   named_scope :eligible_for_group, :conditions => "address1 <> ''"
   
@@ -98,6 +98,12 @@ class Address < ActiveRecord::Base
     def validate_phone_numbers
       if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
         errors.add(:home_phone, "is not valid")
+      end
+    end
+
+    def verify_number_of_contacts_valid_for_address_type
+      if contact2_id.nil? && self.address_type && !self.address_type.only_one_main_contact?
+        errors.add_to_base("This address type requires primary and secondary contacts be specified")
       end
     end
 
