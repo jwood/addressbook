@@ -1,7 +1,7 @@
 module AddressHelper
 
   def secondary_contact_style
-    if @address.contact2_id.nil?
+    if @address.address_type.ergo.only_one_main_contact?
       "display:none;"
     else
       ""
