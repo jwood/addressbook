@@ -85,6 +85,10 @@ class Address < ActiveRecord::Base
     id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
   end
 
+  def only_has_one_contact?
+    self.contacts(true).size == 1
+  end
+
   private
 
     def sanitize_phone_numbers

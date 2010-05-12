@@ -263,6 +263,18 @@ class AddressTest < ActiveSupport::TestCase
     assert_equal '3125551213', address.home_phone
   end
 
+  test "should be able to easily tell if an address only has one contact" do
+    contact = contacts(:john_doe)
+    contact.assign_address(addresses(:chicago))
+    contact.save
+    assert addresses(:chicago).only_has_one_contact?
+
+    contact = contacts(:jane_doe)
+    contact.assign_address(addresses(:chicago))
+    contact.save
+    assert !addresses(:chicago).only_has_one_contact?
+  end
+
   private
 
     def setup_link_unlink_test

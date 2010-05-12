@@ -1,6 +1,4 @@
 Enhancements
 ------------
-* Make the primary and secondary contacts links to the actual contact
 * Allow user to select font color, size, weight, and alignment for labels
-* Should be able to easily see all contacts associated with an address
 
