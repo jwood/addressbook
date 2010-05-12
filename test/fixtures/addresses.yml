@@ -4,6 +4,7 @@ chicago:
   city: 'Chicago'
   state: 'IL'
   zip: '60606'
+  address_type: individual
   home_phone: '312-555-1234'
 
 alsip:
@@ -11,13 +12,16 @@ alsip:
   city: 'Alsip'
   state: 'IL'
   zip: '60803'
+  address_type: individual
   home_phone: '708-111-2222'
 
 tinley_park:
   address1: '789 Oakland Pl.'
   city: 'Tinley Park'
   state: 'IL'
+  address_type: individual
   zip: '60477'
 
 phone_only:
+  address_type: individual
   home_phone: '708-111-3333'
