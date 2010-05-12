@@ -273,8 +273,17 @@ class AddressTest < ActiveSupport::TestCase
 
   test "should not be able to edit the address type of an address without the required primary and secondary contacts" do
     assign_contact_to_address(contacts(:john_doe), addresses(:chicago))
+
     address = addresses(:chicago)
-    address.address_type = AddressType.family
+    address.address_type = address_types(:family)
+    assert !address.valid?
+    assert address.errors.full_messages.include?("This address type requires primary and secondary contacts be specified")
+
+    address.address_type = address_types(:married_couple)
+    assert !address.valid?
+    assert address.errors.full_messages.include?("This address type requires primary and secondary contacts be specified")
+
+    address.address_type = address_types(:unmarried_couple)
     assert !address.valid?
     assert address.errors.full_messages.include?("This address type requires primary and secondary contacts be specified")
   end
