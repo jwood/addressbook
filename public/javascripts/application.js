@@ -2,9 +2,6 @@ dojo.require("dijit.layout.AccordionContainer");
 dojo.require("dijit.layout.ContentPane");
 dojo.require("dijit.layout.BorderContainer");
 
-/* 
- * Code to disable/enable the second contact for an address 
- */
 function adjustSelectableContacts() {
   var INDIVIDUAL = 1;
   var SINGLE_PARENT = 5;
@@ -19,20 +16,11 @@ function adjustSelectableContacts() {
   }
 }
 
-/*
- * Updates the create labels link to specify the proper label type
- */
 function updateCreateLabelsLink(url) {
-  var selector = document.getElementById('labelTypeSelector');
-  var newLinkHtml = '<a href="' + url + '?label_type=' + selector.value + 
-    '" onclick="window.open(this.href,\'label_window\',\'label_window\');return false;"' + 
-    '>Create Labels</a>';
-  Element.update('createLabelsLink', newLinkHtml);
+  var newLinkHtml = '<a href="' + url + '?label_type=' + jQuery('#labelTypeSelector').val() + '" target="new"' + '>Create Labels</a>';
+  $('createLabelsLink').update(newLinkHtml);
 }
 
-/*
- * Functions used while maintaining group members
- */
 function includeSelectedMembers() {
   $('not_included').childElements().each(function(s) {
     if (s.selected == true) {
@@ -95,6 +83,6 @@ function closeFancybox() {
 }
 
 function displayMaintainGroupMembers() {
-  Element.hide('displayGroupMembers');
-  Element.show('editGroupMembers');
+  $('displayGroupMembers').hide();
+  $('editGroupMembers').show();
 }
