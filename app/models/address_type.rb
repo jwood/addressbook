@@ -37,9 +37,9 @@ class AddressType < ActiveRecord::Base
     elsif get_type == :individual
       "#{address.primary_contact.prefix} #{address.primary_contact.first_name} #{address.primary_contact.last_name}"
     elsif get_type == :married_couple
-      "#{address.primary_contact.prefix} & #{address.secondary_contact.prefix} #{address.primary_contact.first_name} & #{address.secondary_contact.first_name} #{address.primary_contact.last_name}"
+      "#{address.primary_contact.prefix} & #{address.secondary_contact.ergo.prefix} #{address.primary_contact.first_name} & #{address.secondary_contact.ergo.first_name} #{address.primary_contact.last_name}"
     elsif get_type == :unmarried_couple
-      "#{address.primary_contact.prefix} #{address.primary_contact.first_name} #{address.primary_contact.last_name} & #{address.secondary_contact.prefix} #{address.secondary_contact.first_name} #{address.secondary_contact.last_name}"
+      "#{address.primary_contact.prefix} #{address.primary_contact.first_name} #{address.primary_contact.last_name} & #{address.secondary_contact.ergo.prefix} #{address.secondary_contact.ergo.first_name} #{address.secondary_contact.ergo.last_name}"
     elsif get_type == :single_parent
       "The #{address.primary_contact.last_name} Family"
     end
