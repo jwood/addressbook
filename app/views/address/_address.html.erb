@@ -35,19 +35,24 @@
   <% if !address.id.blank? && !address.contacts.blank? -%>
     <h3>Address Contacts</h3>
     <div class="section">
-      <table>
+      <table class="addressContacts">
         <tr>
-          <td><label>Contact 1:</label></td>
-          <td>
-            <%= create_contact_dropdown("contact1") %>
-          </td>
+          <th>Primary</th>
+          <th class="secondary_contact_header" style="<%= secondary_contact_style %>">Secondary</th>
+          <th>Name</th>
         </tr>
-        <%= hidden_tr_if (!address.address_type || address.address_type.only_one_main_contact?), :id => "addressContact2" %>
-          <td><label>Contact 2:</label></td>
-          <td>
-            <%= create_contact_dropdown("contact2") %>
-          </td>
-        </tr>
+        <% address.contacts.each do |contact| -%>
+          <tr>
+            <td><%= radio_button_tag 'address[contact1_id]', contact.id, address.contact1_id == contact.id %></td>
+            <td class="secondary_contact_column" style="<%= secondary_contact_style %>"><%= radio_button_tag 'address[contact2_id]', contact.id, address.contact2_id == contact.id %></td>
+            <td>
+              <%= link_to_remote(contact.full_name_last_first,
+                  :url => { :controller => :contact, :action => :edit_contact, :id => contact },
+                  :method => 'get', :complete => "$('spinner').style.visibility = 'hidden';",
+                  :loading => "$('spinner').style.visibility = 'visible';") %>
+            </td>
+          </tr>
+        <% end -%>
       </table>
     </div>
   <% end -%>

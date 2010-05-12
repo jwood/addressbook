@@ -5,14 +5,15 @@ dojo.require("dijit.layout.BorderContainer");
 function adjustSelectableContacts() {
   var INDIVIDUAL = 1;
   var SINGLE_PARENT = 5;
-  var addressContact2 = document.getElementById("addressContact2");
   var addressTypeElement = document.getElementById("addressType");
 
   if (addressTypeElement.value != INDIVIDUAL &&
       addressTypeElement.value != SINGLE_PARENT) {
-    addressContact2.style.visibility = "visible";
+    jQuery(".secondary_contact_header").show();
+    jQuery(".secondary_contact_column").show();
   } else {
-    addressContact2.style.visibility = "hidden";
+    jQuery(".secondary_contact_header").hide();
+    jQuery(".secondary_contact_column").hide();
   }
 }
 

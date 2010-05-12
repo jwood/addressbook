@@ -66,6 +66,16 @@ html, body {
   z-index: 10;
 }
 
+/* BEGIN - Styles for addresses */
+.addressContacts th {
+  padding: 10px;
+}
+
+.addressContacts td {
+  text-align: center;
+}
+/* END - Styles for addresses */
+
 /* BEGIN - Styles for group maintenance */
 .selectGroupAddresses {
   width: 235px;
