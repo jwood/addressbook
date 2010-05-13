@@ -3,17 +3,13 @@ dojo.require("dijit.layout.ContentPane");
 dojo.require("dijit.layout.BorderContainer");
 
 function adjustSelectableContacts() {
-  var INDIVIDUAL = 1;
-  var SINGLE_PARENT = 5;
-  var addressTypeElement = document.getElementById("addressType");
-
-  if (addressTypeElement.value != INDIVIDUAL &&
-      addressTypeElement.value != SINGLE_PARENT) {
-    jQuery(".secondary_contact_header").show();
-    jQuery(".secondary_contact_column").show();
-  } else {
+  var addressTypeDescription = jQuery("#addressType option[value='" + jQuery("#addressType").val() + "']").text();
+  if (addressTypeDescription == "Individual" || addressTypeDescription == "Single Parent") {
     jQuery(".secondary_contact_header").hide();
     jQuery(".secondary_contact_column").hide();
+  } else {
+    jQuery(".secondary_contact_header").show();
+    jQuery(".secondary_contact_column").show();
   }
 }
 
