@@ -155,7 +155,8 @@ class Address < ActiveRecord::Base
         errors.add_to_base("You must specify a phone number or a full address")
       end
 
-      if (!address1.blank? || !city.blank? || !state.blank? || !zip.blank?) && is_address_empty?
+      if (!address1.blank? || !city.blank? || !state.blank? || !zip.blank?) &&
+              (address1.blank? || city.blank? || state.blank? || zip.blank?)
         errors.add_to_base("You must specify a valid address")
       end
     end
