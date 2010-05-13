@@ -22,6 +22,8 @@ class Phone
     if Phone.valid?(phone_number)
       phone_number = Phone.sanitize(phone_number)
       "#{phone_number[0..2]}-#{phone_number[3..5]}-#{phone_number[6..9]}"
+    else
+      phone_number
     end
   end
 
