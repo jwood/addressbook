@@ -25,7 +25,7 @@ class Address < ActiveRecord::Base
   def different_from?(other)
     if other.nil? || (address1 != other.address1 || address2 != other.address2 ||
                       city != other.city || state != other.state ||
-                      zip != other.zip || home_phone != other.home_phone)
+                      zip != other.zip || Phone.sanitize(home_phone) != Phone.sanitize(other.home_phone))
       true
     else
       false
