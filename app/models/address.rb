@@ -81,8 +81,12 @@ class Address < ActiveRecord::Base
       "#{other.primary_contact.last_name}#{other.primary_contact.first_name}"
   end
 
-  def is_empty?
+  def is_address_empty?
     id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
+  end
+
+  def is_empty?
+    is_address_empty? && home_phone.blank?
   end
 
   def only_has_one_contact?

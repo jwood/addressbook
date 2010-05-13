@@ -21,7 +21,7 @@ class Contact < ActiveRecord::Base
   end
 
   def has_address?
-    !address.blank? && !address.is_empty?
+    !address.blank? && !address.is_address_empty?
   end
 
   def assign_address(new_address)

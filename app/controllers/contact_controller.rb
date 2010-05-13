@@ -24,7 +24,7 @@ class ContactController < ApplicationController
       @address_list = Address.find_for_list if new_address_saved
     end
 
-    @address = @contact.address || Address.new
+    @address = new_address || @contact.address || Address.new
     render :template => "contact/#{render_target}"
   end
 
@@ -82,12 +82,8 @@ class ContactController < ApplicationController
         other.address
       elsif specified_address?
         address = Address.new(params[:address])
-        if address.valid?
-          address
-        else
-          @contact.errors.add_to_base("Please specify a valid address")
-          nil
-        end
+        @contact.errors.add_to_base("Please specify a valid address") unless address.valid?
+        address
       end
     end
 

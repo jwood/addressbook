@@ -32,7 +32,7 @@ module ContactHelper
   end
 
   def display_style_for_specify_address
-    (@address.blank? || @address.is_empty?) ? "" : "display:none;"
+    (@address.blank? || @address.is_address_empty?) ? "" : "display:none;"
   end
   
   def display_style_for_address

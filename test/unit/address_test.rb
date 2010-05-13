@@ -236,9 +236,9 @@ class AddressTest < ActiveSupport::TestCase
   end
 
   test "addresses with no information or only a home phone number should be considered empty" do
-    assert Address.new.is_empty?
-    assert Address.new(:home_phone => '312-555-1212').is_empty?
-    assert !addresses(:alsip).is_empty?
+    assert Address.new.is_address_empty?
+    assert Address.new(:home_phone => '312-555-1212').is_address_empty?
+    assert !addresses(:alsip).is_address_empty?
   end
 
   test "should be able to get the mailing address for an address" do
