@@ -300,6 +300,12 @@ class AddressTest < ActiveSupport::TestCase
     assert !address.valid?
   end
 
+  test "an address with an invalid zip code should not be considered valid" do
+    address = addresses(:chicago)
+    address.zip = "abcd"
+    assert !address.valid?
+  end
+
   private
 
     def assign_contact_to_address(contact, address)

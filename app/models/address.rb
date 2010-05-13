@@ -9,6 +9,7 @@ class Address < ActiveRecord::Base
   before_save :sanitize_phone_numbers
 
   validates_inclusion_of :state, :in => State.codes, :allow_blank => true
+  validates_format_of :zip, :with => %r{(^\d{5}$)|(^\d{5}-\d{4}$)}, :allow_blank => true
   validate :verify_required_info, :validate_phone_numbers, :verify_number_of_contacts_valid_for_address_type
 
   named_scope :eligible_for_group, :conditions => "address1 <> ''"
