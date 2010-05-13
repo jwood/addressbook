@@ -306,6 +306,12 @@ class AddressTest < ActiveSupport::TestCase
     assert !address.valid?
   end
 
+  test "should not consider partial addresses valid" do
+    address = addresses(:chicago)
+    address.city = ""
+    assert !address.valid?
+  end
+
   private
 
     def assign_contact_to_address(contact, address)
