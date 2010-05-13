@@ -241,6 +241,12 @@ class AddressTest < ActiveSupport::TestCase
     assert !addresses(:alsip).is_address_empty?
   end
 
+  test "address with no street address but a valid home phone should not be considered empty" do
+    assert Address.new.is_empty?
+    assert !Address.new(:home_phone => '312-555-1212').is_empty?
+    assert !addresses(:alsip).is_empty?
+  end
+
   test "should be able to get the mailing address for an address" do
     assert_equal "123 Main St., Apt. 109, Chicago, IL 60606", addresses(:chicago).mailing_address
     assert_equal "456 Maple Ave., Alsip, IL 60803", addresses(:alsip).mailing_address
