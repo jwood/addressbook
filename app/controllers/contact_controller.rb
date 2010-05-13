@@ -54,8 +54,10 @@ class ContactController < ApplicationController
   
   def remove_address_from_contact
     @contact = Contact.find_by_id(params[:id])
+    @old_address = @contact.address
     @old_address_id = @contact.remove_address
     @saved = true unless @old_address_id.nil?
+    @address_list = Address.find_for_list
     render :template => 'contact/edit_contact'
   end
 
