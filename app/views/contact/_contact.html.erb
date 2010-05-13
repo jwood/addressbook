@@ -1,5 +1,6 @@
 <%= error_messages_for 'contact' %>
-<% form_remote_tag :url => { :action => :edit_contact, :id => contact } do -%>
+<% form_remote_tag :url => { :action => :edit_contact, :id => contact },
+                   :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
 
   <h3>Personal Info</h3>
   <div class="section">
@@ -89,7 +90,9 @@
     <% if contact.has_address? -%>
       <p>
         <%= link_to_function "Edit Address", "editAddress();" %> |
-        <%= link_to_remote("Address Details", :url => { :controller => :address, :action => :edit_address, :id => contact.address }) %> |
+        <%= link_to_remote("Address Details",
+              :url => { :controller => :address, :action => :edit_address, :id => contact.address },
+              :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %> |
         <%= link_to_remote("Delete Address",
               :url => { :action => :remove_address_from_contact, :id => contact },
               :confirm => "Are you sure you would like to delete the address for #{contact.first_name} #{contact.last_name}?") %> |

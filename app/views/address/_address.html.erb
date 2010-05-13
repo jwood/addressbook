@@ -1,5 +1,6 @@
 <%= error_messages_for 'address' %>
-<% form_remote_tag :url => { :action => :edit_address, :id => address } do -%>
+<% form_remote_tag :url => { :action => :edit_address, :id => address },
+                   :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
     
   <h3>Address Type</h3>
   <div class="section">

@@ -22,7 +22,8 @@
           <%= render :partial => 'contact_list', :collection => @contact_list %>
         </div>
       </ul>
-      <% form_remote_tag :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get' do -%>
+      <% form_remote_tag :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get',
+                         :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
         <%= submit_tag "Add Contact" %>
       <% end -%>
     </div>
@@ -41,7 +42,8 @@
           <%= render :partial => 'group_list', :collection => @group_list %>
         </div>
       </ul>
-      <% form_remote_tag :url => { :controller => 'group', :action => :edit_group }, :method => 'get' do %>
+      <% form_remote_tag :url => { :controller => 'group', :action => :edit_group }, :method => 'get',
+                         :complete => "hideSpinner();", :loading => "showSpinner();" do %>
         <%= submit_tag "Add Group" %>
       <% end %>
     </div>

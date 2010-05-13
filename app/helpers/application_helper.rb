@@ -15,11 +15,11 @@ module ApplicationHelper
       html =  '<p>'
       html << link_to_remote("Cancel",
                 :url => { :action => "edit_#{obj_type}", :id => object },
-                :method => 'get')
+                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();")
       html << ' | '
       html << link_to_remote("Delete",
                 :url => { :action => "delete_#{obj_type}", :id => object },
-                :confirm => confirm)
+                :confirm => confirm, :complete => "hideSpinner();", :loading => "showSpinner();")
       html << '</p>'
       html
     end

@@ -1,5 +1,6 @@
 <%= error_messages_for 'group' %>
-<% form_remote_tag :url => { :action => :edit_group, :id => group } do -%>
+<% form_remote_tag :url => { :action => :edit_group, :id => group },
+                   :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
 
   <h3>Group Info</h3>
   <div class="section">
