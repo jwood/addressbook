@@ -33,14 +33,14 @@ would be the following for the specific address types:
 "Family" - "Mr. & Mrs. Joe & Jane Smith & Family"  
 "Married Couple" - "Mr. & Mrs. Joe & Jane Smith"  
 "Unmarried Couple" - "Mr. Joe Smith & Ms. Jane Smith"  
+"Single Parent" - "Mr. Joe Smith & Family"  
 
 The home phone is also stored along with the address, since home phones are
 specific to a home.  
  
-You can specify the 2 main contacts for an address, in the "Contact 1" and 
-"Contact 2" fields.  The drop down box will only let you select a contact that
-is currently linked to the address.  These contacts are used in constructing
-the addressee (see above).
+You can specify the two main contacts for an address by selecting the primary
+and secondary contact on the address details page.  These contacts are used
+in constructing the addressee (see above).
  
 ### Groups
 Groups provide a way to organize your contacts.  Each group has a name, and 
