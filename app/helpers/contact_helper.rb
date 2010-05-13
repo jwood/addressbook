@@ -31,12 +31,12 @@ module ContactHelper
     html
   end
 
+  def display_style_for_address
+    (@address.blank? || @address.is_address_empty?) ? "display:none;" : ""
+  end
+
   def display_style_for_specify_address
     (@address.blank? || @address.is_address_empty?) ? "" : "display:none;"
   end
   
-  def display_style_for_address
-    @address.blank? ? "display:none;" : ""
-  end
-
 end

@@ -79,7 +79,7 @@
 
       <p>
         <%= radio_button_tag('address_specification_type', 'specified_address',
-              !@address.ergo.is_empty?, :id => 'specified_address') %>
+              (!@address.ergo.is_empty? || !@address.ergo.valid?), :id => 'specified_address') %>
         <%= label_tag 'specified_address', 'Associate contact the specified address' %>
         <div class="addressOption">
           <%= render :partial => 'shared/address_fields' %>

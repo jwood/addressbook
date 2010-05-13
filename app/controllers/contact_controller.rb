@@ -24,7 +24,12 @@ class ContactController < ApplicationController
       @address_list = Address.find_for_list if new_address_saved
     end
 
-    @address = new_address || @contact.address || Address.new
+    if new_address && new_address.different_from?(@contact.address)
+      @address = new_address
+    else
+      @address = @contact.address || Address.new
+    end
+
     render :template => "contact/#{render_target}"
   end
 
