@@ -294,6 +294,12 @@ class AddressTest < ActiveSupport::TestCase
     assert address.errors.full_messages.include?("This address type requires primary and secondary contacts be specified")
   end
 
+  test "an address with an invalid state code should not pass validation" do
+    address = addresses(:chicago)
+    address.state = "XY"
+    assert !address.valid?
+  end
+
   private
 
     def assign_contact_to_address(contact, address)

@@ -13,7 +13,7 @@
   </tr>
   <tr>
     <td><label>State:</label></td>
-    <td><%= text_field 'address', 'state', 'size' => 5 %></td>
+    <td><%= select 'address', 'state', State.options_for_select %></td>
   </tr>
   <tr>
     <td><label>Zip Code:</label></td>
