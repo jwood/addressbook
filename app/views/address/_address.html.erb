@@ -48,8 +48,7 @@
             <td>
               <%= link_to_remote(contact.full_name_last_first,
                   :url => { :controller => :contact, :action => :edit_contact, :id => contact },
-                  :method => 'get', :complete => "$('spinner').style.visibility = 'hidden';",
-                  :loading => "$('spinner').style.visibility = 'visible';") %>
+                  :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
             </td>
           </tr>
         <% end -%>

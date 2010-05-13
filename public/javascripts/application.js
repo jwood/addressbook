@@ -87,3 +87,11 @@ function displayMaintainGroupMembers() {
   $('displayGroupMembers').hide();
   $('editGroupMembers').show();
 }
+
+function showSpinner() {
+  $('spinner').style.visibility = 'visible';
+}
+
+function hideSpinner() {
+  $('spinner').style.visibility = 'hidden';
+}

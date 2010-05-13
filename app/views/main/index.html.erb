@@ -2,8 +2,7 @@
   <div id="menu" dojoType="dijit.layout.AccordionContainer" region="leading">
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
       <% form_remote_tag :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
-           :complete => "$('spinner').style.visibility = 'hidden';",
-           :loading => "$('spinner').style.visibility = 'visible';" do %>
+           :complete => "hideSpinner();", :loading => "showSpinner();" do %>
         <table>
           <tr>
             <td>Last Name:</td>
