@@ -6,7 +6,7 @@ class Address < ActiveRecord::Base
   belongs_to :primary_contact, :class_name => 'Contact', :foreign_key => "contact1_id"
   belongs_to :secondary_contact, :class_name => 'Contact', :foreign_key => "contact2_id"
 
-  before_save :sanitize_phone_numbers
+  before_save :sanitize_phone_numbers, :nullify_secondary_contact_if_address_type_only_has_one_main_contact
 
   validates_inclusion_of :state, :in => State.codes, :allow_blank => true
   validates_format_of :zip, :with => %r{(^\d{5}$)|(^\d{5}-\d{4}$)}, :allow_blank => true
@@ -99,6 +99,10 @@ class Address < ActiveRecord::Base
 
     def sanitize_phone_numbers
       self.home_phone = Phone.sanitize(self.home_phone)
+    end
+
+    def nullify_secondary_contact_if_address_type_only_has_one_main_contact
+      self.secondary_contact = nil if self.address_type.ergo.only_one_main_contact?
     end
 
     def validate_phone_numbers

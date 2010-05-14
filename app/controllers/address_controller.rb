@@ -6,7 +6,6 @@ class AddressController < ApplicationController
     if request.post?
       new_address = true if params[:id].nil?
       @address.attributes = params[:address]
-      @address.secondary_contact = nil if @address.address_type.only_one_main_contact?
       @saved = @address.save
     end
     @address_list = Address.find_for_list if new_address
