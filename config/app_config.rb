@@ -5,5 +5,3 @@ config.app_config.user_address = {
   :zip => "60606"
 }
 
-config.app_config.htpasswd_file = '/path/to/my/password_file'
-
