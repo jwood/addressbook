@@ -1,5 +1,6 @@
 html, body {
-  width: 100%;
+  width: auto;
+  height: auto;
   -webkit-text-size-adjust: none;
 }
 
