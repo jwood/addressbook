@@ -1,5 +1,9 @@
 class ContactController < ApplicationController
 
+  def show_contact
+    @contact = Contact.find_by_id(params[:id])
+  end
+
   def edit_contact
     render_target = 'edit_contact'
     @contact = Contact.find_by_id(params[:id]) || Contact.new

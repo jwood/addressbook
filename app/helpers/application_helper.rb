@@ -67,5 +67,9 @@ module ApplicationHelper
   def highlight_in_list(object, page)
     page.visual_effect(:highlight, create_id_for(object), :duration => 2)
   end
+
+  def phone_to(phone_number)
+    link_to Phone.format(phone_number), "tel:" + phone_number
+  end
   
 end
