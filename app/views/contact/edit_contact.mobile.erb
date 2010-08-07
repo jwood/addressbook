@@ -1,0 +1,58 @@
+<% form_remote_tag :url => { :action => :edit_contact, :id => @contact },
+                   :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
+
+  <h3>Personal Info</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Prefix:</label></td>
+        <td><%= text_field 'contact', 'prefix', 'size' => 5, 'id' => 'top' %></td>
+      </tr>
+        <tr>
+        <td><label>First Name:</label></td>
+        <td><%= text_field 'contact', 'first_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Middle Name:</label></td>
+        <td><%= text_field 'contact', 'middle_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Last Name:</label></td>
+        <td><%= text_field 'contact', 'last_name', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Birthdate:</label></td>
+        <td><%= text_field 'contact', 'birthday', 'size' => 15 %></td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Contact Info</h3>
+  <div class="section">
+    <table>
+      <tr>
+        <td><label>Home Phone:</label></td>
+        <td><%= text_field_tag 'address[home_phone]', Phone.format(@address.ergo.home_phone), 'size' => 20 %></td>
+        </td>
+      </tr>
+      <tr>
+        <td><label>Work Phone:</label></td>
+        <td><%= text_field_tag 'contact[work_phone]', Phone.format(@contact.work_phone), 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Cell Phone:</label></td>
+        <td><%= text_field_tag 'contact[cell_phone]', Phone.format(@contact.cell_phone), 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Email Address:</label></td>
+        <td><%= text_field 'contact', 'email', 'size' => 20 %></td>
+      </tr>
+      <tr>
+        <td><label>Web Page:</label></td>
+        <td><%= text_field 'contact', 'website', 'size' => 20 %></td>
+      </tr>
+    </table>
+  </div>
+
+  <p><%= submit_tag "Save" %></p>
+<% end -%>

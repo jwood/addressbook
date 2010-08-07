@@ -1,0 +1,17 @@
+html, body {
+  width: 100%;
+  -webkit-text-size-adjust: none;
+}
+
+#content {
+  padding: 0px;
+}
+
+.section {
+  width: 90%;
+  margin: 0px;
+  border: 1px solid black;
+  background: #e1ebfb;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}

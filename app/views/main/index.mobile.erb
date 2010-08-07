@@ -1,0 +1,5 @@
+<ul id="contactList">
+  <% @contact_list.each do |contact| -%>
+    <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => 'edit_contact', :id => contact %></li>
+  <% end -%>
+</ul>
