@@ -7,4 +7,14 @@ class ApplicationController < ActionController::Base
     htpasswd_file = AppConfig.htpasswd_file
     htpasswd :file => htpasswd_file unless htpasswd_file.blank?
   end
+
+  def use_mobile_view
+    session[:mobile_view] = true
+    redirect_to root_path
+  end
+
+  def use_desktop_view
+    session[:mobile_view] = false
+    redirect_to root_path
+  end
 end

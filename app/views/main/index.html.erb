@@ -14,6 +14,7 @@
       <ul>
         <div id="contactSearchResults"></div>
       </ul>
+      <p><%= link_to 'Switch to mobile view', :action => :use_mobile_view if is_mobile_device? %></p>
     </div>
 
     <div dojoType="dijit.layout.AccordionPane" title="Contacts" class="menuContent">
