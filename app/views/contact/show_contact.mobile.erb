@@ -1,45 +1,47 @@
 <h2><%= @contact.prefix %> <%= @contact.first_name %> <%= @contact.last_name %></h2>
 
-<h3>Contact Info</h3>
-<div class="section">
-  <table>
-    <% if @contact.has_address? && @contact.address.home_phone -%>
-      <tr>
-        <td><label>Home Phone:</label></td>
-        <td><%= phone_to(@contact.address.home_phone) %></td>
-        </td>
-      </tr>
-    <% end -%>
+<% if has_contact_info_to_display?(@contact) -%>
+  <h3>Contact Info</h3>
+  <div class="section">
+    <table>
+      <% if @contact.has_address? && !@contact.address.home_phone.blank? -%>
+        <tr>
+          <td><label>Home:</label></td>
+          <td><%= phone_to(@contact.address.home_phone) %></td>
+          </td>
+        </tr>
+      <% end -%>
 
-    <% if @contact.work_phone -%>
-      <tr>
-        <td><label>Work Phone:</label></td>
-        <td><%= phone_to(@contact.work_phone) %></td>
-      </tr>
-    <% end -%>
+      <% unless @contact.work_phone.blank? -%>
+        <tr>
+          <td><label>Work:</label></td>
+          <td><%= phone_to(@contact.work_phone) %></td>
+        </tr>
+      <% end -%>
 
-    <% if @contact.cell_phone -%>
-      <tr>
-        <td><label>Cell Phone:</label></td>
-        <td><%= phone_to(@contact.cell_phone) %></td>
-      </tr>
-    <% end -%>
+      <% unless @contact.cell_phone.blank? -%>
+        <tr>
+          <td><label>Cell:</label></td>
+          <td><%= phone_to(@contact.cell_phone) %></td>
+        </tr>
+      <% end -%>
 
-    <% if @contact.email -%>
-      <tr>
-        <td><label>Email Address:</label></td>
-        <td><%= mail_to @contact.email %></td>
-      </tr>
-    <% end -%>
+      <% unless @contact.email.blank? -%>
+        <tr>
+          <td><label>Email:</label></td>
+          <td><%= mail_to @contact.email %></td>
+        </tr>
+      <% end -%>
 
-    <% if @contact.website -%>
-      <tr>
-        <td><label>Web Page:</label></td>
-        <td><%= auto_link @contact.website %></td>
-      </tr>
-    <% end -%>
-  </table>
-</div>
+      <% unless @contact.website.blank? -%>
+        <tr>
+          <td><label>Web:</label></td>
+          <td><%= auto_link @contact.website %></td>
+        </tr>
+      <% end -%>
+    </table>
+  </div>
+<% end -%>
 
 <% if @contact.has_address? -%>
   <h3>Address</h3>
@@ -53,4 +55,6 @@
   </div>
 <% end -%>
 
-<p><%= link_to "Back", root_path %></p>
+<div id="navLinks">
+  <p><%= link_to "Back", root_path %></p>  
+</div>
