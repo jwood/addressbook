@@ -12,7 +12,7 @@ module ContactHelper
     html = "<a href=\"#{map_link}\" target=\"new\">Map</a>"
 
     user_address = AppConfig.user_address
-    unless user_address.blank?
+    if !user_address.blank? && !is_mobile_device?
       directions_query = 'daddr=' +
         contact.address.address1 + ',' +
         contact.address.city + ',' +
