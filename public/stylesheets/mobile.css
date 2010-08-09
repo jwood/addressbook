@@ -46,6 +46,10 @@ ul {
   font-size: 18px;
 }
 
+#address, #mapLinks {
+  text-align: center;
+}
+
 h2 {
   font-size: 1.7em;
 }

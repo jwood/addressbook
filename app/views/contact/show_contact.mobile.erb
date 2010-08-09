@@ -51,7 +51,7 @@
       <%= h(@contact.address.address2) + "<br />" unless @contact.address.address2.blank? %>
       <%= h(@contact.address.city) + ", " + h(@contact.address.state) + " " + h(@contact.address.zip) %>
     </p>
-    <p><%= add_map_and_directions_links(@contact) %></p>
+    <p id="mapLinks"><%= add_map_and_directions_links(@contact) %></p>
   </div>
 <% end -%>
 
