@@ -67,7 +67,7 @@ class ContactController < ApplicationController
 
   def find_contact
     @contact_list = Contact.find(:all, 
-      :conditions => ["last_name like ?", params[:last_name] << "%"],
+      :conditions => ["upper(last_name) like ?", params[:last_name].upcase << "%"],
       :order => 'last_name, first_name')
   end
   
