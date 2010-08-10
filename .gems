@@ -1,0 +1,4 @@
+rails -v 2.3.5
+pdf-labels --version 2.0.1
+facets --version 2.4.4
+
