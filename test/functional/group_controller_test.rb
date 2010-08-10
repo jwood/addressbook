@@ -43,8 +43,7 @@ class GroupControllerTest < ActionController::TestCase
     group.save
 
     get :create_labels, { :id => group.id, :label_type => 'Avery 8660' }
-    assert_response :redirect
-    assert_redirected_to 'mailing_labels.pdf'
+    assert_response :success
   end
   
 end

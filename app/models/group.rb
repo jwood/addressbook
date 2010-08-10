@@ -1,7 +1,7 @@
 require 'pdf/label'
 
 class Group < ActiveRecord::Base
-  LABELS_PATH = File::join RAILS_ROOT, "public"
+  LABELS_PATH = "/tmp"
   LABELS_FILE = "mailing_labels.pdf"
 
   has_and_belongs_to_many :addresses
@@ -37,7 +37,9 @@ class Group < ActiveRecord::Base
       pos = pos.next
     end
 
-    p.save_as("#{LABELS_PATH}/#{LABELS_FILE}")
+    file_path = "#{LABELS_PATH}/#{LABELS_FILE}"
+    p.save_as(file_path)
+    file_path
   end
 
 end

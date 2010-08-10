@@ -22,8 +22,8 @@ class GroupController < ApplicationController
 
   def create_labels
     @group = Group.find_by_id(params[:id])
-    @group.create_labels(params[:label_type])
-    redirect_to("/#{Group::LABELS_FILE}")
+    file_path = @group.create_labels(params[:label_type])
+    send_data(File.read(file_path), :filename => "labels.pdf", :type => "application/pdf")
     include_common_data
   end
   
