@@ -1,10 +1,15 @@
 class Settings < ActiveRecord::Base
 
   def self.save_home_address(address)
-    Settings.update(:address, address.address1)
-    Settings.update(:city, address.city)
-    Settings.update(:state, address.state)
-    Settings.update(:zip, address.zip)
+    if address.valid?
+      Settings.update(:address, address.address1)
+      Settings.update(:city, address.city)
+      Settings.update(:state, address.state)
+      Settings.update(:zip, address.zip)
+      true
+    else
+      false
+    end
   end
 
   def self.home_address
@@ -12,7 +17,12 @@ class Settings < ActiveRecord::Base
   end
 
   def self.save_password_file(password_file)
-    Settings.update(:password_file, password_file)
+    if password_file.blank? || File.exist?(password_file)
+      Settings.update(:password_file, password_file)
+      true
+    else
+      false
+    end
   end
 
   def self.password_file

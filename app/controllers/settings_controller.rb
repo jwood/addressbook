@@ -4,10 +4,7 @@ class SettingsController < ApplicationController
     @address = Settings.home_address
     if request.post?
       @address = Address.new(params[:address])
-      if @address.valid?
-        Settings.save_home_address(@address)
-        @saved = true
-      end
+      @saved = true if Settings.save_home_address(@address)
     end
   end
 
@@ -15,8 +12,11 @@ class SettingsController < ApplicationController
     @password_file = Settings.password_file
     if request.post?
       @password_file = params[:password_file]
-      Settings.save_password_file(@password_file)
-      @saved = true
+      if Settings.save_password_file(@password_file)
+        @saved = true
+      else
+        flash.now[:notice] = 'The password file you specified could not be found'
+      end
     end
   end
 
