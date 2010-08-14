@@ -42,7 +42,7 @@ class GroupControllerTest < ActionController::TestCase
     group.addresses << @eligible_for_group
     group.save
 
-    get :create_labels, { :id => group.id, :label_type => 'Avery 8660' }
+    get :create_labels, { :id => group.id, :label_type => 'Avery__8660' }
     assert_response :success
   end
   

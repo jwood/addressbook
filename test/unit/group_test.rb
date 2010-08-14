@@ -19,7 +19,7 @@ class GroupTest < ActiveSupport::TestCase
     label_file = File.join(Group::LABELS_PATH, Group::LABELS_FILE)
     FileUtils.rm_f label_file
     assert !File.exist?(label_file)
-    group.create_labels('Avery 8660')
+    group.create_labels('Avery__8660')
     assert File.exist?(label_file)
   end
 
