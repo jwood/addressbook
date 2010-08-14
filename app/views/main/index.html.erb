@@ -57,7 +57,11 @@
                 :url => { :controller => :settings, :action => 'address' },
                 :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
           </li>
-          <li>Password file</li>
+          <li>
+            <%= link_to_remote('Password File', :html => { :id => 'edit_password_file' },
+                :url => { :controller => :settings, :action => 'password_file' },
+                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
+          </li>
         </div>
       </ul>
     </div>
