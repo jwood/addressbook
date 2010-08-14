@@ -4,6 +4,10 @@
      :loading => "showSpinner();" do -%>
 
   <h3>Home Address</h3>
+  <p>
+    If a home address is specified, it is used to calculate directions from the home
+    address to the address of your contacts.
+  </p>
   <div class="section">
     <%= render :partial => 'shared/address_fields', :locals => { :address => address, :disable_address2 => true } %>
   </div>
