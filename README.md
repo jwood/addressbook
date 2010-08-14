@@ -8,8 +8,8 @@ and more.
 * gem install rails
 * rake gems:install
 * Copy config/database.yml.template to config/database.yml and configure your database
-* Copy config/app_config.rb.template to config/app_config.rb and setup your preferences
 * rake db:migrate
+* Once the app is running, be sure to set your home address in the settings section
 
 
 ## Description

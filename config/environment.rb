@@ -10,8 +10,6 @@
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-require 'plugins/app_config/lib/configuration'
-
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
   
@@ -45,8 +43,6 @@ Rails::Initializer.run do |config|
 
   config.gem 'pdf-labels', :version => '2.0.1', :lib => 'pdf/label'
   config.gem 'facets', :version => '2.4.4'
-
-  eval(IO.read(RAILS_ROOT + '/config/app_config.rb'), binding, RAILS_ROOT + '/config/app_config.rb')
 end
 
 # Add new inflection rules using the following format 

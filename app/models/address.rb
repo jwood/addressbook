@@ -84,7 +84,11 @@ class Address < ActiveRecord::Base
   end
 
   def is_address_empty?
-    id.blank? || address1.blank? || city.blank? || state.blank? || zip.blank?
+    id.blank? || is_street_address_empty?
+  end
+
+  def is_street_address_empty?
+    address1.blank? || city.blank? || state.blank? || zip.blank?
   end
 
   def is_empty?

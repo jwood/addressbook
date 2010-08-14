@@ -1,5 +1,3 @@
-require 'app_config'
-
 module ContactHelper
 
   def add_map_and_directions_links(contact)
@@ -11,18 +9,18 @@ module ContactHelper
     map_link = 'http://maps.google.com/maps?q=' + map_query
     html = "<a href=\"#{map_link}\" target=\"new\">Map</a>"
 
-    user_address = AppConfig.user_address
-    if !user_address.blank? && !is_mobile_device?
+    user_address = Settings.home_address
+    if !user_address.is_street_address_empty? && !is_mobile_device?
       directions_query = 'daddr=' +
         contact.address.address1 + ',' +
         contact.address.city + ',' +
         contact.address.state + ' ' +
         contact.address.zip
       directions_query += '&saddr=' +
-        user_address[:address] + ',' +
-        user_address[:city] + ',' +
-        user_address[:state] + ' ' +
-        user_address[:zip]
+        user_address.address1 + ',' +
+        user_address.city + ',' +
+        user_address.state + ' ' +
+        user_address.zip
       directions_query.gsub!(' ', '+')
       directions_link = 'http://maps.google.com/maps?' + directions_query
       html += " | <a href=\"#{directions_link}\" target=\"new\">Directions</a>"
