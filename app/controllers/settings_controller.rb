@@ -4,8 +4,10 @@ class SettingsController < ApplicationController
     @address = Settings.home_address
     if request.post?
       @address = Address.new(params[:address])
-      Settings.save_home_address(@address)
-      @saved = true
+      if @address.valid?
+        Settings.save_home_address(@address)
+        @saved = true
+      end
     end
   end
 
