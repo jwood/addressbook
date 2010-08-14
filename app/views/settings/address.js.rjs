@@ -1,0 +1,2 @@
+page.replace_html('content', :partial => 'address', :locals => { :address => @address })
+page.visual_effect(:highlight, 'edit_home_address', :duration => 2) if @saved

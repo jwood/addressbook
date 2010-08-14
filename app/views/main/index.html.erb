@@ -48,6 +48,19 @@
         <%= submit_tag "Add Group" %>
       <% end %>
     </div>
+
+    <div dojoType="dijit.layout.AccordionPane" title="Settings" class="menuContent">
+      <ul>
+        <div id="settings">
+          <li>
+            <%= link_to_remote('Home Address', :html => { :id => 'edit_home_address' },
+                :url => { :controller => :settings, :action => 'address' },
+                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
+          </li>
+          <li>Password file</li>
+        </div>
+      </ul>
+    </div>
   </div>
 
   <div dojoType="dijit.layout.ContentPane" region="center">
