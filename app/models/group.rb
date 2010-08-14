@@ -22,7 +22,7 @@ class Group < ActiveRecord::Base
   end
 
   def create_labels(label_type)
-    p = Pdf::Label::Batch.new(label_type.sub(' ', '  '))
+    p = Pdf::Label::Batch.new(label_type.gsub('_', ' '))
 
     pos = 0
     self.addresses.each do |a|
@@ -30,11 +30,16 @@ class Group < ActiveRecord::Base
       label_text += a.address1 + "\n"
       label_text += a.address2 + "\n" unless a.address2.blank?
       label_text += a.city + ", " + a.state + " " + a.zip
-      p.add_label(:text => label_text,
-                  :position => pos,
-                  :font_size => 10,
-                  :justification => :center)
-      pos = pos.next
+
+      begin
+        p.add_label(:text => label_text,
+                    :position => pos,
+                    :font_size => 10,
+                    :justification => :center)
+        pos = pos.next
+      rescue Exception => e
+        logger.error(e.message)
+      end
     end
 
     file_path = "#{LABELS_PATH}/#{LABELS_FILE}"
