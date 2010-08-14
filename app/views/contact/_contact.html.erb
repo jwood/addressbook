@@ -60,7 +60,9 @@
     <% if contact.has_address? -%>
       <p id="address" style="<%= display_style_for_address %>">
         <%= h(contact.address.address1) %><br />
-        <%= h(contact.address.address2) + "<br />" unless contact.address.address2.blank? %>
+        <% unless contact.address.address2.blank? -%>
+          <%= h(contact.address.address2) %><br />
+        <% end -%>
         <%= h(contact.address.city) + ", " + h(contact.address.state) + " " + h(contact.address.zip) %>
       </p>
     <% end -%>
