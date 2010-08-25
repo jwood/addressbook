@@ -1,6 +1,7 @@
 html, body {
   width: auto;
   height: auto;
+  overflow:scroll;
   -webkit-text-size-adjust: none;
 }
 
