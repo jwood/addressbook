@@ -4,7 +4,7 @@
   <h3>Contact Info</h3>
   <div class="section">
     <table>
-      <% if @contact.has_address? && !@contact.address.home_phone.blank? -%>
+      <% if !@contact.address.ergo.home_phone.blank? -%>
         <tr>
           <td><label>Home:</label></td>
           <td><%= phone_to(@contact.address.home_phone) %></td>
