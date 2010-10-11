@@ -11,6 +11,8 @@ and more.
 * rake db:migrate
 * Once the app is running, be sure to set your home address in the settings section
 
+## Demo
+[http://jwood-addressbook.heroku.com/](http://jwood-addressbook.heroku.com/)  
 
 ## Description
 Addressbook consists of 4 main sections:
@@ -64,5 +66,5 @@ MIT License.  See LICENCE for details.
 ## AUTHOR
 John Wood  
 [http://johnpwood.net](http://johnpwood.net)  
-[john_p_wood@yahoo.com](mailto:john_p_wood@yahoo.com)  
+[john@johnpwood.net](mailto:john@johnpwood.net)  
 
