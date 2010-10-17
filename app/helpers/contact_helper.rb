@@ -26,7 +26,7 @@ module ContactHelper
       html += " | <a href=\"#{directions_link}\" target=\"new\">Directions</a>"
     end
     
-    html
+    html.html_safe
   end
 
   def display_style_for_address

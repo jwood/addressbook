@@ -1,8 +1,8 @@
-page.replace_html('content', :partial => 'contact', :object => @contact)
+page << "$('#content').html('#{escape_javascript(render :partial => 'contact', :object => @contact)}');"
 update_list(@contact, @contact_list, page)
 
 address = @old_address || @contact.address
 update_list(address, @address_list, page) unless address.nil?
 
-page['top'].focus
+page << "$('#top').focus();"
 highlight_in_list(@contact, page) if @saved

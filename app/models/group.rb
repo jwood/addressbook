@@ -9,7 +9,7 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
 
   def self.find_for_list
-    Group.find(:all, :order => 'name')
+    Group.order('name').all
   end
 
   def addresses_not_included
@@ -17,7 +17,7 @@ class Group < ActiveRecord::Base
     if included_ids.blank?
       Address.eligible_for_group
     else
-      Address.eligible_for_group.find(:all, :conditions => ['id not in (?)', included_ids])
+      Address.eligible_for_group.where(['id not in (?)', included_ids]).all
     end
   end
 

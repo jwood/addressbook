@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   has_mobile_fu
 
-  if ENV['RAILS_ENV'] == 'production'
+  if Rails.env == 'production'
     htpasswd_file = Settings.password_file
     htpasswd :file => htpasswd_file unless htpasswd_file.blank?
   end

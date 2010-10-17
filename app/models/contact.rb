@@ -10,10 +10,10 @@ class Contact < ActiveRecord::Base
   validates_presence_of :prefix
   validate :validate_phone_numbers
 
-  named_scope :with_address, :conditions => 'address_id is not null'
+  scope :with_address, where('address_id is not null')
 
   def self.find_for_list
-    Contact.find(:all, :order => 'last_name, first_name')
+    Contact.order('last_name, first_name').all
   end
 
   def full_name_last_first

@@ -13,15 +13,15 @@ module ApplicationHelper
       end
 
       html =  '<p>'
-      html << link_to_remote("Cancel",
+      html << link_to("Cancel", :remote => true,
                 :url => { :action => "edit_#{obj_type}", :id => object },
                 :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();")
       html << ' | '
-      html << link_to_remote("Delete",
+      html << link_to("Delete", :remote => true,
                 :url => { :action => "delete_#{obj_type}", :id => object },
                 :confirm => confirm, :complete => "hideSpinner();", :loading => "showSpinner();")
       html << '</p>'
-      html
+      html.html_safe
     end
   end
 
@@ -43,29 +43,32 @@ module ApplicationHelper
     html = "<li id=\""
     html << create_id_for(object)
     html << "\">"
-    html << link_to_remote(link, 
-        :url => { :controller => obj_type, :action => "edit_#{obj_type}", :id => object },
-        :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();")
+    html << link_to(link, url_for(:controller => obj_type, :action => "edit_#{obj_type}", :id => object),
+        :method => :get, :remote => true, :class => 'ajax_link')
     html << "</li>"
+    html.html_safe
   end
   
   def update_list(object, object_list, page, force=false)
     if (!object.nil? && !object.id.blank?) || force
       obj_type = object.class.to_s.downcase
       if !object_list.nil?
-        page.replace_html("#{obj_type}List", :partial => "main/#{obj_type}_list", :collection => object_list)
+        #page.replace_html("#{obj_type}List", :partial => "main/#{obj_type}_list", :collection => object_list)
+        page << "$('##{obj_type}List').html('#{escape_javascript(render :partial => "main/#{obj_type}_list", :collection => object_list)}')"
       else
-        page.replace(create_id_for(object), create_link_to(object))
+        #page.replace(create_id_for(object), create_link_to(object))
+        page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}')"
       end
     end
   end
 
   def remove_from_list(object, page)
-    page.replace(create_id_for(object), '')
+    #page.replace(create_id_for(object), '')
+    page << "$('##{create_id_for(object)}').replaceWith('')"
   end
   
   def highlight_in_list(object, page)
-    page.visual_effect(:highlight, create_id_for(object), :duration => 2)
+    page << "$('##{create_id_for(object)}').effect('highlight', {}, 2000);"
   end
 
   def phone_to(phone_number)

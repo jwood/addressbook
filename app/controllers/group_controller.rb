@@ -30,7 +30,7 @@ class GroupController < ApplicationController
   private
 
     def include_common_data
-      @included = @group.addresses(:include => [:contacts, :address_type])
+      @included = @group.addresses.includes([:contacts, :address_type])
       @not_included = @group.addresses_not_included
       @label_types = Pdf::Label::Batch.all_template_names.sort!
     end

@@ -12,7 +12,7 @@ class Address < ActiveRecord::Base
   validates_format_of :zip, :with => %r{(^\d{5}$)|(^\d{5}-\d{4}$)}, :allow_blank => true
   validate :verify_required_info, :validate_phone_numbers, :verify_number_of_contacts_valid_for_address_type
 
-  named_scope :eligible_for_group, :conditions => "address1 <> ''"
+  scope :eligible_for_group, where("address1 <> ''")
   
   def addressee_for_display
     no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_display(self)
@@ -51,12 +51,12 @@ class Address < ActiveRecord::Base
   end
 
   def self.remove_contact(contact)
-    addresses = Address.find(:all, :conditions => ['contact1_id = ? || contact2_id = ?', contact.id, contact.id])
+    addresses = Address.where(['contact1_id = ? || contact2_id = ?', contact.id, contact.id]).all
     addresses.each { |a| a.unlink_contact(contact) }
   end
 
   def self.find_for_list
-    address_list = Address.find(:all, :include => [:primary_contact, :secondary_contact, :address_type])
+    address_list = Address.includes([:primary_contact, :secondary_contact, :address_type]).all
     address_list.sort! do |a1, a2|
       if a1.primary_contact.nil?
         result = 1
@@ -117,7 +117,7 @@ class Address < ActiveRecord::Base
 
     def verify_number_of_contacts_valid_for_address_type
       if contact2_id.nil? && self.address_type && !self.address_type.only_one_main_contact?
-        errors.add_to_base("This address type requires primary and secondary contacts be specified")
+        errors.add(:base, "This address type requires primary and secondary contacts be specified")
       end
     end
 
@@ -160,12 +160,12 @@ class Address < ActiveRecord::Base
 
     def verify_required_info
       if home_phone.blank? && (address1.blank? || city.blank? || state.blank? || zip.blank?)
-        errors.add_to_base("You must specify a phone number or a full address")
+        errors.add(:base, "You must specify a phone number or a full address")
       end
 
       if (!address1.blank? || !city.blank? || !zip.blank?) &&
               (address1.blank? || city.blank? || zip.blank?)
-        errors.add_to_base("You must specify a valid address")
+        errors.add(:base, "You must specify a valid address")
       end
     end
 

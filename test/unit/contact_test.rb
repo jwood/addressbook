@@ -6,9 +6,9 @@ class ContactTest < ActiveSupport::TestCase
   test "should not be able to create a contact with missing required info" do
     contact = Contact.new
     assert !contact.valid?
-    assert contact.errors.on(:first_name).include?(I18n.translate('activerecord.errors.messages')[:blank])
-    assert contact.errors.on(:last_name).include?(I18n.translate('activerecord.errors.messages')[:blank])
-    assert contact.errors.on(:prefix).include?(I18n.translate('activerecord.errors.messages')[:blank])
+    assert contact.errors[:first_name].include?("can't be blank")
+    assert contact.errors[:last_name].include?("can't be blank")
+    assert contact.errors[:prefix].include?("can't be blank")
   end
 
   test "should null out the contact's address when destroying a contact" do
@@ -27,8 +27,8 @@ class ContactTest < ActiveSupport::TestCase
     contact.cell_phone = 'abcd'
     contact.work_phone = '972-2ou234=234'
     assert !contact.valid?
-    assert contact.errors.on(:cell_phone).include?('is not valid')
-    assert contact.errors.on(:work_phone).include?('is not valid')
+    assert contact.errors[:cell_phone].include?('is not valid')
+    assert contact.errors[:work_phone].include?('is not valid')
   end
 
   test "should be able to find all contacts for listing in the app" do

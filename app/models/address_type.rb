@@ -10,11 +10,11 @@ class AddressType < ActiveRecord::Base
   end
   
   def self.individual
-    AddressType.find_by_description("Individual")
+    AddressType.where("description = 'Individual'").first
   end
 
   def self.family
-    AddressType.find_by_description("Family")
+    AddressType.where("description = 'Family'").first
   end
 
   def format_address_for_display(address)
@@ -51,9 +51,9 @@ class AddressType < ActiveRecord::Base
 
   def self.valid_address_types_for_address(address)
     if address.only_has_one_contact?
-      AddressType.find(:all, :conditions => "description = 'Individual' or description = 'Single Parent'")
+      AddressType.where("description = 'Individual' or description = 'Single Parent'").all
     else
-      AddressType.find(:all)
+      AddressType.all
     end
   end
 

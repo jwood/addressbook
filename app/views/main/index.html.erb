@@ -1,7 +1,7 @@
 <div id="main" dojoType="dijit.layout.BorderContainer">
   <div id="menu" dojoType="dijit.layout.AccordionContainer" region="leading">
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
-      <% form_remote_tag :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
+      <%= form_tag :remote => true, :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
            :complete => "hideSpinner();", :loading => "showSpinner();" do %>
         <table>
           <tr>
@@ -23,7 +23,7 @@
           <%= render :partial => 'contact_list', :collection => @contact_list %>
         </div>
       </ul>
-      <% form_remote_tag :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get',
+      <%= form_tag :remote => true, :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get',
                          :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
         <%= submit_tag "Add Contact" %>
       <% end -%>
@@ -43,7 +43,7 @@
           <%= render :partial => 'group_list', :collection => @group_list %>
         </div>
       </ul>
-      <% form_remote_tag :url => { :controller => 'group', :action => :edit_group }, :method => 'get',
+      <%= form_tag :remote => true, :url => { :controller => 'group', :action => :edit_group }, :method => 'get',
                          :complete => "hideSpinner();", :loading => "showSpinner();" do %>
         <%= submit_tag "Add Group" %>
       <% end %>
@@ -53,12 +53,12 @@
       <ul>
         <div id="settings">
           <li>
-            <%= link_to_remote('Home Address', :html => { :id => 'edit_home_address' },
+            <%= link_to('Home Address', :remote => true, :html => { :id => 'edit_home_address' },
                 :url => { :controller => :settings, :action => 'address' },
                 :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
           </li>
           <li>
-            <%= link_to_remote('Password File', :html => { :id => 'edit_password_file' },
+            <%= link_to('Password File', :remote => true, :html => { :id => 'edit_password_file' },
                 :url => { :controller => :settings, :action => 'password_file' },
                 :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
           </li>

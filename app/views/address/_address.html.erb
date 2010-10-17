@@ -1,5 +1,5 @@
 <%= error_messages_for 'address' %>
-<% form_remote_tag :url => { :action => :edit_address, :id => address },
+<%= form_tag :remote => true, :url => { :action => :edit_address, :id => address },
                    :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
     
   <h3>Address Type</h3>
@@ -47,7 +47,7 @@
             <td><%= radio_button_tag 'address[contact1_id]', contact.id, address.contact1_id == contact.id %></td>
             <td class="secondary_contact_column" style="<%= secondary_contact_style %>"><%= radio_button_tag 'address[contact2_id]', contact.id, address.contact2_id == contact.id %></td>
             <td>
-              <%= link_to_remote(contact.full_name_last_first,
+              <%= link_to(contact.full_name_last_first, :remote => true,
                   :url => { :controller => :contact, :action => :edit_contact, :id => contact },
                   :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
             </td>

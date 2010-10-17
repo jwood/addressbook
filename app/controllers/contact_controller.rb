@@ -66,9 +66,8 @@ class ContactController < ApplicationController
   end
 
   def find_contact
-    @contact_list = Contact.find(:all, 
-      :conditions => ["upper(last_name) like ?", params[:last_name].upcase << "%"],
-      :order => 'last_name, first_name')
+    @contact_list = Contact.where(["upper(last_name) like ?", params[:last_name].upcase << "%"]).
+                            order('last_name, first_name').all
   end
   
   private
@@ -93,7 +92,7 @@ class ContactController < ApplicationController
         other.address
       elsif specified_address?
         address = Address.new(params[:address])
-        @contact.errors.add_to_base("Please specify a valid address") unless address.valid?
+        @contact.errors.add(:base, "Please specify a valid address") unless address.valid?
         address
       end
     end

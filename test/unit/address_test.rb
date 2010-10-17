@@ -11,13 +11,13 @@ class AddressTest < ActiveSupport::TestCase
   test "should not be able to create an address without all required info" do
     address = Address.new
     assert !address.valid?
-    assert address.errors.on(:base).include?('You must specify a phone number or a full address')
+    assert address.errors[:base].include?('You must specify a phone number or a full address')
   end
 
   test "should not be able to update an address with an invalid phone number" do
     @address.home_phone = '(312) xxx-3333'
     assert !@address.valid?
-    assert @address.errors.on(:home_phone).include?('is not valid')
+    assert @address.errors[:home_phone].include?('is not valid')
   end
 
   test "an adress with no contacts should simply list the street address as the addressee" do
