@@ -13,13 +13,11 @@ module ApplicationHelper
       end
 
       html =  '<p>'
-      html << link_to("Cancel", :remote => true,
-                :url => { :action => "edit_#{obj_type}", :id => object },
-                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();")
+      html << link_to("Cancel", url_for(:action => "edit_#{obj_type}", :id => object),
+                :remote => true, :method => :get, :class => 'ajax_request')
       html << ' | '
-      html << link_to("Delete", :remote => true,
-                :url => { :action => "delete_#{obj_type}", :id => object },
-                :confirm => confirm, :complete => "hideSpinner();", :loading => "showSpinner();")
+      html << link_to("Delete", url_for(:action => "delete_#{obj_type}", :id => object),
+                :remote => true, :confirm => confirm, :class => 'ajax_request')
       html << '</p>'
       html.html_safe
     end
@@ -44,7 +42,7 @@ module ApplicationHelper
     html << create_id_for(object)
     html << "\">"
     html << link_to(link, url_for(:controller => obj_type, :action => "edit_#{obj_type}", :id => object),
-        :method => :get, :remote => true, :class => 'ajax_link')
+        :method => :get, :remote => true, :class => 'ajax_request')
     html << "</li>"
     html.html_safe
   end
@@ -53,8 +51,7 @@ module ApplicationHelper
     if (!object.nil? && !object.id.blank?) || force
       obj_type = object.class.to_s.downcase
       if !object_list.nil?
-        #page.replace_html("#{obj_type}List", :partial => "main/#{obj_type}_list", :collection => object_list)
-        page << "$('##{obj_type}List').html('#{escape_javascript(render :partial => "main/#{obj_type}_list", :collection => object_list)}')"
+        replace_html("##{obj_type}List", render(:partial => "main/#{obj_type}_list", :collection => object_list), page)
       else
         #page.replace(create_id_for(object), create_link_to(object))
         page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}')"
@@ -69,6 +66,10 @@ module ApplicationHelper
   
   def highlight_in_list(object, page)
     page << "$('##{create_id_for(object)}').effect('highlight', {}, 2000);"
+  end
+
+  def replace_html(selector, html, page)
+    page << "$('#{selector}').html('#{escape_javascript(html)}');"
   end
 
   def phone_to(phone_number)

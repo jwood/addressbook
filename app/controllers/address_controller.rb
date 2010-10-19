@@ -4,7 +4,7 @@ class AddressController < ApplicationController
     @address = Address.find_by_id(params[:id]) || Address.new
 
     if request.post?
-      new_address = true if params[:id].nil?
+      new_address = true if params[:id].blank?
       @address.attributes = params[:address]
       @saved = @address.save
     end

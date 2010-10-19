@@ -1,8 +1,7 @@
 <div id="main" dojoType="dijit.layout.BorderContainer">
   <div id="menu" dojoType="dijit.layout.AccordionContainer" region="leading">
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
-      <%= form_tag :remote => true, :url => { :controller => 'contact', :action => :find_contact }, :method => 'get',
-           :complete => "hideSpinner();", :loading => "showSpinner();" do %>
+      <%= form_tag({ :controller => 'contact', :action => :find_contact }, { :method => 'get', :remote => true, :class => 'ajax_request' }) do %>
         <table>
           <tr>
             <td>Last Name:</td>
@@ -23,8 +22,7 @@
           <%= render :partial => 'contact_list', :collection => @contact_list %>
         </div>
       </ul>
-      <%= form_tag :remote => true, :url => { :controller => 'contact', :action => :edit_contact }, :method => 'get',
-                         :complete => "hideSpinner();", :loading => "showSpinner();" do -%>
+      <%= form_tag({ :controller => 'contact', :action => :edit_contact }, { :method => :get, :remote => true, :class => 'ajax_request' }) do -%>
         <%= submit_tag "Add Contact" %>
       <% end -%>
     </div>
@@ -43,8 +41,7 @@
           <%= render :partial => 'group_list', :collection => @group_list %>
         </div>
       </ul>
-      <%= form_tag :remote => true, :url => { :controller => 'group', :action => :edit_group }, :method => 'get',
-                         :complete => "hideSpinner();", :loading => "showSpinner();" do %>
+      <%= form_tag({ :controller => 'group', :action => :edit_group }, { :method => :get, :remote => true, :class => 'ajax_request' }) do -%>
         <%= submit_tag "Add Group" %>
       <% end %>
     </div>
@@ -53,14 +50,12 @@
       <ul>
         <div id="settings">
           <li>
-            <%= link_to('Home Address', :remote => true, :html => { :id => 'edit_home_address' },
-                :url => { :controller => :settings, :action => 'address' },
-                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
+            <%= link_to("Home Address", url_for(:controller => :settings, :action => :address),
+                :method => :get, :remote => true, :class => 'ajax_request', :id => 'edit_home_address') %>
           </li>
           <li>
-            <%= link_to('Password File', :remote => true, :html => { :id => 'edit_password_file' },
-                :url => { :controller => :settings, :action => 'password_file' },
-                :method => 'get', :complete => "hideSpinner();", :loading => "showSpinner();") %>
+            <%= link_to("Password File", url_for(:controller => :settings, :action => :password_file),
+                :method => :get, :remote => true, :class => 'ajax_request', :id => 'edit_password_file') %>
           </li>
         </div>
       </ul>

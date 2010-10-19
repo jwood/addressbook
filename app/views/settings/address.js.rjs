@@ -1,2 +1,2 @@
-page.replace_html('content', :partial => 'address', :locals => { :address => @address })
-page.visual_effect(:highlight, 'edit_home_address', :duration => 2) if @saved
+replace_html('#content', render(:partial => 'address', :locals => {:address => @address}), page)
+page << "$('#edit_home_address').effect('highlight', {}, 2000);" if @saved

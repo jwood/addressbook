@@ -1,7 +1,7 @@
 <a id="multipleAddressConfirmationLink" href="#multipleAddressConfirmation" style="display:none"></a>
 <div style="display:none">
   <div id="multipleAddressConfirmation">
-    <%= form_tag :remote => true, :url => {:action => :change_address_for_contact, :id => @contact}, :html => {:id => 'multipleAddressConfirmationForm'} do -%>
+    <%= form_tag({ :action => :change_address_for_contact, :id => @contact }, { :remote => true, :id => 'multipleAddressConfirmationForm', :class => 'ajax_request' }) do -%>
       <p>
         The following contacts live at this address and have this phone number:
         <p>

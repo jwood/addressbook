@@ -1,1 +1,1 @@
-page << "jQuery('#multipleAddressConfirmationLink').click();"
+page << "$('#multipleAddressConfirmationLink').click();"

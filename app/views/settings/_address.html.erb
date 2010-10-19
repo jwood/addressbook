@@ -1,8 +1,6 @@
 <%= error_messages_for 'address' %>
 
-<%= form_tag :remote => true, :url => { :action => 'address' }, :complete => "hideSpinner();",
-     :loading => "showSpinner();" do -%>
-
+<%= form_tag({ :action => :address }, { :remote => true, :class => 'ajax_request' }) do -%>
   <h3>Home Address</h3>
   <p>
     If a home address is specified, it is used to calculate directions from the home
@@ -16,6 +14,5 @@
 <% end -%>
 
 <p>
-  <%= link_to("Cancel", :remote => true, :url => { :action => "address" }, :method => 'get',
-        :complete => "hideSpinner();", :loading => "showSpinner();") %>
+  <%= link_to("Cancel", url_for(:action => "address"), :method => :get, :remote => true, :class => 'ajax_request') %>
 </p>

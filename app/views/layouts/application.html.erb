@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <title>Address Book</title>
 
-  <%= stylesheet_link_tag 'stylesheet', 'jquery.fancybox-1.3.1', 'http://ajax.googleapis.com/ajax/libs/dojo/1.4/dijit/themes/soria/soria.css' %>
+  <%= stylesheet_link_tag 'stylesheet', 'jquery.fancybox-1.3.1', 'http://ajax.googleapis.com/ajax/libs/dojo/1.5/dijit/themes/soria/soria.css' %>
   <%= csrf_meta_tag %>
 </head>
 
@@ -13,8 +13,7 @@
   <%= yield :layout %>
 </body>
 
-<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.4/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script>
 <%= javascript_include_tag :defaults, 'jquery.fancybox-1.3.1.pack' %>
 
 </html>

@@ -4,7 +4,7 @@ class GroupController < ApplicationController
     @group = Group.find_by_id(params[:id]) || Group.new
 
     if request.post?
-      new_group = true if params[:id].nil?
+      new_group = true if params[:id].blank?
       @group.attributes = params[:group]
       @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
       @saved = @group.save

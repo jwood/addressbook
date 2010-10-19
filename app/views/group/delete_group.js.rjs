@@ -1,2 +1,2 @@
-page.replace_html('content', :partial => 'deleted_group', :object => @group)
+replace_html('#content', render(:partial => 'deleted_group', :object => @group), page)
 remove_from_list(@group, page)

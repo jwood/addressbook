@@ -9,7 +9,7 @@ class ContactController < ApplicationController
     @contact = Contact.find_by_id(params[:id]) || Contact.new
 
     if request.post?
-      new_contact = true if params[:id].nil?
+      new_contact = true if params[:id].blank?
       @contact.attributes = params[:contact]
 
       new_address = parse_address
