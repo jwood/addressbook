@@ -66,12 +66,12 @@ function editAddress() {
 }
 
 function changeAddressForAll() {
-  $("#submit_id").value = "yes";
+  $("#submit_id").val("yes");
   closeFancybox();
 }
 
 function changeAddressForSpecified() {
-  $("#submit_id").value = "no";
+  $("#submit_id").val("no");
   closeFancybox();
 }
 
