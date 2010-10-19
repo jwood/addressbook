@@ -7,6 +7,7 @@ class Address < ActiveRecord::Base
   belongs_to :secondary_contact, :class_name => 'Contact', :foreign_key => "contact2_id"
 
   before_save :sanitize_phone_numbers, :nullify_secondary_contact_if_address_type_only_has_one_main_contact
+  before_destroy :clear_group_associations
 
   validates_inclusion_of :state, :in => State.codes, :allow_blank => true
   validates_format_of :zip, :with => %r{(^\d{5}$)|(^\d{5}-\d{4}$)}, :allow_blank => true
@@ -182,6 +183,10 @@ class Address < ActiveRecord::Base
 
     def no_contacts?
       primary_contact.nil? && secondary_contact.nil?
+    end
+
+    def clear_group_associations
+      groups.clear
     end
 
 end

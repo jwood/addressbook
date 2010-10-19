@@ -312,6 +312,17 @@ class AddressTest < ActiveSupport::TestCase
     assert !address.valid?
   end
 
+  test "should be able to delete an address that is a member of a group" do
+    address = addresses(:alsip)
+    group = groups(:group_1)
+    group.addresses = [address]
+    group.save!
+
+    assert group.addresses(true).include?(address)
+    address.destroy
+    assert !group.addresses(true).include?(address)
+  end
+
   private
 
     def assign_contact_to_address(contact, address)
@@ -330,7 +341,7 @@ class AddressTest < ActiveSupport::TestCase
         contact.address_id = @address.id
         contact.save
         @address.contacts << contact
-        @address.save
+        @address.save!
         @address.link_contact
       end
 
