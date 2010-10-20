@@ -11,7 +11,7 @@ module GroupHelper
     group_members.each do |address|
       html << "<option value='#{address.id}' title='#{address.mailing_address}'>#{address.addressee_for_display}</option>"
     end
-    html
+    html.html_safe
   end
 
 end

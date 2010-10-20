@@ -19,36 +19,36 @@ function updateCreateLabelsLink(url) {
 }
 
 function includeSelectedMembers() {
-  $('#not_included').childElements().each(function(s) {
-    if (s.selected == true) {
-      $('#included').insert({'bottom': s});
+  $('#not_included').children().each(function(i) {
+    if (this.selected == true) {
+      $('#included').append(this);
     }
   });
 }
 
 function excludeSelectedMembers() {
-  $('#included').childElements().each(function(s) {
-    if (s.selected == true) {
-      $('#not_included').insert({'bottom': s});
+  $('#included').children().each(function(i) {
+    if (this.selected == true) {
+      $('#not_included').append(this);
     }
   });
 }
 
 function includeAllMembers() {
-  $('#not_included').childElements().each(function(s) {
-    $('#included').insert({'bottom': s});
+  $('#not_included').children().each(function(i) {
+    $('#included').append(this);
   });
 }
 
 function excludeAllMembers() {
-  $('#included').childElements().each(function(s) {
-    $('#not_included').insert({'bottom': s});
+  $('#included').children().each(function(i) {
+    $('#not_included').append(this);
   });
 }
 
 function selectAllIncludedGroupMembers() {
-  $('#included').childElements().each(function(s) {
-    s.selected = true;
+  $('#included').children().each(function(i) {
+    this.selected = true;
   });
 }
 
