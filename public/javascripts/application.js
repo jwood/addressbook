@@ -15,7 +15,7 @@ function adjustSelectableContacts() {
 
 function updateCreateLabelsLink(url) {
   var newLinkHtml = '<a href="' + url + '?label_type=' + jQuery('#labelTypeSelector').val() + '" target="new"' + '>Create Labels</a>';
-  $('#createLabelsLink').update(newLinkHtml);
+  $('#createLabelsLink').html(newLinkHtml);
 }
 
 function includeSelectedMembers() {

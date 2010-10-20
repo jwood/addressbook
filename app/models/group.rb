@@ -6,6 +6,8 @@ class Group < ActiveRecord::Base
 
   has_and_belongs_to_many :addresses
 
+  before_destroy :clear_address_associations
+
   validates_presence_of :name
 
   def self.find_for_list
@@ -46,5 +48,11 @@ class Group < ActiveRecord::Base
     p.save_as(file_path)
     file_path
   end
+
+  private
+
+    def clear_address_associations
+      addresses.clear
+    end
 
 end

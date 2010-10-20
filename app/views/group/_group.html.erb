@@ -37,7 +37,7 @@
       <label>Label Type:</label>
       <%= select_tag "label_type", get_label_options(@label_types),
             { :id => 'labelTypeSelector',
-              :onchange => "updateCreateLabelsLink('#{url_for :action => :create_labels, :id => @group }');" } %>
+              :onchange => "updateCreateLabelsLink('#{url_for(:action => :create_labels, :id => @group)}');" } %>
 
       <span id="createLabelsLink">
         <%= link_to "Create Labels", { :action => :create_labels, :id => @group, :label_type => @label_types.first } %>
