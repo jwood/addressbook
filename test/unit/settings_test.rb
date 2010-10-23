@@ -2,9 +2,14 @@ require 'test_helper'
 
 class SettingsTest < ActiveSupport::TestCase
 
-  test "should be able to set the application's password file" do
-    assert Settings.save_password_file(__FILE__)
-    assert_equal __FILE__, Settings.password_file
+  test "should be able to set the application's username" do
+    Settings.username = "bob"
+    assert_equal "bob", Settings.username
+  end
+
+  test "should be able to set the application's password" do
+    Settings.password = "mypass"
+    assert_equal "mypass", Settings.password
   end
 
   test "should not be able to save an invalid address" do
@@ -19,10 +24,6 @@ class SettingsTest < ActiveSupport::TestCase
     assert_equal "Chicago", address.city
     assert_equal "IL", address.state
     assert_equal "60606", address.zip
-  end
-
-  test "should not be able to save the password file if the file doesn't exist" do
-    assert !Settings.save_password_file("/file/does/not/exist")
   end
 
 end

@@ -16,17 +16,20 @@ class Settings < ActiveRecord::Base
     Address.new(:address1 => address, :city => city, :state => state, :zip => zip)
   end
 
-  def self.save_password_file(password_file)
-    if password_file.blank? || File.exist?(password_file)
-      Settings.update(:password_file, password_file)
-      true
-    else
-      false
-    end
+  def self.username
+    self.get(:username)
   end
 
-  def self.password_file
-    self.get(:password_file)
+  def self.username=(data)
+    Settings.update(:username, data)
+  end
+
+  def self.password
+    self.get(:password)
+  end
+
+  def self.password=(data)
+    Settings.update(:password, data)
   end
 
   def self.address
