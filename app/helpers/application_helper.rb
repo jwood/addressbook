@@ -38,12 +38,12 @@ module ApplicationHelper
       link = "#{object.name}"
     end
   
-    html = "<li id=\""
+    html = '<li id="'
     html << create_id_for(object)
-    html << "\">"
+    html << '">'
     html << link_to(link, url_for(:controller => obj_type, :action => "edit_#{obj_type}", :id => object),
         :method => :get, :remote => true, :class => 'ajax_request')
-    html << "</li>"
+    html << '</li>'
     html.html_safe
   end
   
@@ -53,15 +53,13 @@ module ApplicationHelper
       if !object_list.nil?
         replace_html("##{obj_type}List", render(:partial => "main/#{obj_type}_list", :collection => object_list), page)
       else
-        #page.replace(create_id_for(object), create_link_to(object))
-        page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}')"
+        page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}');"
       end
     end
   end
 
   def remove_from_list(object, page)
-    #page.replace(create_id_for(object), '')
-    page << "$('##{create_id_for(object)}').replaceWith('')"
+    page << "$('##{create_id_for(object)}').replaceWith('');"
   end
   
   def highlight_in_list(object, page)
@@ -73,7 +71,7 @@ module ApplicationHelper
   end
 
   def phone_to(phone_number)
-    link_to Phone.format(phone_number), "tel:" + phone_number
+    link_to(Phone.format(phone_number), "tel:" + phone_number)
   end
   
 end

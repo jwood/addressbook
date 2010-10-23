@@ -5,8 +5,8 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
-* gem install rails
-* rake gems:install
+* gem install bundler
+* bundle install
 * Copy config/database.yml.template to config/database.yml and configure your database
 * rake db:migrate
 * Once the app is running, be sure to set your home address in the settings section
@@ -48,7 +48,7 @@ in constructing the addressee (see above).
 Groups provide a way to organize your contacts.  Each group has a name, and 
 a list of members.  Members can be added via the "Maintain Group Members"
 link.  After clicking "Maintain Group Members", you can add/remove one or more
-addresses to/from the group.  Changes take affect after clicking "Save".
+addresses to/from the group.
 
 Once you have members in your group, you can create a printable PDF file of
 mailing labels for the members in your group.  Simply specify the type of labels
@@ -58,6 +58,9 @@ When printing the labels, be sure your PDF viewer is set to respect the
 margins in the document, and not to "center the document in the page" or 
 perform any other types of margin alterations.
 
+## Other Features
+* Mobile optimized index and contact details pages
+* Authentication via htpasswd files
  
 ## LICENSE
 MIT License.  See LICENCE for details.

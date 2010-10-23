@@ -1,28 +1,33 @@
 Addressbook ChangeLog
 http://johnpwood.net/projects/webapps/addressbook/
 
-Version 2.0 - 2010-05-11
+2010-10-20
 ------------------------
- * Major cleanup
- * Fixed many of the awkward navigation and usage issues
- * Fixed some outstanding bugs
- * Upgraded to latest releases of Rails and Dojo
+* Upgrade to Rails 3
+* Swapped Prototype with jQuery
 
-Version 1.2 - 2008-12-23
+2010-05-11
 ------------------------
- * Moved all application specific config into its own config file
- * Generified some configuration in preperation for migration to GitHub
- * Dropped rabels for pdf-labels for label generation
+* Major cleanup
+* Fixed many of the awkward navigation and usage issues
+* Fixed some outstanding bugs
+* Upgraded to latest releases of Rails and Dojo
 
-Version 1.1 - 2008-12-21
+2008-12-23
 ------------------------
- * Some post-release cleanup
+* Moved all application specific config into its own config file
+* Generified some configuration in preperation for migration to GitHub
+* Dropped rabels for pdf-labels for label generation
 
-Version 1.0 - 2008-12-20
+2008-12-21
 ------------------------
- * First public release
+* Some post-release cleanup
 
-Version 0.1 - 2008-12-04
+2008-12-20
 ------------------------
- * Initial release - still plenty of work to be done
+* First public release
+
+2008-12-04
+------------------------
+* Initial release - still plenty of work to be done
 

@@ -18,7 +18,7 @@ class ContactController < ApplicationController
           session[:changed_address] = new_address
           render_target = 'edit_contact_with_shared_address'
         else
-          assigning_new_address_object = params[:address_specification_type] == 'existing_address' ? true : false
+          assigning_new_address_object = params[:address_specification_type] == 'existing_address'
           new_address_saved = assign_address_to_contact(new_address, assigning_new_address_object)
         end
       end
@@ -39,7 +39,7 @@ class ContactController < ApplicationController
 
   def change_address_for_contact
     @contact = Contact.find_by_id(params[:id])
-    assigning_new_address_object = params[:submit_id] == 'no' ? true : false
+    assigning_new_address_object = params[:submit_id] == 'no'
     new_address = assign_address_to_contact(session[:changed_address], assigning_new_address_object)
     @contact.save
 
@@ -67,7 +67,7 @@ class ContactController < ApplicationController
 
   def find_contact
     @contact_list = Contact.where(["upper(last_name) like ?", params[:last_name].upcase << "%"]).
-                            order('last_name, first_name').all
+                            order('last_name, first_name')
   end
   
   private
@@ -92,7 +92,7 @@ class ContactController < ApplicationController
         other.address
       elsif specified_address?
         address = Address.new(params[:address])
-        @contact.errors.add(:base, "Please specify a valid address") unless address.valid?
+        @contact.errors.add(:base, 'Please specify a valid address') unless address.valid?
         address
       end
     end

@@ -13,7 +13,7 @@ class Contact < ActiveRecord::Base
   scope :with_address, where('address_id is not null')
 
   def self.find_for_list
-    Contact.order('last_name, first_name').all
+    Contact.order('last_name, first_name')
   end
 
   def full_name_last_first
@@ -60,11 +60,11 @@ class Contact < ActiveRecord::Base
 
     def validate_phone_numbers
       if !self.cell_phone.blank? && !Phone.valid?(self.cell_phone)
-        errors.add(:cell_phone, "is not valid")
+        errors.add(:cell_phone, 'is not valid')
       end
 
       if !self.work_phone.blank? && !Phone.valid?(self.work_phone)
-        errors.add(:work_phone, "is not valid")
+        errors.add(:work_phone, 'is not valid')
       end
     end
 

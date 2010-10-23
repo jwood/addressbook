@@ -3,8 +3,8 @@ class Address < ActiveRecord::Base
   has_and_belongs_to_many :groups
   has_many :contacts, :dependent => :nullify
   belongs_to :address_type
-  belongs_to :primary_contact, :class_name => 'Contact', :foreign_key => "contact1_id"
-  belongs_to :secondary_contact, :class_name => 'Contact', :foreign_key => "contact2_id"
+  belongs_to :primary_contact, :class_name => 'Contact', :foreign_key => 'contact1_id'
+  belongs_to :secondary_contact, :class_name => 'Contact', :foreign_key => 'contact2_id'
 
   before_save :sanitize_phone_numbers, :nullify_secondary_contact_if_address_type_only_has_one_main_contact
   before_destroy :clear_group_associations
@@ -52,12 +52,12 @@ class Address < ActiveRecord::Base
   end
 
   def self.remove_contact(contact)
-    addresses = Address.where(['contact1_id = ? || contact2_id = ?', contact.id, contact.id]).all
+    addresses = Address.where(['contact1_id = ? || contact2_id = ?', contact.id, contact.id])
     addresses.each { |a| a.unlink_contact(contact) }
   end
 
   def self.find_for_list
-    address_list = Address.includes([:primary_contact, :secondary_contact, :address_type]).all
+    address_list = Address.includes([:primary_contact, :secondary_contact, :address_type])
     address_list.sort! do |a1, a2|
       if a1.primary_contact.nil?
         result = 1
@@ -112,13 +112,13 @@ class Address < ActiveRecord::Base
 
     def validate_phone_numbers
       if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
-        errors.add(:home_phone, "is not valid")
+        errors.add(:home_phone, 'is not valid')
       end
     end
 
     def verify_number_of_contacts_valid_for_address_type
       if contact2_id.nil? && self.address_type && !self.address_type.only_one_main_contact?
-        errors.add(:base, "This address type requires primary and secondary contacts be specified")
+        errors.add(:base, 'This address type requires primary and secondary contacts be specified')
       end
     end
 
@@ -161,12 +161,12 @@ class Address < ActiveRecord::Base
 
     def verify_required_info
       if home_phone.blank? && (address1.blank? || city.blank? || state.blank? || zip.blank?)
-        errors.add(:base, "You must specify a phone number or a full address")
+        errors.add(:base, 'You must specify a phone number or a full address')
       end
 
       if (!address1.blank? || !city.blank? || !zip.blank?) &&
               (address1.blank? || city.blank? || zip.blank?)
-        errors.add(:base, "You must specify a valid address")
+        errors.add(:base, 'You must specify a valid address')
       end
     end
 

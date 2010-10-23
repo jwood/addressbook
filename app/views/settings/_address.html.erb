@@ -1,6 +1,6 @@
-<%= error_messages_for 'address' %>
+<%= error_messages_for :address %>
 
-<%= form_tag({ :action => :address }, { :remote => true, :class => 'ajax_request' }) do -%>
+<%= form_tag({ :action => :address }, { :remote => true, :class => 'ajax_request' }) do %>
   <h3>Home Address</h3>
   <p>
     If a home address is specified, it is used to calculate directions from the home
@@ -10,9 +10,9 @@
     <%= render :partial => 'shared/address_fields', :locals => { :address => address, :disable_address2 => true } %>
   </div>
 
-  <p><%= submit_tag "Save" %></p>  
-<% end -%>
+  <p><%= submit_tag 'Save' %></p>  
+<% end %>
 
 <p>
-  <%= link_to("Cancel", url_for(:action => "address"), :method => :get, :remote => true, :class => 'ajax_request') %>
+  <%= link_to('Cancel', url_for(:action => :address), :method => :get, :remote => true, :class => 'ajax_request') %>
 </p>

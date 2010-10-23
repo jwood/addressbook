@@ -1,8 +1,8 @@
 require 'pdf/label'
 
 class Group < ActiveRecord::Base
-  LABELS_PATH = "/tmp"
-  LABELS_FILE = "mailing_labels.pdf"
+  LABELS_PATH = '/tmp'
+  LABELS_FILE = 'mailing_labels.pdf'
 
   has_and_belongs_to_many :addresses
 
@@ -11,7 +11,7 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
 
   def self.find_for_list
-    Group.order('name').all
+    Group.order('name')
   end
 
   def addresses_not_included
@@ -19,7 +19,7 @@ class Group < ActiveRecord::Base
     if included_ids.blank?
       Address.eligible_for_group
     else
-      Address.eligible_for_group.where(['id not in (?)', included_ids]).all
+      Address.eligible_for_group.where(['id not in (?)', included_ids])
     end
   end
 
@@ -31,7 +31,7 @@ class Group < ActiveRecord::Base
       label_text =  a.addressee + "\n"
       label_text += a.address1 + "\n"
       label_text += a.address2 + "\n" unless a.address2.blank?
-      label_text += a.city + ", " + a.state + " " + a.zip
+      label_text += a.city + ', ' + a.state + ' ' + a.zip
 
       begin
         p.add_label(:text => label_text,

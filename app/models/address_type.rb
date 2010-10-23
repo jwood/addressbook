@@ -2,11 +2,11 @@ class AddressType < ActiveRecord::Base
   has_one :address
 
   def get_type
-    return :individual if description == "Individual"
-    return :family if description == "Family"
-    return :married_couple if description == "Married Couple"
-    return :unmarried_couple if description == "Unmarried Couple"
-    return :single_parent if description == "Single Parent"
+    return :individual if description == 'Individual'
+    return :family if description == 'Family'
+    return :married_couple if description == 'Married Couple'
+    return :unmarried_couple if description == 'Unmarried Couple'
+    return :single_parent if description == 'Single Parent'
   end
   
   def self.individual

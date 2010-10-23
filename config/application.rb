@@ -34,8 +34,6 @@ module Addressbook
  
     config.secret_token = "eba709df22a160581c4806cd0ccf78a877413c87b3521d0873b3591118cac1e56779019f0e0c6ab4259e7e5a4372b64a582d18fd53c60275f9ef1a8c737133ac"
 
-    # See Rails::Configuration for more options
-
     config.action_view.javascript_expansions[:defaults] = %w(jquery jquery-ui rails application)
   end
 end

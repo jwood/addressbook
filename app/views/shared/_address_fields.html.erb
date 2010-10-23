@@ -1,26 +1,26 @@
-<% disable_address2 ||= false -%>
+<% disable_address2 ||= false %>
 
 <table>
   <tr>
     <td><label>Address Line 1:</label></td>
-    <td><%= text_field 'address', 'address1', 'size' => 40 %></td>
+    <td><%= text_field :address, :address1, :size => 40 %></td>
   </tr>
-  <% unless disable_address2 -%>
+  <% unless disable_address2 %>
     <tr>
       <td><label>Address Line 2:</label></td>
-      <td><%= text_field 'address', 'address2', 'size' => 40 %></td>
+      <td><%= text_field :address, :address2, :size => 40 %></td>
     </tr>
-  <% end -%>
+  <% end %>
   <tr>
     <td><label>City:</label></td>
-    <td><%= text_field 'address', 'city', 'size' => 20 %></td>
+    <td><%= text_field :address, :city, :size => 20 %></td>
   </tr>
   <tr>
     <td><label>State:</label></td>
-    <td><%= select 'address', 'state', State.options_for_select %></td>
+    <td><%= select :address, :state, State.options_for_select %></td>
   </tr>
   <tr>
     <td><label>Zip Code:</label></td>
-    <td><%= text_field 'address', 'zip', 'size' => 15 %></td>
+    <td><%= text_field :address, :zip, :size => 15 %></td>
   </tr>
 </table>

@@ -5,7 +5,7 @@ class Phone
 
     sanitized_phone_number = phone_number.gsub(/[a-zA-Z\-.()+,\s]/, '')
 
-    if sanitized_phone_number[0,1] == "1"
+    if sanitized_phone_number[0,1] == '1'
       sanitized_phone_number = sanitized_phone_number[1, sanitized_phone_number.size]
     end
 
