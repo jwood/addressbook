@@ -4,3 +4,4 @@ db/schema.rb
 log/*
 public/mailing_labels.pdf
 tmp/*
+*.swp
