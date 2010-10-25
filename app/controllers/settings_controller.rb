@@ -11,8 +11,9 @@ class SettingsController < ApplicationController
   def login_credentials
     @username = Settings.username
     @password = Settings.password
+    @demo = (ENV['DEMO'] == 'true')
 
-    if request.post?
+    if request.post? && !@demo
       @username = params[:username]
       @password = params[:password]
       @password_confirmation = params[:password_confirmation]
