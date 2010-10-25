@@ -1,5 +1,5 @@
 <%= error_messages_for :address %>
-<%= form_tag({ :action => :edit_address, :id => address }, { :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag({ :action => :edit_address, :id => @address }, { :remote => true, :class => 'ajax_request' }) do %>
   <h3>Address Type</h3>
   <div class="section">
     <table>
@@ -31,7 +31,7 @@
     <%= render :partial => 'shared/address_fields' %>
   </div>
 
-  <% if !address.id.blank? && !address.contacts.blank? %>
+  <% if !@address.id.blank? && !@address.contacts.blank? %>
     <h3>Address Contacts</h3>
     <div class="section">
       <table class="addressContacts">
@@ -40,10 +40,10 @@
           <th class="secondary_contact_header" style="<%= secondary_contact_style %>">Secondary</th>
           <th>Name</th>
         </tr>
-        <% address.contacts.each do |contact| %>
+        <% @address.contacts.each do |contact| %>
           <tr>
-            <td><%= radio_button_tag 'address[contact1_id]', contact.id, address.contact1_id == contact.id %></td>
-            <td class="secondary_contact_column" style="<%= secondary_contact_style %>"><%= radio_button_tag 'address[contact2_id]', contact.id, address.contact2_id == contact.id %></td>
+            <td><%= radio_button_tag 'address[contact1_id]', contact.id, @address.contact1_id == contact.id %></td>
+            <td class="secondary_contact_column" style="<%= secondary_contact_style %>"><%= radio_button_tag 'address[contact2_id]', contact.id, @address.contact2_id == contact.id %></td>
             <td>
               <%= link_to(contact.full_name_last_first, url_for(:controller => :contact, :action => :edit_contact, :id => contact),
                   :remote => true, :method => :get) %>
@@ -58,4 +58,4 @@
   <%= submit_tag "Save" %>
 <% end %>
 
-<%= create_cancel_delete_links(address) %>
+<%= create_cancel_delete_links(@address) %>

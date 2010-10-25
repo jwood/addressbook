@@ -1,4 +1,4 @@
-replace_html('#content', render(:partial => 'address', :locals => {:address => @address}), page)
+replace_html('#content', render(:partial => 'address'), page)
 if @saved
   update_list(@address, @address_list, page)
   highlight_in_list(@address, page)

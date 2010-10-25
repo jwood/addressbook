@@ -1,4 +1,4 @@
-replace_html('#content', render(:partial => 'contact', :object => @contact), page)
+replace_html('#content', render(:partial => 'contact'), page)
 update_list(@contact, @contact_list, page)
 
 address = @old_address || @contact.address

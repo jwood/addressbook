@@ -1,5 +1,5 @@
 <%= error_messages_for :contact %>
-<%= form_tag({ :action => :edit_contact, :id => contact }, { :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag({ :action => :edit_contact, :id => @contact }, { :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Personal Info</h3>
   <div class="section">
@@ -56,13 +56,13 @@
 
   <h3>Address</h3>
   <div class="section">
-    <% if contact.has_address? %>
+    <% if @contact.has_address? %>
       <p id="address" style="<%= display_style_for_address %>">
-        <%= contact.address.address1 %><br />
-        <% unless contact.address.address2.blank? %>
-          <%= contact.address.address2 %><br />
+        <%= @contact.address.address1 %><br />
+        <% unless @contact.address.address2.blank? %>
+          <%= @contact.address.address2 %><br />
         <% end %>
-        <%= contact.address.city + ', ' + contact.address.state + ' ' + contact.address.zip %>
+        <%= @contact.address.city + ', ' + @contact.address.state + ' ' + @contact.address.zip %>
       </p>
     <% end %>
 
@@ -88,14 +88,14 @@
       </p>
     </div>
 
-    <% if contact.has_address? %>
+    <% if @contact.has_address? %>
       <p>
         <%= link_to_function 'Edit Address', 'editAddress();' %> |
-        <%= link_to('Address Details', url_for(:controller => :address, :action => :edit_address, :id => contact.address),
+        <%= link_to('Address Details', url_for(:controller => :address, :action => :edit_address, :id => @contact.address),
                     :method => :get, :remote => true, :class => 'ajax_request') %> |
-        <%= link_to('Delete Address', url_for(:action => :remove_address_from_contact, :id => contact),
-                    :method => :post, :remote => true, :class => 'ajax_request', :confirm => "Are you sure you would like to delete the address for #{contact.first_name} #{contact.last_name}?") %> |
-        <%= add_map_and_directions_links(contact) %> <br />
+        <%= link_to('Delete Address', url_for(:action => :remove_address_from_contact, :id => @contact),
+                    :method => :post, :remote => true, :class => 'ajax_request', :confirm => "Are you sure you would like to delete the address for #{@contact.first_name} #{@contact.last_name}?") %> |
+        <%= add_map_and_directions_links(@contact) %> <br />
       </p>
     <% end %>
   </div>
@@ -104,7 +104,7 @@
   <%= submit_tag "Save" %>
 <% end %>
 
-<%= create_cancel_delete_links(contact) %>
+<%= create_cancel_delete_links(@contact) %>
 
 <%= render :partial => 'multiple_address_confirmation_form' unless @contact.address.nil? %>
 

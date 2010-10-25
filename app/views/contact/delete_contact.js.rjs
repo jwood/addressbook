@@ -1,4 +1,4 @@
-replace_html('#content', render(:partial => 'deleted_contact', :object => @contact), page)
+replace_html('#content', render(:partial => 'deleted_contact'), page)
 remove_from_list(@contact, page)
 address = @old_address || @contact.address
 

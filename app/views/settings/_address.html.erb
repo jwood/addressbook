@@ -7,7 +7,7 @@
     address to the address of your contacts.
   </p>
   <div class="section">
-    <%= render :partial => 'shared/address_fields', :locals => { :address => address, :disable_address2 => true } %>
+    <%= render :partial => 'shared/address_fields', :locals => { :address => @address, :disable_address2 => true } %>
   </div>
 
   <p><%= submit_tag 'Save' %></p>  
