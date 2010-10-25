@@ -19,7 +19,7 @@ class SettingsController < ApplicationController
       @current_password = params[:current_password]
 
       current_password = Settings.password
-      if !current_password.blank? && @current_password != current_password
+      if !current_password.blank? && Password.encode(@current_password) != current_password
         flash.now[:notice] = 'The current password specified is not valid' and return
       end
 

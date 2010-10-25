@@ -16,12 +16,14 @@ class ApplicationController < ActionController::Base
   private
 
     def authenticate
-      username = Settings.username
-      password = Settings.password
+      if Rails.env == 'production'
+        username = Settings.username
+        password = Settings.password
 
-      if !username.blank? && !password.blank?
-        authenticate_or_request_with_http_basic("Addressbook") do |http_username, http_password|
-          http_username == username && http_password == password
+        if !username.blank? && !password.blank?
+          authenticate_or_request_with_http_basic("Addressbook") do |http_username, http_password|
+            http_username == username && Password.encode(http_password) == password
+          end
         end
       end
     end

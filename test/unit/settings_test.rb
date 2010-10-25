@@ -9,7 +9,7 @@ class SettingsTest < ActiveSupport::TestCase
 
   test "should be able to set the application's password" do
     Settings.password = "mypass"
-    assert_equal "mypass", Settings.password
+    assert_equal Password.encode("mypass"), Settings.password
   end
 
   test "should not be able to save an invalid address" do

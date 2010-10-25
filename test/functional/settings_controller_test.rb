@@ -41,7 +41,7 @@ class SettingsControllerTest < ActionController::TestCase
     xhr :get, :login_credentials
     assert_response :success
     assert_equal 'bobby', assigns(:username)
-    assert_equal 'pass', assigns(:password)
+    assert_equal Password.encode('pass'), assigns(:password)
   end
 
   test "should get an error if we didn't specify the username, password, and password confirmation" do
@@ -60,7 +60,7 @@ class SettingsControllerTest < ActionController::TestCase
     xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'mypass'
     assert_response :success
     assert_equal 'bob', Settings.username
-    assert_equal 'mypass', Settings.password
+    assert_equal Password.encode('mypass'), Settings.password
   end
 
   test "should be able to change the username and password" do
@@ -70,7 +70,7 @@ class SettingsControllerTest < ActionController::TestCase
     xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'mypass', :current_password => 'pass'
     assert_response :success
     assert_equal 'bob', Settings.username
-    assert_equal 'mypass', Settings.password
+    assert_equal Password.encode('mypass'), Settings.password
   end
 
   test "should be able to successfully blank out the username and password" do

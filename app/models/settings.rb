@@ -29,6 +29,7 @@ class Settings < ActiveRecord::Base
   end
 
   def self.password=(data)
+    data = Password.encode(data) unless data.blank?
     Settings.update(:password, data)
   end
 
