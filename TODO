@@ -2,5 +2,4 @@ Enhancements
 ------------
 * Allow user to select font color, size, weight, and alignment for labels
 * Create mailer to remind user about upcoming birthdays
-* Add authentication in the app instead of relying on htpasswd files
 

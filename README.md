@@ -60,7 +60,7 @@ perform any other types of margin alterations.
 
 ## Other Features
 * Mobile optimized index and contact details pages
-* Authentication via htpasswd files
+* Authentication using HTTP Basic Auth
  
 ## LICENSE
 MIT License.  See LICENCE for details.
