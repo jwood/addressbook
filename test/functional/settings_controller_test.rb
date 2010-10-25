@@ -35,23 +35,53 @@ class SettingsControllerTest < ActionController::TestCase
     assert_equal "60606", address.zip
   end
 
-  test "should be able to get the password file" do
-    assert Settings.save_password_file(__FILE__)
-    xhr :get, :password_file
-    assert_equal __FILE__, assigns(:password_file)
+  test "should be able to get the form to set the username and password" do
+    Settings.username = 'bobby'
+    Settings.password = 'pass'
+    xhr :get, :login_credentials
+    assert_response :success
+    assert_equal 'bobby', assigns(:username)
+    assert_equal 'pass', assigns(:password)
   end
 
-  test "should be able to set the password file" do
-    assert Settings.save_password_file("")
-    xhr :post, :password_file, :password_file => __FILE__
-    assert_equal __FILE__ , assigns(:password_file)
+  test "should get an error if we didn't specify the username, password, and password confirmation" do
+    xhr :post, :login_credentials, :username => 'bob'
+    assert_response :success
+    assert_equal 'You must specify a username, password, and password confirmation', flash[:notice]
   end
 
-  test "should not be able to save the password file if the file doens't exist" do
-    assert Settings.save_password_file(__FILE__)
-    xhr :post, :password_file, :password_file => '/does/not/exist'
-    assert_equal 'The password file you specified could not be found', flash.now[:notice]
-    assert_equal __FILE__ , Settings.password_file
+  test "should get an error if the password and the password confirmation do not match" do
+    xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'notmypass'
+    assert_response :success
+    assert_equal 'The password and password confirmation do not match', flash[:notice]
+  end
+
+  test "should be able to successfully set the username and password" do
+    xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'mypass'
+    assert_response :success
+    assert_equal 'bob', Settings.username
+    assert_equal 'mypass', Settings.password
+  end
+
+  test "should be able to change the username and password" do
+    Settings.username = 'bobby'
+    Settings.password = 'pass'
+
+    xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'mypass', :current_password => 'pass'
+    assert_response :success
+    assert_equal 'bob', Settings.username
+    assert_equal 'mypass', Settings.password
+  end
+
+  test "should be able to successfully blank out the username and password" do
+    Settings.username = 'bob'
+    Settings.password = 'mypass'
+
+    xhr :post, :login_credentials, :username => '', :password => '', :password_confirmation => '', :current_password => 'mypass'
+    assert_response :success
+
+    assert Settings.username.blank?
+    assert Settings.password.blank?
   end
 
 end

@@ -8,15 +8,32 @@ class SettingsController < ApplicationController
     end
   end
 
-  def password_file
-    @password_file = Settings.password_file
+  def login_credentials
+    @username = Settings.username
+    @password = Settings.password
+
     if request.post?
-      @password_file = params[:password_file]
-      if Settings.save_password_file(@password_file)
-        @saved = true
-      else
-        flash.now[:notice] = 'The password file you specified could not be found'
+      @username = params[:username]
+      @password = params[:password]
+      @password_confirmation = params[:password_confirmation]
+      @current_password = params[:current_password]
+
+      current_password = Settings.password
+      if !current_password.blank? && @current_password != current_password
+        flash.now[:notice] = 'The current password specified is not valid' and return
       end
+
+      if (@username.blank? || @password.blank? || @password_confirmation.blank?) && !(@username.blank? && @password.blank? && @password_confirmation.blank?)
+        flash.now[:notice] = 'You must specify a username, password, and password confirmation' and return
+      end
+
+      if @password != @password_confirmation
+        flash.now[:notice] = 'The password and password confirmation do not match' and return
+      end
+
+      Settings.username = @username
+      Settings.password = @password
+      @saved = true
     end
   end
 
