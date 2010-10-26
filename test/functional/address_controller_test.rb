@@ -3,40 +3,55 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AddressControllerTest < ActionController::TestCase
   fixtures :all
 
-  test "should be able to get a form to create a new address" do
-    xhr :get, :edit_address
-    assert_template 'edit_address'
+  context "on GET to :edit_address with no record" do
+    setup { xhr :get, :edit_address }
+
+    should respond_with :success
+    should render_template :edit_address
   end
 
-  test "should be able to get an address with a single contact" do
-    contact = contacts(:billy_bob)
-    address = addresses(:chicago)
+  context "on GET to :edit_address with a specific record" do
+    setup do
+      contact = contacts(:billy_bob)
+      @address = addresses(:chicago)
 
-    contact.address = address
-    contact.save
-    contact.address.link_contact
+      contact.address = @address
+      contact.save
+      contact.address.link_contact
 
-    xhr :get, :edit_address, { :id => address.id }
-    assert_template 'edit_address'
+      xhr :get, :edit_address, :id => @address
+    end
+
+    should respond_with :success
+    should render_template :edit_address
+    should("return the specified address") { assert_equal @address, assigns(:address) }
   end
 
-  test "should be able to edit an address" do
-    address = addresses(:chicago)
-    address.address_type = address_types(:individual)
-    address.address2 = 'Apt 109'
+  context "on POST to :edit_address" do
+    setup do
+      @address = addresses(:chicago)
+      @address.address_type = address_types(:individual)
+      @address.address2 = 'Apt 109'
 
-    xhr :post, :edit_address, { :id => address.id, :address => address.attributes }
-    assert_template 'edit_address'
-    assert_equal(address.address2, assigns(:address).address2)
-    assert_equal(true, assigns(:saved))
-    assert_nil assigns(:address_list)
+      xhr :post, :edit_address, :id => @address, :address => @address.attributes
+    end
+
+    should respond_with :success
+    should render_template :edit_address
+    should("return the edited address") { assert_equal @address.address2, assigns(:address).address2 }
+    should("indicate the record was saved") { assert_equal true, assigns(:saved) }
+    should("not return an updated address list") { assert_nil assigns(:address_list) }
   end
 
-  test "should be able to delete an address" do
-    address = addresses(:chicago)
-    xhr :post, :delete_address, { :id => address.id }
-    assert_template 'delete_address'
-    assert_equal(address, assigns(:address))
+  context "on POST to :delete_address" do
+    setup do
+      @address = addresses(:chicago)
+      xhr :post, :delete_address, :id => @address
+    end
+
+    should respond_with :success
+    should render_template :delete_address
+    should("return the deleted address") { assert_equal @address, assigns(:address) }
   end
   
 end
