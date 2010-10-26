@@ -8,6 +8,8 @@ gem 'jquery-rails', '0.2.2'
 
 gem 'pdf-labels', '2.0.1', :require => 'pdf/label'
 
+gem 'rcov'
+
 group :test do
   gem 'shoulda'
 end
