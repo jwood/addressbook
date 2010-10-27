@@ -5,11 +5,20 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
+* git clone git://github.com/jwood/addressbook.git
+* cd addressbook
 * gem install bundler
 * bundle install
 * Copy config/database.yml.template to config/database.yml and configure your database
 * rake db:migrate
-* Once the app is running, be sure to set your home address in the settings section
+
+## Setup on [Heroku](http://heroku.com/) - Free hosting
+* [Create your Heroku Account](http://heroku.com/signup) and [Install the Heroku gem](http://docs.heroku.com/heroku-command)
+* git clone git://github.com/jwood/addressbook.git
+* cd addressbook
+* heroku create
+* git push heroku master
+* heroku rake db:migrate
 
 ## Demo
 [http://jwood-addressbook.heroku.com/](http://jwood-addressbook.heroku.com/)  
@@ -64,7 +73,6 @@ perform any other types of margin alterations.
  
 ## LICENSE
 MIT License.  See LICENCE for details.
-
 
 ## AUTHOR
 John Wood  
