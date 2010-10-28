@@ -1,7 +1,15 @@
-<ul id="contactList">
-  <% @contact_list.each do |contact| %>
-    <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
-  <% end %>
-</ul>
+<div data-role="header" data-theme="b">
+  <h1>Address Book</h1>
+</div>
 
-<p><%= link_to 'Switch to desktop view', :action => :use_desktop_view %></p>
+<div data-role="content">
+  <ul data-role="listview">
+    <% @contact_list.each do |contact| %>
+      <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div data-role="footer" data-theme="b">
+  <p style="padding-left: 10px"><%= link_to 'Switch to desktop view', {:action => :use_desktop_view}, {:rel => 'external'} %></p>
+</div>

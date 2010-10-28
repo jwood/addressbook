@@ -1,3 +1,9 @@
+<div data-role="header" data-theme="b">
+  <h1><%= @contact.last_name %></h1>
+</div>
+
+<div data-role="content">
+
 <h2><%= @contact.prefix %> <%= @contact.first_name %> <%= @contact.last_name %></h2>
 
 <% if has_contact_info_to_display?(@contact) %>
@@ -48,13 +54,13 @@
   <div class="section">
     <p id="address">
       <%= @contact.address.address1 %><br />
-      <%= @contact.address.address2 + '<br />' unless @contact.address.address2.blank? %>
+      <% unless @contact.address.address2.blank? %>
+        <%= @contact.address.address2 %><br />
+      <% end %>
       <%= @contact.address.city + ', ' + @contact.address.state + ' ' + @contact.address.zip %>
     </p>
     <p id="mapLinks"><%= add_map_and_directions_links(@contact) %></p>
   </div>
 <% end %>
 
-<div id="navLinks">
-  <p><%= link_to 'Back', root_path %></p>  
 </div>
