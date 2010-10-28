@@ -42,7 +42,7 @@
       <% unless @contact.website.blank? %>
         <tr>
           <td><label>Web:</label></td>
-          <td><%= auto_link @contact.website %></td>
+          <td><%= auto_link @contact.website, :html => {:rel => 'external'} %></td>
         </tr>
       <% end %>
     </table>

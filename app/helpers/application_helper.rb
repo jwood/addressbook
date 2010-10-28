@@ -71,7 +71,7 @@ module ApplicationHelper
   end
 
   def phone_to(phone_number)
-    link_to(Phone.format(phone_number), "tel:" + phone_number)
+    link_to(Phone.format(phone_number), "tel:" + phone_number, :rel => 'external')
   end
   
 end
