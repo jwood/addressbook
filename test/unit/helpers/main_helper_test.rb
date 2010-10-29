@@ -13,17 +13,21 @@ class MainHelperTest < ActionView::TestCase
       chunked_contacts = chunk_contact_list(contact_list)
       assert_equal 26, chunked_contacts.size
 
-      assert_equal 1, chunked_contacts['A'].size
-      assert_equal albertson, chunked_contacts['A'].first
+      # A
+      assert_equal 1, chunked_contacts[0][1].size
+      assert_equal albertson, chunked_contacts[0][1].first
 
-      assert_equal 1, chunked_contacts['B'].size
-      assert_equal barry, chunked_contacts['B'].first
+      # B
+      assert_equal 1, chunked_contacts[1][1].size
+      assert_equal barry, chunked_contacts[1][1].first
 
-      assert_equal 0, chunked_contacts['C'].size
+      # C
+      assert_equal 0, chunked_contacts[2][1].size
 
-      assert_equal 2, chunked_contacts['D'].size
-      assert_equal dixon, chunked_contacts['D'].first
-      assert_equal donaldson, chunked_contacts['D'].last
+      # D
+      assert_equal 2, chunked_contacts[3][1].size
+      assert_equal dixon, chunked_contacts[3][1].first
+      assert_equal donaldson, chunked_contacts[3][1].last
     end
   end
 
