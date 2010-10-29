@@ -3,15 +3,17 @@
 </div>
 
 <div data-role="content">
-  <ul data-role="listview" data-dividertheme="d">
-    <% chunked_contacts = chunk_contact_list(@contact_list) %>
-    <% chunked_contacts.each do |letter, contact_list| %>
-      <li data-role="list-divider"><%= letter %></li>
-      <% contact_list.each do |contact| %>
-        <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
-      <% end %>
-    <% end %>
-  </ul>
+  <% chunked_contacts = chunk_contact_list(@contact_list) %>
+  <% chunked_contacts.each do |letter, contact_list| %>
+    <div data-role="collapsible" data-state="collapsed" data-theme="c">
+      <h3><%= letter %></h3>
+      <ul data-role="listview" data-inset="true" data-theme="d">
+        <% contact_list.each do |contact| %>
+          <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>
 
 <div data-role="footer" data-theme="b">
