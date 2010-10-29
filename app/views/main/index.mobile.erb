@@ -3,9 +3,13 @@
 </div>
 
 <div data-role="content">
-  <ul data-role="listview">
-    <% @contact_list.each do |contact| %>
-      <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
+  <ul data-role="listview" data-dividertheme="d">
+    <% chunked_contacts = chunk_contact_list(@contact_list) %>
+    <% chunked_contacts.each do |letter, contact_list| %>
+      <li data-role="list-divider"><%= letter %></li>
+      <% contact_list.each do |contact| %>
+        <li><%= link_to contact.full_name_last_first, :controller => :contact, :action => :show_contact, :id => contact %></li>
+      <% end %>
     <% end %>
   </ul>
 </div>
