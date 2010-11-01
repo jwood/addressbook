@@ -10,7 +10,7 @@ module ContactHelper
     html = "<a href=\"#{map_link}\" target=\"new\">Map</a>"
 
     user_address = Settings.home_address
-    if !user_address.is_street_address_empty? && !is_mobile_device?
+    if !user_address.is_street_address_empty? && !mobile_device?
       directions_query = 'daddr=' +
         contact.address.address1 + ',' +
         contact.address.city + ',' +
@@ -44,5 +44,11 @@ module ContactHelper
             !contact.email.blank? ||
             !contact.website.blank?
   end
+
+  private
+
+    def mobile_device?
+      respond_to?(:is_mobile_device?) && is_mobile_device?
+    end
   
 end

@@ -109,6 +109,22 @@ class SettingsControllerTest < ActionController::TestCase
     end
   end
 
+  context "on POST to :login_credentials when trying to change existing credentials but specified the wrong current password" do
+    setup do
+      Settings.username = 'bobby'
+      Settings.password = 'pass'
+      xhr :post, :login_credentials, :username => 'bob', :password => 'mypass', :password_confirmation => 'mypass', :current_password => 'wrong_pass'
+    end
+
+    should respond_with :success
+    should render_template :login_credentials
+    should("return an error") { assert_equal 'The current password specified is not valid', flash[:notice] }
+    should "retain the existing the user credentials" do
+      assert_equal 'bobby', Settings.username
+      assert_equal Password.encode('pass'), Settings.password
+    end
+  end
+
   context "on POST to :login_credentials when removing the login credentials" do
     setup do
       Settings.username = 'bob'

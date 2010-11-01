@@ -2,7 +2,18 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class ContactControllerTest < ActionController::TestCase
   fixtures :all
-  
+
+  context "on GET to :show_contact" do
+    setup do
+      @request.user_agent = "android"
+      get :show_contact, :id => contacts(:john_doe)
+    end
+
+    should respond_with :success
+    should render_template :show_contact
+    should("return the contact") { assert_equal contacts(:john_doe), assigns(:contact) }
+  end
+
   context "on GET to :edit_contact with no record" do
     setup { xhr :get, :edit_contact }
 
