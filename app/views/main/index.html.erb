@@ -19,7 +19,7 @@
     <div dojoType="dijit.layout.AccordionPane" title="Contacts" class="menuContent">
       <ul>
         <div id="contactList">
-          <%= render :partial => 'contact_list', :collection => @contact_list %>
+          <%= render :partial => 'contact_list', :locals => {:object_list => @contact_list} %>
         </div>
       </ul>
       <%= form_tag({ :controller => :contact, :action => :edit_contact }, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
@@ -30,7 +30,7 @@
     <div dojoType="dijit.layout.AccordionPane" title="Addresses" class="menuContent">
       <ul>
         <div id="addressList">
-          <%= render :partial => 'address_list', :collection => @address_list %>
+          <%= render :partial => 'address_list', :locals => {:object_list => @address_list} %>
         </div>
       </ul>
     </div>
@@ -38,7 +38,7 @@
     <div dojoType="dijit.layout.AccordionPane" title="Groups" class="menuContent">
       <ul>
         <div id="groupList">
-          <%= render :partial => 'group_list', :collection => @group_list %>
+          <%= render :partial => 'group_list', :locals => {:object_list => @group_list} %>
         </div>
       </ul>
       <%= form_tag({ :controller => :group, :action => :edit_group }, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>

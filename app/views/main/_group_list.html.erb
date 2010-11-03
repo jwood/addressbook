@@ -1,1 +1,3 @@
-<%= create_link_to(group_list) %>
+<% object_list.each do |object| %>
+  <%= create_link_to(object) %>
+<% end %>

@@ -51,7 +51,7 @@ module ApplicationHelper
     if (!object.nil? && !object.id.blank?) || force
       obj_type = object.class.to_s.downcase
       if !object_list.nil?
-        replace_html("##{obj_type}List", render(:partial => "main/#{obj_type}_list", :collection => object_list), page)
+        replace_html("##{obj_type}List", render(:partial => "main/#{obj_type}_list", :locals => {:object_list => object_list}), page)
       else
         page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}');"
       end
