@@ -1,3 +1,10 @@
-<% object_list.each do |object| %>
-  <%= create_link_to(object) %>
+<% chunked_contacts = chunk_contact_list(object_list) %>
+<% chunked_contacts.each do |letter, contact_list| %>
+  <% next if contact_list.blank? %>
+  <h3><%= letter %></h3>
+  <ul>
+    <% contact_list.each do |object| %>
+      <%= create_link_to(object) %>
+    <% end %>
+  </ul>
 <% end %>
