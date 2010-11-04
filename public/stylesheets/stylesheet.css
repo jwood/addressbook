@@ -38,6 +38,12 @@ html, body {
   padding-top: 5px;
 }
 
+.letter {
+  font-family: Times New Roman, serif;
+  padding: 0px;
+  margin: 0px 0px -5px 0px;
+}
+
 /* A section of information in the content window (i.e. Address) */
 .section {
   margin-left: 30px;
