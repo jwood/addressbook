@@ -10,7 +10,7 @@ class MainHelperTest < ActionView::TestCase
       donaldson = Contact.new(:last_name => 'donaldson')
       contact_list = [albertson, barry, dixon, donaldson]
 
-      chunked_contacts = chunk_contact_list(contact_list)
+      chunked_contacts = chunk_list(contact_list)
       assert_equal 26, chunked_contacts.size
 
       # A

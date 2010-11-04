@@ -1,10 +1,1 @@
-<% chunked_contacts = chunk_contact_list(object_list) %>
-<% chunked_contacts.each do |letter, contact_list| %>
-  <% next if contact_list.blank? %>
-  <h2 class="letter"><%= letter %></h2>
-  <ul>
-    <% contact_list.each do |object| %>
-      <%= create_link_to(object) %>
-    <% end %>
-  </ul>
-<% end %>
+<%= render :partial => 'main/chunked_list', :locals => {:object_list => object_list} %>

@@ -1,0 +1,10 @@
+<% chunked_objects = chunk_list(object_list) %>
+<% chunked_objects.each do |letter, list| %>
+  <% next if list.blank? %>
+  <h2 class="letter"><%= letter %></h2>
+  <ul>
+    <% list.each do |object| %>
+      <%= create_link_to(object) %>
+    <% end %>
+  </ul>
+<% end %>
