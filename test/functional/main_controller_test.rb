@@ -13,6 +13,17 @@ class MainControllerTest < ActionController::TestCase
     should("return the list of groups") { assert_equal 2, assigns(:group_list).size }
   end
 
+  context "on GET to :index from a mobile device" do
+    setup do
+      @request.user_agent = "android"
+      get :index
+    end
+
+    should respond_with :success
+    should render_template :index
+    should("return the list of contacts") { assert_equal 4, assigns(:contact_list).size }
+  end
+
   context "on GET to :use_mobile_view" do
     setup { get :use_mobile_view }
 
