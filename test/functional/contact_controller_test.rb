@@ -3,10 +3,17 @@ require File.dirname(__FILE__) + '/../test_helper'
 class ContactControllerTest < ActionController::TestCase
   fixtures :all
 
-  context "on GET to :show_contact" do
+  context "on GET to :new" do
+    setup { xhr :get, :new }
+
+    should respond_with :success
+    should render_template :edit_contact
+  end
+
+  context "on GET to :show from a mobile device" do
     setup do
       @request.user_agent = "android"
-      get :show_contact, :id => contacts(:john_doe)
+      get :show, :id => contacts(:john_doe)
     end
 
     should respond_with :success
@@ -14,26 +21,27 @@ class ContactControllerTest < ActionController::TestCase
     should("return the contact") { assert_equal contacts(:john_doe), assigns(:contact) }
   end
 
-  context "on GET to :edit_contact with no record" do
-    setup { xhr :get, :edit_contact }
+  context "on GET to :show from a standard web browser" do
+    setup { xhr :get, :show, :id => contacts(:john_doe) }
 
     should respond_with :success
     should render_template :edit_contact
+    should("return the contact") { assert_equal contacts(:john_doe), assigns(:contact) }
   end
 
-  context "on GET to :edit_contact with a specific record" do
-    setup { xhr :get, :edit_contact, :id => contacts(:john_doe) }
+  context "on GET to :edit with a specific record" do
+    setup { xhr :get, :edit, :id => contacts(:john_doe) }
 
     should respond_with :success
     should render_template :edit_contact
     should("return the contact to edit") { assert_equal contacts(:john_doe), assigns(:contact) }
   end
 
-  context "on POST to :edit_contact to edit a contact's details" do
+  context "on POST to :update to edit a contact's details" do
     setup do
       contact = contacts(:john_doe)
       contact.middle_name = 'Patrick'
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes
+      xhr :post, :update, :id => contact, :contact => contact.attributes
     end
 
     should respond_with :success
@@ -42,10 +50,10 @@ class ContactControllerTest < ActionController::TestCase
     should("indicate the record was saved") { assert_equal true, assigns(:saved) }
   end
 
-  context "on POST to :delete_contact" do
+  context "on DELETE to :destroy" do
     setup do
       @contact = contacts(:john_doe)
-      xhr :post, :delete_contact, :id => @contact
+      xhr :delete, :destroy, :id => @contact
     end
 
     should respond_with :success
@@ -54,12 +62,12 @@ class ContactControllerTest < ActionController::TestCase
     should("not be able to find the contact in the database") { assert_nil Contact.find_by_id(@contact) }
   end
 
-  context "on POST to :delete_contact when linked to an address" do
+  context "on DELETE to :destroy when linked to an address" do
     setup do
       @contact = contacts(:john_doe)
       @address = addresses(:alsip)
       @contact.update_attribute(:address, @address)
-      xhr :post, :delete_contact, :id => @contact
+      xhr :delete, :destroy, :id => @contact
     end
 
     should respond_with :success
@@ -84,8 +92,8 @@ class ContactControllerTest < ActionController::TestCase
     should("indicate the record was saved") { assert_equal true, assigns(:saved) }
   end
 
-  context "on POST to :find_contact" do
-    setup { xhr :post, :find_contact, :last_name => 'd' }
+  context "on POST to :find" do
+    setup { xhr :post, :find, :last_name => 'd' }
 
     should respond_with :success
     should render_template :find_contact
@@ -93,12 +101,12 @@ class ContactControllerTest < ActionController::TestCase
     should("return all contacts with the last name of 'Doe'") {  assert assigns(:contact_list).all { |c| c.last_name == 'Doe' } }
   end
 
-  context "on POST to :edit_contact to associate a contact with the address of another contact" do
+  context "on POST to :update to associate a contact with the address of another contact" do
     setup do
       contacts(:john_doe).update_attribute(:address, addresses(:chicago))
       contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes,
+      xhr :post, :update, :id => contact, :contact => contact.attributes,
         :address_specification_type => "existing_address", :other_id => contacts(:jane_doe).id
     end
 
@@ -109,10 +117,10 @@ class ContactControllerTest < ActionController::TestCase
     should("delete the old address of the contact") { assert_nil Address.find_by_id(addresses(:chicago)) }
   end
 
-  context "on POST to :edit_contact to assign a new address to an existing contact" do
+  context "on POST to :update to assign a new address to an existing contact" do
     setup do
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact.id, :contact => contact.attributes,
+      xhr :post, :update, :id => contact.id, :contact => contact.attributes,
         :address_specification_type => "specified_address", :address => {
           :address1 => "9909 South St.", :address2 => "Apt 2", :city => "Chicago", :state => "IL", :zip => "60606", :home_phone => '1-312-222-1221'}
     end
@@ -130,10 +138,10 @@ class ContactControllerTest < ActionController::TestCase
     end
   end
 
-  context "on POST to :edit_contact to assign a bogus adress to an existing contact" do
+  context "on POST to :update to assign a bogus adress to an existing contact" do
     setup do
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes,
+      xhr :post, :update, :id => contact, :contact => contact.attributes,
         :address_specification_type => "specified_address", :address => {
           :address1 => "9909 South St.", :city => "", :state => "Don't know", :zip => "lkjasdflkj"}
     end
@@ -145,11 +153,11 @@ class ContactControllerTest < ActionController::TestCase
     should("include an error message") { assert assigns(:contact).errors.full_messages.include?("Please specify a valid address") }
   end
 
-  context "on POST to :edit_contact to create a new contact associating them with the address of another contact" do
+  context "on POST to :create to create a new contact associating them with the address of another contact" do
     setup do
       contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :contact => contact.attributes,
+      xhr :post, :create, :contact => contact.attributes,
         :address_specification_type => "existing_address", :other_id => contacts(:jane_doe)
     end
 
@@ -159,10 +167,10 @@ class ContactControllerTest < ActionController::TestCase
     should("assign the proper address to the contact") { assert_equal addresses(:alsip), assigns(:contact).address }
   end
 
-  context "on POST to :edit_contact to create a new contact with a specified address" do
+  context "on POST to :create to create a new contact with a specified address" do
     setup do
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :contact => contact.attributes,
+      xhr :post, :create, :contact => contact.attributes,
         :address_specification_type => "specified_address", :address => {
           :address1 => "9909 South St.", :address2 => "Apt 2", :city => "Chicago", :state => "IL", :zip => "60606", :home_phone => "312-222-1221" }
     end
@@ -180,8 +188,8 @@ class ContactControllerTest < ActionController::TestCase
     end
   end
 
-  context "on POST to :edit_contact to create a contact with no address" do
-    setup { xhr :post, :edit_contact, :contact => contacts(:john_doe).attributes }
+  context "on POST to :create to create a contact with no address" do
+    setup { xhr :post, :create, :contact => contacts(:john_doe).attributes }
 
     should respond_with :success
     should render_template :edit_contact
@@ -190,10 +198,10 @@ class ContactControllerTest < ActionController::TestCase
     should("not set an address for the contact") { assert_nil assigns(:contact).address }
   end
 
-  context "on POST to :edit_contact to create a contact with only a home phone number, and no address" do
+  context "on POST to :create to create a contact with only a home phone number, and no address" do
     setup do
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes,
+      xhr :post, :create, :id => contact, :contact => contact.attributes,
         :address => { :home_phone => '555-232-2323', :address1 => '', :city => '', :state => '', :zip => '' }
     end
 
@@ -204,13 +212,13 @@ class ContactControllerTest < ActionController::TestCase
     should("set the home phone number for the contact") { assert_equal '5552322323', assigns(:contact).address.home_phone }
   end
 
-  context "on POST to :edit_contact to update an existing contact with a new address" do
+  context "on POST to :update to update an existing contact with a new address" do
     setup do
       contacts(:john_doe).update_attribute(:address, addresses(:alsip))
       assert(addresses(:alsip).contacts.include?(contacts(:john_doe)))
 
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes,
+      xhr :post, :update, :id => contact, :contact => contact.attributes,
         :address_specification_type => "specified_address", :address => {
           :address1 => "123 Main St", :city => "Chicago", :state => "IL", :zip => "60606"}
     end
@@ -222,13 +230,13 @@ class ContactControllerTest < ActionController::TestCase
     should("update the actual address with the new data") { assert_equal 'Chicago', assigns(:contact).address.city }
   end
 
-  context "on POST to :edit_contact to edit the address of a contact that currently has the same address as another contact" do
+  context "on POST to :update to edit the address of a contact that currently has the same address as another contact" do
     setup do
       contacts(:john_doe).update_attribute(:address, addresses(:alsip))
       contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
 
       contact = contacts(:john_doe)
-      xhr :post, :edit_contact, :id => contact, :contact => contact.attributes,
+      xhr :post, :update, :id => contact, :contact => contact.attributes,
         :address_specification_type => "specified_address", :address => {
           :address1 => "123 Main St", :city => "Chicago", :state => "IL", :zip => "60606"}
     end

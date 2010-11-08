@@ -1,32 +1,57 @@
 class ContactController < ApplicationController
 
-  def show_contact
-    @contact = Contact.find_by_id(params[:id])
+  def new
+    @contact = Contact.new
+    render 'edit_contact'
   end
 
-  def edit_contact
-    render_target = 'edit_contact'
-    @contact = Contact.find_by_id(params[:id]) || Contact.new
+  def create
+    @contact = Contact.new(params[:contact])
 
-    if request.post?
-      new_contact = true if params[:id].blank?
-      @contact.attributes = params[:contact]
-
-      new_address = parse_address
-      if new_address && new_address.valid? && new_address.different_from?(@contact.address)
-        if changing_address_for_multiple_contacts?
-          session[:changed_address] = new_address
-          render_target = 'edit_contact_with_shared_address'
-        else
-          assigning_new_address_object = params[:address_specification_type] == 'existing_address'
-          new_address_saved = assign_address_to_contact(new_address, assigning_new_address_object)
-        end
-      end
-
-      @saved = @contact.errors.blank? && @contact.save
-      @contact_list = Contact.find_for_list if new_contact
-      @address_list = Address.find_for_list if new_address_saved
+    new_address = parse_address
+    if new_address && new_address.valid?
+      assigning_new_address_object = params[:address_specification_type] == 'existing_address'
+      assign_address_to_contact(new_address, assigning_new_address_object)
+      @address_list = Address.find_for_list
     end
+
+    @saved = @contact.save
+    @contact_list = Contact.find_for_list
+    render 'edit_contact'
+  end
+
+  def show
+    @contact = Contact.find_by_id(params[:id])
+    if is_mobile_device?
+      render 'show_contact'
+    else
+      render 'edit_contact'
+    end
+  end
+
+  def edit
+    @contact = Contact.find_by_id(params[:id])
+    render 'edit_contact'
+  end
+
+  def update
+    @contact = Contact.find_by_id(params[:id])
+    @contact.attributes = params[:contact]
+
+    render_target = 'edit_contact'
+    new_address = parse_address
+    if new_address && new_address.valid? && new_address.different_from?(@contact.address)
+      if changing_address_for_multiple_contacts?
+        session[:changed_address] = new_address
+        render_target = 'edit_contact_with_shared_address'
+      else
+        assigning_new_address_object = params[:address_specification_type] == 'existing_address'
+        new_address_saved = assign_address_to_contact(new_address, assigning_new_address_object)
+      end
+    end
+
+    @saved = @contact.errors.blank? && @contact.save
+    @address_list = Address.find_for_list if new_address_saved
 
     if new_address && new_address.different_from?(@contact.address)
       @address = new_address
@@ -35,6 +60,15 @@ class ContactController < ApplicationController
     end
 
     render :template => "contact/#{render_target}"
+  end
+
+  def destroy
+    @contact = Contact.find_by_id(params[:id])
+    @old_address = Address.new
+    @old_address.attributes = @contact.address.ergo.attributes
+    @contact.ergo.destroy
+    @address_list = Address.find_for_list if @contact.address.nil?
+    render 'delete_contact'
   end
 
   def change_address_for_contact
@@ -48,14 +82,6 @@ class ContactController < ApplicationController
     render :template => 'contact/edit_contact'
   end
   
-  def delete_contact
-    @contact = Contact.find_by_id(params[:id])
-    @old_address = Address.new
-    @old_address.attributes = @contact.address.ergo.attributes
-    @contact.ergo.destroy
-    @address_list = Address.find_for_list if @contact.address.nil?
-  end
-  
   def remove_address_from_contact
     @contact = Contact.find_by_id(params[:id])
     @old_address = @contact.address
@@ -65,9 +91,10 @@ class ContactController < ApplicationController
     render :template => 'contact/edit_contact'
   end
 
-  def find_contact
+  def find
     @contact_list = Contact.where(["upper(last_name) like ?", params[:last_name].upcase << "%"]).
                             order('last_name, first_name')
+    render 'find_contact'
   end
   
   private

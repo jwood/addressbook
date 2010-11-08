@@ -3,18 +3,45 @@ require File.dirname(__FILE__) + '/../test_helper'
 class GroupControllerTest < ActionController::TestCase
   fixtures :all
   
-  context "on GET to :edit_group" do
-    setup { xhr :get, :edit_group }
+  context "on GET to :new" do
+    setup { xhr :get, :new }
 
     should respond_with :success
     should render_template :edit_group
   end
 
-  context "on POST to :edit_group" do
+  context "on POST to :create" do
+    setup do
+      xhr :post, :create, :group => { :name => 'Newly created group' }
+    end
+
+    should respond_with :success
+    should render_template :edit_group
+    should("indicate the record was saved") { assert_equal true, assigns(:saved) }
+    should("create the group") { assert_equal 'Newly created group', assigns(:group).name }
+  end
+
+  context "on GET to :show" do
+    setup { xhr :get, :show, :id => groups(:group_1) }
+
+    should respond_with :success
+    should render_template :edit_group
+    should("return the specified group") { assert_equal groups(:group_1), assigns(:group) }
+  end
+
+  context "on GET to :edit" do
+    setup { xhr :get, :edit, :id => groups(:group_1) }
+
+    should respond_with :success
+    should render_template :edit_group
+    should("return the specified group") { assert_equal groups(:group_1), assigns(:group) }
+  end
+
+  context "on POST to :edit" do
     setup do
       group = groups(:group_1)
       group.name = 'New Name'
-      xhr :post, :edit_group, :id => group, :group => group.attributes
+      xhr :post, :update, :id => group, :group => group.attributes
     end
 
     should respond_with :success
@@ -23,10 +50,10 @@ class GroupControllerTest < ActionController::TestCase
     should("modify the group") { assert_equal 'New Name', assigns(:group).name }
   end
 
-  context "on POST to delete_group" do
+  context "on DELETE to destroy" do
     setup do
       @group = groups(:group_1)
-      xhr :post, :delete_group, :id => @group
+      xhr :delete, :destroy, :id => @group
     end
 
     should respond_with :success
@@ -34,10 +61,10 @@ class GroupControllerTest < ActionController::TestCase
     should("return the group that was deleted") { assert_equal @group, assigns(:group) }
   end
 
-  context "on POST to :edit_group to modify the members of a group" do
+  context "on POST to :edit to modify the members of a group" do
     setup do
       group = groups(:group_1)
-      xhr :post, :edit_group, :id => group, :included => [addresses(:chicago).id, addresses(:alsip).id]
+      xhr :post, :update, :id => group, :included => [addresses(:chicago).id, addresses(:alsip).id]
     end
 
     should respond_with :success
