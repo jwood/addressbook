@@ -1,5 +1,7 @@
 class GroupsController < ApplicationController
 
+  before_filter :load_group, :except => [:new, :create]
+
   def new
     @group = Group.new
     include_common_data
@@ -15,19 +17,11 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @group = Group.find_by_id(params[:id])
-    include_common_data
-    render 'edit_group'
-  end
-
-  def edit
-    @group = Group.find_by_id(params[:id])
     include_common_data
     render 'edit_group'
   end
 
   def update
-    @group = Group.find_by_id(params[:id])
     @group.attributes = params[:group]
     @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
     @saved = @group.save
@@ -36,20 +30,22 @@ class GroupsController < ApplicationController
   end
   
   def destroy
-    @group = Group.find_by_id(params[:id])
     @group.ergo.destroy
     include_common_data
     render 'delete_group'
   end
 
   def create_labels
-    @group = Group.find_by_id(params[:id])
     file_path = @group.create_labels(params[:label_type])
-    send_data(File.read(file_path), :filename => "labels.pdf", :type => "application/pdf")
+    send_data(File.read(file_path), :filename => 'labels.pdf', :type => 'application/pdf')
     include_common_data
   end
   
   private
+
+    def load_group
+      @group = Group.find_by_id(params[:id])
+    end
 
     def include_common_data
       @included = @group.addresses.includes([:contacts, :address_type])

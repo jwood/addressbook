@@ -1,5 +1,7 @@
 class ContactsController < ApplicationController
 
+  before_filter :load_contact, :except => [:new, :create, :find]
+
   def new
     @contact = Contact.new
     render 'edit_contact'
@@ -21,7 +23,6 @@ class ContactsController < ApplicationController
   end
 
   def show
-    @contact = Contact.find_by_id(params[:id])
     @address = @contact.address || Address.new
     if is_mobile_device?
       render 'show_contact'
@@ -30,14 +31,7 @@ class ContactsController < ApplicationController
     end
   end
 
-  def edit
-    @contact = Contact.find_by_id(params[:id])
-    @address = @contact.address || Address.new
-    render 'edit_contact'
-  end
-
   def update
-    @contact = Contact.find_by_id(params[:id])
     @contact.attributes = params[:contact]
 
     render_target = 'edit_contact'
@@ -65,7 +59,6 @@ class ContactsController < ApplicationController
   end
 
   def destroy
-    @contact = Contact.find_by_id(params[:id])
     @old_address = Address.new
     @old_address.attributes = @contact.address.ergo.attributes
     @contact.ergo.destroy
@@ -74,23 +67,21 @@ class ContactsController < ApplicationController
   end
 
   def change_address
-    @contact = Contact.find_by_id(params[:id])
     assigning_new_address_object = params[:submit_id] == 'no'
     new_address = assign_address_to_contact(session[:changed_address], assigning_new_address_object)
     @contact.save
 
     @address = @contact.address || Address.new
     @address_list = Address.find_for_list if new_address
-    render :template => 'contacts/edit_contact'
+    render 'edit_contact'
   end
   
   def remove_address
-    @contact = Contact.find_by_id(params[:id])
     @old_address = @contact.address
     @old_address_id = @contact.remove_address
     @saved = true unless @old_address_id.nil?
     @address_list = Address.find_for_list
-    render :template => 'contacts/edit_contact'
+    render 'edit_contact'
   end
 
   def find
@@ -100,6 +91,10 @@ class ContactsController < ApplicationController
   end
   
   private
+
+    def load_contact
+      @contact = Contact.find_by_id(params[:id])
+    end
 
     def changing_address_for_multiple_contacts?
       @contact.address && @contact.address.contacts.size > 1

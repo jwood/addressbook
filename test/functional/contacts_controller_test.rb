@@ -29,14 +29,6 @@ class ContactsControllerTest < ActionController::TestCase
     should("return the contact") { assert_equal contacts(:john_doe), assigns(:contact) }
   end
 
-  context "on GET to :edit with a specific record" do
-    setup { xhr :get, :edit, :id => contacts(:john_doe) }
-
-    should respond_with :success
-    should render_template :edit_contact
-    should("return the contact to edit") { assert_equal contacts(:john_doe), assigns(:contact) }
-  end
-
   context "on POST to :update to edit a contact's details" do
     setup do
       contact = contacts(:john_doe)

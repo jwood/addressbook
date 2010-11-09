@@ -20,23 +20,6 @@ class AddressesControllerTest < ActionController::TestCase
     should("return the specified address") { assert_equal @address, assigns(:address) }
   end
 
-  context "on GET to :edit with a specific record" do
-    setup do
-      contact = contacts(:billy_bob)
-      @address = addresses(:chicago)
-
-      contact.address = @address
-      contact.save
-      contact.address.link_contact
-
-      xhr :get, :edit, :id => @address
-    end
-
-    should respond_with :success
-    should render_template :edit_address
-    should("return the specified address") { assert_equal @address, assigns(:address) }
-  end
-
   context "on PUT to :update" do
     setup do
       @address = addresses(:chicago)

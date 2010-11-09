@@ -1,26 +1,26 @@
 class AddressesController < ApplicationController
 
-  def show
-    @address = Address.find_by_id(params[:id])
-    render 'edit_address'
-  end
+  before_filter :load_address
 
-  def edit
-    @address = Address.find_by_id(params[:id])
+  def show
     render 'edit_address'
   end
 
   def update
-    @address = Address.find_by_id(params[:id])
     @address.update_attributes(params[:address])
     @saved = @address.save
     render 'edit_address'
   end
   
   def destroy
-    @address = Address.find_by_id(params[:id])
     @address.ergo.destroy
     render 'delete_address'
   end
+
+  private
+
+    def load_address
+      @address = Address.find_by_id(params[:id])
+    end
   
 end

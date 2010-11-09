@@ -29,15 +29,7 @@ class GroupsControllerTest < ActionController::TestCase
     should("return the specified group") { assert_equal groups(:group_1), assigns(:group) }
   end
 
-  context "on GET to :edit" do
-    setup { xhr :get, :edit, :id => groups(:group_1) }
-
-    should respond_with :success
-    should render_template :edit_group
-    should("return the specified group") { assert_equal groups(:group_1), assigns(:group) }
-  end
-
-  context "on POST to :edit" do
+  context "on POST to :update" do
     setup do
       group = groups(:group_1)
       group.name = 'New Name'
@@ -61,7 +53,7 @@ class GroupsControllerTest < ActionController::TestCase
     should("return the group that was deleted") { assert_equal @group, assigns(:group) }
   end
 
-  context "on POST to :edit to modify the members of a group" do
+  context "on POST to :update to modify the members of a group" do
     setup do
       group = groups(:group_1)
       xhr :post, :update, :id => group, :included => [addresses(:chicago).id, addresses(:alsip).id]
