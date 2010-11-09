@@ -1,5 +1,5 @@
 <%= error_messages_for :contact %>
-<%= form_tag(@contact, { :method => :put, :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag(@contact, { :method => put_or_post(@contact), :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Personal Info</h3>
   <div class="section">

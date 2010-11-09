@@ -70,5 +70,9 @@ module ApplicationHelper
   def phone_to(phone_number)
     link_to(Phone.format(phone_number), "tel:" + phone_number, :rel => 'external')
   end
+
+  def put_or_post(object)
+    object.ergo.id.nil? ? :post : :put
+  end
   
 end

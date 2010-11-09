@@ -1,5 +1,5 @@
 <%= error_messages_for :group %>
-<%= form_tag(@group, { :method => :put, :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag(@group, { :method => put_or_post(@group), :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Group Info</h3>
   <div class="section">
