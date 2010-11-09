@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class GroupControllerTest < ActionController::TestCase
+class GroupsControllerTest < ActionController::TestCase
   fixtures :all
   
   context "on GET to :new" do

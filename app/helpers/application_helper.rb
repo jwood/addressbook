@@ -13,11 +13,9 @@ module ApplicationHelper
       end
 
       html =  '<p>'
-      html << link_to("Cancel", url_for(:action => "edit_#{obj_type}", :id => object),
-                :remote => true, :method => :get, :class => 'ajax_request')
+      html << link_to("Cancel", object, :method => :get, :remote => true, :class => 'ajax_request')
       html << ' | '
-      html << link_to("Delete", url_for(:action => "delete_#{obj_type}", :id => object),
-                :remote => true, :confirm => confirm, :class => 'ajax_request')
+      html << link_to("Delete", object, :method => :delete, :remote => true, :confirm => confirm, :class => 'ajax_request')
       html << '</p>'
       html.html_safe
     end
@@ -37,12 +35,11 @@ module ApplicationHelper
     elsif obj_type == 'group'
       link = "#{object.name}"
     end
-  
+
     html = '<li id="'
     html << create_id_for(object)
     html << '">'
-    html << link_to(link, url_for(:controller => obj_type, :action => "edit_#{obj_type}", :id => object),
-        :method => :get, :remote => true, :class => 'ajax_request')
+    html << link_to(link, object, :method => :get, :remote => true, :class => 'ajax_request')
     html << '</li>'
     html.html_safe
   end

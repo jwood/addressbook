@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class AddressControllerTest < ActionController::TestCase
+class AddressesControllerTest < ActionController::TestCase
   fixtures :all
 
   context "on GET to :show with a specific record" do
@@ -37,13 +37,13 @@ class AddressControllerTest < ActionController::TestCase
     should("return the specified address") { assert_equal @address, assigns(:address) }
   end
 
-  context "on POST to :update" do
+  context "on PUT to :update" do
     setup do
       @address = addresses(:chicago)
       @address.address_type = address_types(:individual)
       @address.address2 = 'Apt 109'
 
-      xhr :post, :update, :id => @address, :address => @address.attributes
+      xhr :put, :update, :id => @address, :address => @address.attributes
     end
 
     should respond_with :success

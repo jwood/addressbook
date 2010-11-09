@@ -1,7 +1,7 @@
 <div id="main" dojoType="dijit.layout.BorderContainer">
   <div id="menu" dojoType="dijit.layout.AccordionContainer" region="leading">
     <div dojoType="dijit.layout.AccordionPane" title="Search" class="menuContent" selected="true">
-      <%= form_tag({ :controller => :contact, :action => :find_contact }, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
+      <%= form_tag(find_contacts_path, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
         <table>
           <tr>
             <td>Last Name:</td>
@@ -11,14 +11,14 @@
         </table>
       <% end %>
       <div id="contactSearchResults"></div>
-      <p><%= link_to 'Switch to mobile view', :action => :use_mobile_view if is_mobile_device? %></p>
+      <p><%= link_to 'Switch to mobile view', use_mobile_view_path if is_mobile_device? %></p>
     </div>
 
     <div dojoType="dijit.layout.AccordionPane" title="Contacts" class="menuContent">
       <div id="contactList">
         <%= render :partial => 'contact_list', :locals => {:object_list => @contact_list} %>
       </div>
-      <%= form_tag({ :controller => :contact, :action => :edit_contact }, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
+      <%= form_tag(new_contact_path, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
         <%= submit_tag 'Add Contact' %>
       <% end %>
     </div>
@@ -33,7 +33,7 @@
       <div id="groupList">
         <%= render :partial => 'group_list', :locals => {:object_list => @group_list} %>
       </div>
-      <%= form_tag({ :controller => :group, :action => :edit_group }, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
+      <%= form_tag(new_group_path, { :method => :get, :remote => true, :class => 'ajax_request' }) do %>
         <%= submit_tag 'Add Group' %>
       <% end %>
     </div>
@@ -42,11 +42,11 @@
       <ul>
         <div id="settings">
           <li>
-            <%= link_to('Home Address', url_for(:controller => :settings, :action => :address),
+            <%= link_to('Home Address', settings_edit_address_path,
                   :method => :get, :remote => true, :class => 'ajax_request', :id => 'edit_home_address') %>
           </li>
           <li>
-            <%= link_to('Login Credentials', url_for(:controller => :settings, :action => :login_credentials),
+            <%= link_to('Login Credentials', settings_edit_login_credentials_path,
                   :method => :get, :remote => true, :class => 'ajax_request', :id => 'edit_login_credentials') %>
           </li>
         </div>

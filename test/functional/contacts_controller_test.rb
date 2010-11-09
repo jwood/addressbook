@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class ContactControllerTest < ActionController::TestCase
+class ContactsControllerTest < ActionController::TestCase
   fixtures :all
 
   context "on GET to :new" do
@@ -78,12 +78,12 @@ class ContactControllerTest < ActionController::TestCase
     should("return the old address") { assert !addresses(:alsip).different_from?(assigns(:old_address)) }
   end
 
-  context "on POST to :remove_address_from_contact" do
+  context "on POST to :remove_address" do
     setup do
       contact = contacts(:john_doe)
       address = addresses(:chicago)
       contact.update_attribute(:address, address)
-      xhr :post, :remove_address_from_contact, :id => contact
+      xhr :post, :remove_address, :id => contact
     end
 
     should respond_with :success
@@ -252,7 +252,7 @@ class ContactControllerTest < ActionController::TestCase
     end
   end
 
-  context "on POST to :change_address_for_contact for an address with multiple contacts" do
+  context "on POST to :change_address for an address with multiple contacts" do
     setup do
       contacts(:john_doe).update_attribute(:address, addresses(:alsip))
       contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
@@ -261,7 +261,7 @@ class ContactControllerTest < ActionController::TestCase
       address.update_attribute(:city, 'Chicago')
       session[:changed_address] = address
 
-      xhr :post, :change_address_for_contact, { :id => contacts(:john_doe), :submit_id => 'yes' }
+      xhr :post, :change_address, { :id => contacts(:john_doe), :submit_id => 'yes' }
     end
 
     should respond_with :success
@@ -273,7 +273,7 @@ class ContactControllerTest < ActionController::TestCase
     should("not indicate that a new address was added") { assert_nil assigns(:address_list) }
   end
 
-  context "on POST to :change_address_for_contact for an address change that should only be performed on a single contact" do
+  context "on POST to :change_address for an address change that should only be performed on a single contact" do
     setup do
       contacts(:john_doe).update_attribute(:address, addresses(:alsip))
       contacts(:jane_doe).update_attribute(:address, addresses(:alsip))
@@ -282,7 +282,7 @@ class ContactControllerTest < ActionController::TestCase
       address.update_attribute(:city, 'Chicago')
       session[:changed_address] = address
 
-      xhr :post, :change_address_for_contact, { :id => contacts(:john_doe), :submit_id => 'no' }
+      xhr :post, :change_address, { :id => contacts(:john_doe), :submit_id => 'no' }
     end
 
     should respond_with :success

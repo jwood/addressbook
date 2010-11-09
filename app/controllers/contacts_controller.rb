@@ -1,4 +1,4 @@
-class ContactController < ApplicationController
+class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
@@ -22,6 +22,7 @@ class ContactController < ApplicationController
 
   def show
     @contact = Contact.find_by_id(params[:id])
+    @address = @contact.address || Address.new
     if is_mobile_device?
       render 'show_contact'
     else
@@ -31,6 +32,7 @@ class ContactController < ApplicationController
 
   def edit
     @contact = Contact.find_by_id(params[:id])
+    @address = @contact.address || Address.new
     render 'edit_contact'
   end
 
@@ -59,7 +61,7 @@ class ContactController < ApplicationController
       @address = @contact.address || Address.new
     end
 
-    render :template => "contact/#{render_target}"
+    render :template => "contacts/#{render_target}"
   end
 
   def destroy
@@ -71,7 +73,7 @@ class ContactController < ApplicationController
     render 'delete_contact'
   end
 
-  def change_address_for_contact
+  def change_address
     @contact = Contact.find_by_id(params[:id])
     assigning_new_address_object = params[:submit_id] == 'no'
     new_address = assign_address_to_contact(session[:changed_address], assigning_new_address_object)
@@ -79,16 +81,16 @@ class ContactController < ApplicationController
 
     @address = @contact.address || Address.new
     @address_list = Address.find_for_list if new_address
-    render :template => 'contact/edit_contact'
+    render :template => 'contacts/edit_contact'
   end
   
-  def remove_address_from_contact
+  def remove_address
     @contact = Contact.find_by_id(params[:id])
     @old_address = @contact.address
     @old_address_id = @contact.remove_address
     @saved = true unless @old_address_id.nil?
     @address_list = Address.find_for_list
-    render :template => 'contact/edit_contact'
+    render :template => 'contacts/edit_contact'
   end
 
   def find

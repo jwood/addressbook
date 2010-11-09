@@ -1,6 +1,6 @@
 <%= error_messages_for :address %>
 
-<%= form_tag({ :action => :address }, { :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag(settings_update_address_path, { :method => :put, :remote => true, :class => 'ajax_request' }) do %>
   <h3>Home Address</h3>
   <p>
     If a home address is specified, it is used to calculate directions from the home
@@ -14,5 +14,5 @@
 <% end %>
 
 <p>
-  <%= link_to('Cancel', url_for(:action => :address), :method => :get, :remote => true, :class => 'ajax_request') %>
+  <%= link_to('Cancel', settings_edit_address_path, :method => :get, :remote => true, :class => 'ajax_request') %>
 </p>

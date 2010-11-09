@@ -1,5 +1,5 @@
 <%= error_messages_for :group %>
-<%= form_tag({ :action => :edit_group, :id => @group }, { :remote => true, :class => 'ajax_request' }) do %>
+<%= form_tag(@group, { :method => :put, :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Group Info</h3>
   <div class="section">
@@ -40,7 +40,7 @@
               :onchange => "updateCreateLabelsLink('#{url_for(:action => :create_labels, :id => @group)}');" } %>
 
       <span id="createLabelsLink">
-        <%= link_to 'Create Labels', { :action => :create_labels, :id => @group, :label_type => @label_types.first } %>
+        <%= link_to 'Create Labels', create_labels_group_path(@group, :label_type => @label_types.first) %>
       </span>
     </div>
   <% end %>
