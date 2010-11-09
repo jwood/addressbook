@@ -1,14 +1,13 @@
 module ApplicationHelper
 
   def create_cancel_delete_links(object)
-    obj_type = object.class.to_s.downcase
     unless object.id.blank?
       confirm = "Are you sure you would like to delete this entry?"
-      if obj_type == 'address'
+      if object.class == Address
         confirm = "Are you sure you would like to delete the address for #{object.addressee}?"
-      elsif obj_type == 'contact'
+      elsif object.class == Contact
         confirm = "Are you sure you would like to delete #{object.first_name} #{object.last_name}?"
-      elsif obj_type == 'group'
+      elsif object.class == Group
         confirm = "Are you sure you would like to delete group #{object.name}?"
       end
 
@@ -27,12 +26,11 @@ module ApplicationHelper
   end
 
   def create_link_to(object)
-    obj_type = object.class.to_s.downcase
-    if obj_type == 'contact'
+    if object.class == Contact
       link = "#{object.last_name}, #{object.first_name}"
-    elsif obj_type == 'address' 
+    elsif object.class == Address
       link = "#{object.addressee_for_display}"
-    elsif obj_type == 'group'
+    elsif object.class == Group
       link = "#{object.name}"
     end
 

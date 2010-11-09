@@ -3,5 +3,5 @@ Enhancements
 * Allow user to select font color, size, weight, and alignment for labels
 * Create mailer to remind user about upcoming birthdays
 * Import/Export contacts and addresses
-* API Access (Need to make controllers RESTful first)
+* API Access
 

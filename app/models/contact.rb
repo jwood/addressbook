@@ -5,9 +5,7 @@ class Contact < ActiveRecord::Base
   after_save :link_contact_to_address
   before_destroy :remove_contact_from_address
 
-  validates_presence_of :first_name
-  validates_presence_of :last_name
-  validates_presence_of :prefix
+  validates_presence_of :first_name, :last_name, :prefix
   validate :validate_phone_numbers
 
   scope :with_address, where('address_id is not null')

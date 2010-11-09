@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
 
     new_address = parse_address
     if new_address && new_address.valid?
-      assigning_new_address_object = params[:address_specification_type] == 'existing_address'
+      assigning_new_address_object = (params[:address_specification_type] == 'existing_address')
       assign_address_to_contact(new_address, assigning_new_address_object)
       @address_list = Address.find_for_list
     end
@@ -24,11 +24,7 @@ class ContactsController < ApplicationController
 
   def show
     @address = @contact.address || Address.new
-    if is_mobile_device?
-      render 'show_contact'
-    else
-      render 'edit_contact'
-    end
+    is_mobile_device? ? render('show_contact') : render('edit_contact')
   end
 
   def update
@@ -41,7 +37,7 @@ class ContactsController < ApplicationController
         session[:changed_address] = new_address
         render_target = 'edit_contact_with_shared_address'
       else
-        assigning_new_address_object = params[:address_specification_type] == 'existing_address'
+        assigning_new_address_object = (params[:address_specification_type] == 'existing_address')
         new_address_saved = assign_address_to_contact(new_address, assigning_new_address_object)
       end
     end
@@ -55,7 +51,7 @@ class ContactsController < ApplicationController
       @address = @contact.address || Address.new
     end
 
-    render :template => "contacts/#{render_target}"
+    render render_target
   end
 
   def destroy

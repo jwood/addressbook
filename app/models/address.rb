@@ -24,13 +24,9 @@ class Address < ActiveRecord::Base
   end
 
   def different_from?(other)
-    if other.nil? || (address1 != other.address1 || address2 != other.address2 ||
-                      city != other.city || state != other.state ||
-                      zip != other.zip || Phone.sanitize(home_phone) != Phone.sanitize(other.home_phone))
-      true
-    else
-      false
-    end
+    other.nil? || (address1 != other.address1 || address2 != other.address2 ||
+                   city != other.city || state != other.state ||
+                   zip != other.zip || Phone.sanitize(home_phone) != Phone.sanitize(other.home_phone))
   end
 
   def mailing_address
@@ -164,20 +160,19 @@ class Address < ActiveRecord::Base
         errors.add(:base, 'You must specify a phone number or a full address')
       end
 
-      if (!address1.blank? || !city.blank? || !zip.blank?) &&
-              (address1.blank? || city.blank? || zip.blank?)
+      if (!address1.blank? || !city.blank? || !zip.blank?) && (address1.blank? || city.blank? || zip.blank?)
         errors.add(:base, 'You must specify a valid address')
       end
     end
 
     def format_address_with_no_contacts
       if !address1.blank?
-        addressee =  "#{address1}"
-        addressee << " #{address2}" if !address2.blank?
-        addressee << ", #{city}, #{state} #{zip}"
-        return addressee
+          addressee =  "#{address1}"
+          addressee << " #{address2}" if !address2.blank?
+          addressee << ", #{city}, #{state} #{zip}"
+        addressee
       else
-        return home_phone
+        home_phone
       end
     end
 
