@@ -10,9 +10,7 @@ Addressbook::Application.routes.draw do
   end
 
   resources :groups do
-    member do
-      get  :create_labels
-    end
+    get  :create_labels, :on => :member
   end
 
   match 'settings/address' => 'settings#edit_address', :as => :settings_edit_address, :via => :get
