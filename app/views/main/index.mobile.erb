@@ -6,7 +6,7 @@
   <% chunked_contacts = chunk_list(@contact_list) %>
   <% chunked_contacts.each do |letter, contact_list| %>
     <% unless contact_list.blank? %>
-      <div data-role="collapsible" data-state="collapsed" data-theme="c">
+      <div data-role="collapsible" data-collapsed="true" data-theme="c">
         <h3><%= letter %></h3>
         <ul data-role="listview" data-inset="true" data-theme="d">
           <% contact_list.each do |contact| %>
