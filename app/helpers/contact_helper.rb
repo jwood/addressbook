@@ -29,12 +29,12 @@ module ContactHelper
     html.html_safe
   end
 
-  def display_style_for_address
-    (@address.blank? || @address.is_address_empty?) ? "display:none;" : ""
+  def display_style_for_address(address)
+    (address.blank? || address.is_address_empty?) ? "display:none;" : ""
   end
 
-  def display_style_for_specify_address
-    (@address.blank? || @address.is_address_empty?) ? "" : "display:none;"
+  def display_style_for_specify_address(address)
+    (address.blank? || address.is_address_empty?) ? "" : "display:none;"
   end
 
   def has_contact_info_to_display?(contact)

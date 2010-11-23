@@ -1,4 +1,5 @@
 <%= error_messages_for :contact %>
+<% address = @contact.ergo.address %>
 <%= form_tag(@contact, { :method => put_or_post(@contact), :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Personal Info</h3>
@@ -32,7 +33,7 @@
     <table>
       <tr>
         <td><label>Home Phone:</label></td>
-        <td><%= text_field_tag 'address[home_phone]', Phone.format(@address.ergo.home_phone), :size => 20 %></td>
+        <td><%= text_field_tag 'address[home_phone]', Phone.format(address.ergo.home_phone), :size => 20 %></td>
         </td>
       </tr>
       <tr>
@@ -57,16 +58,16 @@
   <h3>Address</h3>
   <div class="section">
     <% if @contact.has_address? %>
-      <p id="address" style="<%= display_style_for_address %>">
-        <%= @contact.address.address1 %><br />
-        <% unless @contact.address.address2.blank? %>
-          <%= @contact.address.address2 %><br />
+      <p id="address" style="<%= display_style_for_address(address) %>">
+        <%= address.address1 %><br />
+        <% unless address.address2.blank? %>
+          <%= address.address2 %><br />
         <% end %>
-        <%= @contact.address.city + ', ' + @contact.address.state + ' ' + @contact.address.zip %>
+        <%= address.city + ', ' + address.state + ' ' + address.zip %>
       </p>
     <% end %>
 
-    <div id="specifyAddress" style="<%= display_style_for_specify_address %>">
+    <div id="specifyAddress" style="<%= display_style_for_specify_address(address) %>">
       <% if Address.all.size > 0 %>
         <p>
           <%= radio_button_tag(:address_specification_type, :existing_address, false, :id => 'existing_address') %>
@@ -80,7 +81,7 @@
 
       <p>
         <%= radio_button_tag(:address_specification_type, :specified_address,
-              (!@address.ergo.is_empty? || (!@address.ergo.is_empty? && !@address.ergo.valid?)), :id => 'specified_address') %>
+              (!address.ergo.is_empty? || (!address.ergo.is_empty? && !address.ergo.valid?)), :id => 'specified_address') %>
         <%= label_tag :specified_address, 'Associate contact the specified address' %>
         <div class="addressOption">
           <%= render :partial => 'shared/address_fields' %>
@@ -91,7 +92,7 @@
     <% if @contact.has_address? %>
       <p>
         <%= link_to_function 'Edit Address', 'editAddress();' %> |
-        <%= link_to('Address Details', @contact.address, :method => :get, :remote => true, :class => 'ajax_request') %> |
+        <%= link_to('Address Details', address, :method => :get, :remote => true, :class => 'ajax_request') %> |
         <%= link_to('Delete Address', remove_address_contact_path(@contact),
                     :method => :post, :remote => true, :class => 'ajax_request', :confirm => "Are you sure you would like to delete the address for #{@contact.first_name} #{@contact.last_name}?") %> |
         <%= add_map_and_directions_links(@contact) %> <br />
@@ -105,7 +106,7 @@
 
 <%= create_cancel_delete_links(@contact) %>
 
-<%= render :partial => 'multiple_address_confirmation_form' unless @contact.address.nil? %>
+<%= render :partial => 'multiple_address_confirmation_form' unless address.nil? %>
 
 <script>
 $(document).ready(function() {
