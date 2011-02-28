@@ -6,3 +6,4 @@ public/mailing_labels.pdf
 tmp/*
 *.swp
 coverage
+.rvmrc
