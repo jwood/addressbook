@@ -1,7 +1,7 @@
 source :gemcutter
 source "http://gems.github.com"
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.5'
 gem 'rake', '0.8.7'
 gem 'mysql', '2.8.1'
 gem 'jquery-rails', '0.2.2'
