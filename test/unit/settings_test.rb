@@ -26,6 +26,48 @@ class SettingsTest < ActiveSupport::TestCase
       assert_equal "IL", address.state
       assert_equal "60606", address.zip
     end
+
+    context "when working with login credentials" do
+      setup do
+        Settings.username = 'bobby'
+        Settings.password = 'pass'
+      end
+
+      should "be able to update the login credentials" do
+        msg = Settings.update_login_credentials('bob', 'newpass', 'newpass', 'pass')
+        assert_nil msg
+        assert_equal 'bob', Settings.username
+        assert_equal Password.encode('newpass'), Settings.password
+      end
+
+      should "reject if the current password specified is invalid" do
+        msg = Settings.update_login_credentials('bob', 'newpass', 'newpass', 'wrongpass')
+        assert_equal 'The current password specified is not valid', msg
+        assert_equal 'bobby', Settings.username
+        assert_equal Password.encode('pass'), Settings.password
+      end
+
+      should "reject updates if not all of the required info has been specified" do
+        msg = Settings.update_login_credentials('', 'newpass', 'newpass', 'pass')
+        assert_equal 'You must specify a username, password, and password confirmation', msg
+
+        msg = Settings.update_login_credentials('bob', nil, 'newpass', 'pass')
+        assert_equal 'You must specify a username, password, and password confirmation', msg
+
+        msg = Settings.update_login_credentials('bob', 'newpass', '', 'pass')
+        assert_equal 'You must specify a username, password, and password confirmation', msg
+
+        assert_equal 'bobby', Settings.username
+        assert_equal Password.encode('pass'), Settings.password
+      end
+
+      should "reject update if the password and password confirmation do not match" do
+        msg = Settings.update_login_credentials('bob', 'newpass', 'othernewpass', 'pass')
+        assert_equal 'The password and password confirmation do not match', msg
+        assert_equal 'bobby', Settings.username
+        assert_equal Password.encode('pass'), Settings.password
+      end
+    end
   end
 
 end

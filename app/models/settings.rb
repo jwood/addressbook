@@ -1,5 +1,20 @@
 class Settings < ActiveRecord::Base
 
+  def self.update_login_credentials(username, password, password_confirmation, current_password)
+    actual_current_password = Settings.password
+    if !actual_current_password.blank? && Password.encode(current_password) != actual_current_password
+      'The current password specified is not valid'
+    elsif (username.blank? || password.blank? || password_confirmation.blank?) && !(username.blank? && password.blank? && password_confirmation.blank?)
+      'You must specify a username, password, and password confirmation'
+    elsif password != password_confirmation
+      'The password and password confirmation do not match'
+    else
+      Settings.username = username
+      Settings.password = password
+      nil
+    end
+  end
+
   def self.save_home_address(address)
     if address.valid?
       Settings.update(:address, address.address1)
