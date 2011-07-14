@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   has_mobile_fu
 
   before_filter :authenticate
+  before_filter :set_request_format
 
   def use_mobile_view
     session[:mobile_view] = true
@@ -26,6 +27,10 @@ class ApplicationController < ActionController::Base
           end
         end
       end
+    end
+
+    def set_request_format
+      request.format = :mobile if is_mobile_device?
     end
 
 end
