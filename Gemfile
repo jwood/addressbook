@@ -1,10 +1,9 @@
 source :gemcutter
-source "http://gems.github.com"
 
-gem 'rails', '3.0.5'
-gem 'rake', '0.8.7'
+gem 'rails', '3.0.9'
+gem 'rake', '0.9.2'
 gem 'mysql', '2.8.1'
-gem 'jquery-rails', '0.2.2'
+gem 'jquery-rails', '1.0.12'
 
 gem 'pdf-labels', '2.0.1', :require => 'pdf/label'
 
