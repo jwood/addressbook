@@ -12,6 +12,11 @@ and more.
 * Copy config/database.yml.template to config/database.yml and configure your database
 * rake db:migrate
 
+## Ruby 1.8.x only
+Addressbook currently has a dependency on a library that is not compatible with Ruby 1.9.
+Until that dependency is updated (or replaced), addressbook will require Ruby 1.8.x to
+run.
+
 ## Setup on [Heroku](http://heroku.com/) - Free hosting
 * [Create your Heroku Account](http://heroku.com/signup) and [Install the Heroku gem](http://docs.heroku.com/heroku-command)
 * git clone git://github.com/jwood/addressbook.git
