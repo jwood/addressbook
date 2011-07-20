@@ -7,3 +7,5 @@ tmp/*
 *.swp
 coverage
 .rvmrc
+Capfile
+config/deploy.rb
