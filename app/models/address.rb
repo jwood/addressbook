@@ -48,7 +48,7 @@ class Address < ActiveRecord::Base
   end
 
   def self.remove_contact(contact)
-    addresses = Address.where(['contact1_id = ? || contact2_id = ?', contact.id, contact.id])
+    addresses = Address.where(['contact1_id = ? OR contact2_id = ?', contact.id, contact.id])
     addresses.each { |a| a.unlink_contact(contact) }
   end
 
