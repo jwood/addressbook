@@ -92,7 +92,7 @@ function hideSpinner() {
   $('#spinner').css({"visibility":"hidden"});
 }
 
-$(".ajax_request").
+$(".ajax_request, .button_to").
   live('ajax:before', function() { showSpinner(); }).
   live('ajax:complete', function() { hideSpinner(); });
 
