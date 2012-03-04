@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.0.12'
 gem 'rake', '0.9.2'
 gem 'mysql', '2.8.1'
 gem 'jquery-rails', '1.0.12'
