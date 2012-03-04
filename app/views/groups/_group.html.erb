@@ -46,7 +46,9 @@
   <% end %>
   
   <br />
-  <%= submit_tag 'Save', :onclick => 'selectAllIncludedGroupMembers();' %>
+  <div class="buttons">
+    <%= submit_tag 'Save', :class => 'positive', :onclick => 'selectAllIncludedGroupMembers();' %>
+  </div>
 <% end %>
 
 <%= create_cancel_delete_links(@group) %>

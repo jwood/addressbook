@@ -101,7 +101,9 @@
   </div>
 
   <br />
-  <%= submit_tag "Save" %>
+  <div class="buttons">
+    <%= submit_tag "Save", :class => "positive" %>
+  </div>
 <% end %>
 
 <%= create_cancel_delete_links(@contact) %>
