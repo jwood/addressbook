@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '3.0.12'
+gem 'rails', '3.0.19'
 gem 'rake', '0.9.2'
 gem 'mysql2', '0.2.18'
 gem 'activerecord-mysql2-adapter', '0.0.3'
