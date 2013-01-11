@@ -11,11 +11,10 @@ module ApplicationHelper
         confirm = "Are you sure you would like to delete group #{object.name}?"
       end
 
-      html =  '<p>'
-      html << link_to("Cancel", object, :method => :get, :remote => true, :class => 'ajax_request')
-      html << ' | '
-      html << link_to("Delete", object, :method => :delete, :remote => true, :confirm => confirm, :class => 'ajax_request')
-      html << '</p>'
+      html = "<div class='buttons'>"
+      html << button_to("Cancel", object, :method => :get, :remote => true, :class => 'ajax_request regular')
+      html << button_to("Delete", object, :method => :delete, :remote => true, :confirm => confirm, :class => 'ajax_request negative')
+      html << "</div>"
       html.html_safe
     end
   end
