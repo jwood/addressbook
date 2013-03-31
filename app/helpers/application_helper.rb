@@ -41,27 +41,23 @@ module ApplicationHelper
     html.html_safe
   end
   
-  def update_list(object, object_list, page, force=false)
+  def update_list(object, object_list, force=false)
     if (!object.nil? && !object.id.blank?) || force
       obj_type = object.class.to_s.downcase
       if !object_list.nil?
-        replace_html("##{obj_type}List", render(:partial => "main/#{obj_type}_list", :locals => {:object_list => object_list}), page)
+        "$('##{obj_type}List').html(\"#{j render(:partial => "main/#{obj_type}_list", :locals => {:object_list => object_list}) }\");"
       else
-        page << "$('##{create_id_for(object)}').replaceWith('#{escape_javascript(create_link_to(object))}');"
+        "$('##{create_id_for(object)}').replaceWith('#{j create_link_to(object)}');"
       end
-    end
+    end.ergo.html_safe
   end
 
-  def remove_from_list(object, page)
-    page << "$('##{create_id_for(object)}').replaceWith('');"
+  def remove_from_list(object)
+    "$('##{create_id_for(object)}').replaceWith('');".html_safe
   end
   
-  def highlight_in_list(object, page)
-    page << "$('##{create_id_for(object)}').effect('highlight', {}, 2000);"
-  end
-
-  def replace_html(selector, html, page)
-    page << "$('#{selector}').html('#{escape_javascript(html)}');"
+  def highlight_in_list(object)
+    "$('##{create_id_for(object)}').effect('highlight', {}, 2000);".html_safe
   end
 
   def phone_to(phone_number)
