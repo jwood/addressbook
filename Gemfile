@@ -9,6 +9,7 @@ gem 'capistrano'
 gem 'pdf-labels', '2.0.1', :require => 'pdf/label'
 gem 'json'
 gem 'dynamic_form'
+gem 'rails_autolink'
 
 # Gems used only for assets and not required
 # in production environments by default.
