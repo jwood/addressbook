@@ -1,0 +1,3 @@
+$('#content').html("<%= j render(:partial => 'group') %>");
+<%= update_list(@group, @group_list) %>
+<%= highlight_in_list(@group) if @saved %>
