@@ -1,0 +1,5 @@
+$('#content').html("<%= j render(:partial => 'address') %>");
+<% if @saved %>
+  <%= update_list(@address, @address_list) %>
+  <%= highlight_in_list(@address) %>
+<% end %>
