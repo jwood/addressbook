@@ -25,12 +25,10 @@ class Group < ActiveRecord::Base
 
   def create_labels(label_type)
     Prawn::Labels.render(self.addresses, :type => label_type) do |pdf, a|
-      label_text =  a.addressee + "\n"
-      label_text += a.address1 + "\n"
-      label_text += a.address2 + "\n" unless a.address2.blank?
-      label_text += a.city + ', ' + a.state + ' ' + a.zip
-
-      pdf.text label_text
+      pdf.text a.addressee
+      pdf.text a.address1
+      pdf.text a.address2 unless a.address2.blank?
+      pdf.text a.city + ', ' + a.state + ' ' + a.zip
     end
   end
 
