@@ -2,6 +2,8 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 require 'shoulda'
+require 'simplecov'
+SimpleCov.start
 
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method

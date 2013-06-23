@@ -1,4 +1,4 @@
-require 'pdf/label'
+require 'prawn/labels'
 
 class Group < ActiveRecord::Base
   LABELS_PATH = '/tmp'
@@ -24,29 +24,14 @@ class Group < ActiveRecord::Base
   end
 
   def create_labels(label_type)
-    p = Pdf::Label::Batch.new(label_type.gsub('_', ' '))
-
-    pos = 0
-    self.addresses.each do |a|
+    Prawn::Labels.render(self.addresses, :type => label_type) do |pdf, a|
       label_text =  a.addressee + "\n"
       label_text += a.address1 + "\n"
       label_text += a.address2 + "\n" unless a.address2.blank?
       label_text += a.city + ', ' + a.state + ' ' + a.zip
 
-      begin
-        p.add_label(:text => label_text,
-                    :position => pos,
-                    :font_size => 10,
-                    :justification => :center)
-        pos = pos.next
-      rescue Exception => e
-        logger.error(e.message)
-      end
+      pdf.text label_text
     end
-
-    file_path = "#{LABELS_PATH}/#{LABELS_FILE}"
-    p.save_as(file_path)
-    file_path
   end
 
   private

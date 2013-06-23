@@ -6,7 +6,7 @@ gem 'jquery-ui-rails', '2.0.2'
 gem 'mysql2'
 
 gem 'capistrano'
-gem 'pdf-labels', '2.0.1', :require => 'pdf/label'
+gem 'prawn-labels'
 gem 'json'
 gem 'dynamic_form'
 gem 'rails_autolink'
@@ -21,7 +21,7 @@ group :assets do
 end
 
 group :test do
-  gem 'rcov'
+  gem 'simplecov'
   gem 'shoulda'
 end
 

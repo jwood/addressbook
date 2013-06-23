@@ -1,0 +1,16 @@
+#
+# prawns' basic unit is PostScript-Point
+# 72 points per inch
+#
+
+Avery8660:
+    paper_size: A4
+    top_margin: 43.9
+    bottom_margin: 0
+    left_margin: 19.843
+    right_margin: 19.843
+    columns: 3
+    rows: 7
+    column_gutter: 8.504
+    row_gutter: 0
+

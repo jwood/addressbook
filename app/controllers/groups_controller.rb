@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
     include_common_data
     render 'edit_group'
   end
-  
+
   def destroy
     @group.ergo.destroy
     include_common_data
@@ -36,11 +36,11 @@ class GroupsController < ApplicationController
   end
 
   def create_labels
-    file_path = @group.create_labels(params[:label_type])
-    send_data(File.read(file_path), :filename => 'labels.pdf', :type => 'application/pdf')
+    labels = @group.create_labels(params[:label_type])
+    send_data(labels, :filename => 'labels.pdf', :type => 'application/pdf')
     include_common_data
   end
-  
+
   private
 
     def load_group
@@ -50,7 +50,7 @@ class GroupsController < ApplicationController
     def include_common_data
       @included = @group.addresses.includes([:contacts, :address_type])
       @not_included = @group.addresses_not_included
-      @label_types = Pdf::Label::Batch.all_template_names.sort!
+      @label_types = Prawn::Labels.types.keys.sort!
     end
 
 end
