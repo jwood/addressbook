@@ -1,9 +1,6 @@
 require 'prawn/labels'
 
 class Group < ActiveRecord::Base
-  LABELS_PATH = '/tmp'
-  LABELS_FILE = 'mailing_labels.pdf'
-
   has_and_belongs_to_many :addresses
 
   before_destroy :clear_address_associations

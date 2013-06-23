@@ -17,9 +17,6 @@ class GroupTest < ActiveSupport::TestCase
       group.addresses << [addresses(:chicago), addresses(:tinley_park), addresses(:alsip)]
       group.save
 
-      label_file = File.join(Group::LABELS_PATH, Group::LABELS_FILE)
-      FileUtils.rm_f label_file
-      assert !File.exist?(label_file)
       labels = group.create_labels('Avery8660')
       assert_not_nil labels
     end
