@@ -1,4 +1,5 @@
 .bundle
+.powenv
 .ruby-version
 db/development.sqlite3
 db/schema.rb
@@ -10,3 +11,4 @@ coverage
 .rvmrc
 Capfile
 config/deploy.rb
+config/application_config.yml

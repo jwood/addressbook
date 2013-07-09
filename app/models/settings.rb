@@ -66,12 +66,13 @@ class Settings < ActiveRecord::Base
 
   private
 
-    def self.get(key)
-      Settings.find_by_key(key).ergo.value
-    end
+  def self.get(key)
+    Settings.find_by_key(key).ergo.value
+  end
 
-    def self.update(key, value)
-      settings = Settings.find_by_key(key) || Settings.create(:key => key)
-      settings.update_attribute(:value, value)
-    end
+  def self.update(key, value)
+    settings = Settings.find_by_key(key) || Settings.create(:key => key)
+    settings.update_attribute(:value, value)
+  end
+
 end

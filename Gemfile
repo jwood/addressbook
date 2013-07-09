@@ -1,14 +1,28 @@
-source :gemcutter
+source 'https://rubygems.org'
+ruby '2.0.0'
 
-gem 'rails', '3.0.20'
-gem 'rake', '0.9.2'
-gem 'pg', '0.11.0'
-gem 'jquery-rails', '1.0.12'
+gem 'rails', '4.0.0'
+gem 'pg'
 
-gem 'pdf-labels', '2.0.1', :require => 'pdf/label'
+gem 'capistrano'
+gem 'prawn-labels'
+gem 'json'
+gem 'dynamic_form'
+gem 'rails_autolink'
 
-gem 'rcov'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'therubyracer'
+gem 'uglifier'
+
+group :development do
+  gem 'thin'
+end
 
 group :test do
+  gem 'simplecov'
   gem 'shoulda'
 end
+

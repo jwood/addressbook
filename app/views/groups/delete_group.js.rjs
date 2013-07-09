@@ -1,2 +1,0 @@
-replace_html('#content', render(:partial => 'deleted_group'), page)
-remove_from_list(@group, page)

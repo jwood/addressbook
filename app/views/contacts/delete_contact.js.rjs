@@ -1,9 +1,0 @@
-replace_html('#content', render(:partial => 'deleted_contact'), page)
-remove_from_list(@contact, page)
-address = @old_address || @contact.address
-
-if !@address_list.nil?
-  update_list(address, @address_list, page, true)
-elsif !address.nil?
-  update_list(address, nil, page)
-end

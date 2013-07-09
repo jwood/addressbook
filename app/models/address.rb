@@ -13,8 +13,8 @@ class Address < ActiveRecord::Base
   validates_format_of :zip, :with => %r{(^\d{5}$)|(^\d{5}-\d{4}$)}, :allow_blank => true
   validate :verify_required_info, :validate_phone_numbers, :verify_number_of_contacts_valid_for_address_type
 
-  scope :eligible_for_group, where("address1 <> ''")
-  
+  scope :eligible_for_group, -> { where("address1 <> ''") }
+
   def addressee_for_display
     no_contacts? ? format_address_with_no_contacts : address_type.format_address_for_display(self)
   end
@@ -98,90 +98,90 @@ class Address < ActiveRecord::Base
 
   private
 
-    def sanitize_phone_numbers
-      self.home_phone = Phone.sanitize(self.home_phone)
+  def sanitize_phone_numbers
+    self.home_phone = Phone.sanitize(self.home_phone)
+  end
+
+  def nullify_secondary_contact_if_address_type_only_has_one_main_contact
+    self.secondary_contact = nil if self.address_type.ergo.only_one_main_contact?
+  end
+
+  def validate_phone_numbers
+    if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
+      errors.add(:home_phone, 'is not valid')
+    end
+  end
+
+  def verify_number_of_contacts_valid_for_address_type
+    if contact2_id.nil? && self.address_type && !self.address_type.only_one_main_contact?
+      errors.add(:base, 'This address type requires primary and secondary contacts be specified')
+    end
+  end
+
+  def adjust_primary_secondary_contacts
+    # Get the first 2 contacts linked to this address
+    primary_contacts = contacts.first(2)
+
+    # Set contact1 to the first person in the contacts list if it is blank
+    if self.primary_contact.blank? && primary_contacts[0]
+      self.primary_contact = primary_contacts[0]
+    elsif !primary_contacts[0]
+      self.primary_contact = nil
     end
 
-    def nullify_secondary_contact_if_address_type_only_has_one_main_contact
-      self.secondary_contact = nil if self.address_type.ergo.only_one_main_contact?
+    # Set contact2 to the second person in the contacts list if it is blank
+    if self.secondary_contact.blank? && primary_contacts[1]
+      self.secondary_contact = primary_contacts[1]
+    elsif !primary_contacts[1]
+      self.secondary_contact = nil
     end
 
-    def validate_phone_numbers
-      if !self.home_phone.blank? && !Phone.valid?(self.home_phone)
-        errors.add(:home_phone, 'is not valid')
-      end
-    end
-
-    def verify_number_of_contacts_valid_for_address_type
-      if contact2_id.nil? && self.address_type && !self.address_type.only_one_main_contact?
-        errors.add(:base, 'This address type requires primary and secondary contacts be specified')
-      end
-    end
-
-    def adjust_primary_secondary_contacts
-      # Get the first 2 contacts linked to this address
-      primary_contacts = contacts.first(2)
-
-      # Set contact1 to the first person in the contacts list if it is blank
-      if self.primary_contact.blank? && primary_contacts[0]
-        self.primary_contact = primary_contacts[0]
-      elsif !primary_contacts[0]
-        self.primary_contact = nil
-      end
-
-      # Set contact2 to the second person in the contacts list if it is blank
-      if self.secondary_contact.blank? && primary_contacts[1]
-        self.secondary_contact = primary_contacts[1]
-      elsif !primary_contacts[1]
-        self.secondary_contact = nil
-      end
-
-      # If contact1 == contact2, fix it
-      if self.primary_contact == self.secondary_contact && self.primary_contact && self.secondary_contact
-        if self.primary_contact == primary_contacts[0]
-          self.primary_contact = primary_contacts[1]
-        else
-          self.primary_contact = primary_contacts[0]
-        end
-      end
-
-      # Set the address type to individual if one contact, and family if there are two
-      if !self.primary_contact.blank? && self.secondary_contact.blank?
-        self.address_type = AddressType.individual
-      elsif !self.primary_contact.blank? && !self.secondary_contact.blank?
-        self.address_type = AddressType.family
-      end
-
-      save
-    end
-
-    def verify_required_info
-      if home_phone.blank? && (address1.blank? || city.blank? || state.blank? || zip.blank?)
-        errors.add(:base, 'You must specify a phone number or a full address')
-      end
-
-      if (!address1.blank? || !city.blank? || !zip.blank?) && (address1.blank? || city.blank? || zip.blank?)
-        errors.add(:base, 'You must specify a valid address')
-      end
-    end
-
-    def format_address_with_no_contacts
-      if !address1.blank?
-          addressee =  "#{address1}"
-          addressee << " #{address2}" if !address2.blank?
-          addressee << ", #{city}, #{state} #{zip}"
-        addressee
+    # If contact1 == contact2, fix it
+    if self.primary_contact == self.secondary_contact && self.primary_contact && self.secondary_contact
+      if self.primary_contact == primary_contacts[0]
+        self.primary_contact = primary_contacts[1]
       else
-        home_phone
+        self.primary_contact = primary_contacts[0]
       end
     end
 
-    def no_contacts?
-      primary_contact.nil? && secondary_contact.nil?
+    # Set the address type to individual if one contact, and family if there are two
+    if !self.primary_contact.blank? && self.secondary_contact.blank?
+      self.address_type = AddressType.individual
+    elsif !self.primary_contact.blank? && !self.secondary_contact.blank?
+      self.address_type = AddressType.family
     end
 
-    def clear_group_associations
-      groups.clear
+    save
+  end
+
+  def verify_required_info
+    if home_phone.blank? && (address1.blank? || city.blank? || state.blank? || zip.blank?)
+      errors.add(:base, 'You must specify a phone number or a full address')
     end
+
+    if (!address1.blank? || !city.blank? || !zip.blank?) && (address1.blank? || city.blank? || zip.blank?)
+      errors.add(:base, 'You must specify a valid address')
+    end
+  end
+
+  def format_address_with_no_contacts
+    if !address1.blank?
+        addressee =  "#{address1}"
+        addressee << " #{address2}" if !address2.blank?
+        addressee << ", #{city}, #{state} #{zip}"
+      addressee
+    else
+      home_phone
+    end
+  end
+
+  def no_contacts?
+    primary_contact.nil? && secondary_contact.nil?
+  end
+
+  def clear_group_associations
+    groups.clear
+  end
 
 end

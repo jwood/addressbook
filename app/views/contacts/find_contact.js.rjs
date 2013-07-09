@@ -1,5 +1,0 @@
-if @contact_list.blank?
-  replace_html('#contactSearchResults', '<p><em>No results found</em></p>', page)
-else
-  replace_html('#contactSearchResults', render(:partial => 'main/search_list', :locals => {:object_list => @contact_list}), page)
-end

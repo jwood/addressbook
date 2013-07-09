@@ -4,11 +4,6 @@ This is Address Book.  Address Book is a web application for managing
 your personal address book.  It manages phone numbers, birthdays, addresses, 
 and more.
 
-## Ruby 1.8.x only
-Addressbook currently has a dependency on a library (pdf-labels) that is not compatible with Ruby 1.9.
-Until that dependency is updated (or replaced), addressbook will require Ruby 1.8.x to
-run.
-
 ## Setup
 * git clone git://github.com/jwood/addressbook.git
 * cd addressbook

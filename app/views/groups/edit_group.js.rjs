@@ -1,3 +1,0 @@
-replace_html('#content', render(:partial => 'group'), page)
-update_list(@group, @group_list, page)
-highlight_in_list(@group, page) if @saved

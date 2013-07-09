@@ -1,0 +1,4 @@
+$('#content').html("<%= j render(:partial => 'address') %>");
+<% if @saved %>
+  $('#edit_home_address').effect('highlight', {}, 2000);
+<% end %>

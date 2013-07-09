@@ -1,8 +1,0 @@
-replace_html('#content', render(:partial => 'contact'), page)
-update_list(@contact, @contact_list, page)
-
-address = @old_address || @contact.address
-update_list(address, @address_list, page) unless address.nil?
-
-page << "$('#top').focus();"
-highlight_in_list(@contact, page) if @saved

@@ -16,21 +16,21 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def authenticate
-      if Rails.env == 'production'
-        username = Settings.username
-        password = Settings.password
+  def authenticate
+    if Rails.env == 'production'
+      username = Settings.username
+      password = Settings.password
 
-        if !username.blank? && !password.blank?
-          authenticate_or_request_with_http_basic("Addressbook") do |http_username, http_password|
-            http_username == username && Password.encode(http_password) == password
-          end
+      if !username.blank? && !password.blank?
+        authenticate_or_request_with_http_basic("Addressbook") do |http_username, http_password|
+          http_username == username && Password.encode(http_password) == password
         end
       end
     end
+  end
 
-    def set_request_format
-      request.format = :mobile if is_mobile_device?
-    end
+  def set_request_format
+    request.format = :mobile if is_mobile_device?
+  end
 
 end

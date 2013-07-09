@@ -83,7 +83,7 @@ class MainControllerTest < ActionController::TestCase
   private
 
     def encode_credentials(username, password)
-      "Basic #{ActiveSupport::Base64.encode64("#{username}:#{password}")}"
+      "Basic #{Base64.encode64("#{username}:#{password}")}"
     end
 
 end

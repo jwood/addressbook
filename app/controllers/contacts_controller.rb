@@ -8,7 +8,7 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = Contact.new(params[:contact])
+    @contact = Contact.new(contact_params)
 
     new_address = parse_address
     if new_address && new_address.valid?
@@ -28,13 +28,13 @@ class ContactsController < ApplicationController
   end
 
   def update
-    @contact.attributes = params[:contact]
+    @contact.attributes = contact_params
 
     render_target = 'edit_contact'
     new_address = parse_address
     if new_address && new_address.valid? && new_address.different_from?(@contact.address)
       if changing_address_for_multiple_contacts?
-        session[:changed_address] = new_address
+        session[:changed_address] = new_address.to_json
         render_target = 'edit_contact_with_shared_address'
       else
         assigning_new_address_object = (params[:address_specification_type] == 'existing_address')
@@ -64,14 +64,17 @@ class ContactsController < ApplicationController
 
   def change_address
     assigning_new_address_object = params[:submit_id] == 'no'
-    new_address = assign_address_to_contact(session[:changed_address], assigning_new_address_object)
+    changed_address_params = JSON.parse(session[:changed_address])
+    changed_address = Address.find_by_id(changed_address_params['id']) || Address.new
+    changed_address.attributes = changed_address_params
+    new_address = assign_address_to_contact(changed_address, assigning_new_address_object)
     @contact.save
 
     @address = @contact.address || Address.new
     @address_list = Address.find_for_list if new_address
     render 'edit_contact'
   end
-  
+
   def remove_address
     @old_address = @contact.address
     @old_address_id = @contact.remove_address
@@ -85,41 +88,49 @@ class ContactsController < ApplicationController
                             order('last_name, first_name')
     render 'find_contact'
   end
-  
+
   private
 
-    def load_contact
-      @contact = Contact.find_by_id(params[:id])
-    end
+  def load_contact
+    @contact = Contact.find_by_id(params[:id])
+  end
 
-    def changing_address_for_multiple_contacts?
-      @contact.address && @contact.address.contacts.size > 1
-    end
+  def changing_address_for_multiple_contacts?
+    @contact.address && @contact.address.contacts.size > 1
+  end
 
-    def assign_address_to_contact(new_address, assigning_new_address_object)
-      if @contact.address.nil? || assigning_new_address_object
-        @contact.assign_address(new_address)
-        true
-      else
-        @contact.address.attributes = new_address.attributes
-        false
-      end
+  def assign_address_to_contact(new_address, assigning_new_address_object)
+    if @contact.address.nil? || assigning_new_address_object
+      @contact.assign_address(new_address)
+      true
+    else
+      @contact.address.attributes = new_address.attributes.reject { |k,v| k == 'id' }
+      false
     end
+  end
 
-    def parse_address
-      if params[:address_specification_type] == 'existing_address'
-        other = Contact.find_by_id(params[:other_id])
-        other.address
-      elsif specified_address?
-        address = Address.new(params[:address])
-        @contact.errors.add(:base, 'Please specify a valid address') unless address.valid?
-        address
-      end
+  def parse_address
+    if params[:address_specification_type] == 'existing_address'
+      other = Contact.find_by_id(params[:other_id])
+      other.address
+    elsif specified_address?
+      address = Address.new(address_params)
+      @contact.errors.add(:base, 'Please specify a valid address') unless address.valid?
+      address
     end
+  end
 
-    def specified_address?
-      params[:address_specification_type] == 'specified_address' ||
-              (params[:address] && params[:address][:home_phone] && !params[:address][:home_phone].blank?)
-    end
-  
+  def specified_address?
+    params[:address_specification_type] == 'specified_address' ||
+            (params[:address] && params[:address][:home_phone] && !params[:address][:home_phone].blank?)
+  end
+
+  def contact_params
+    params.require(:contact).permit(:prefix, :first_name, :middle_name, :last_name, :birthday, :work_phone, :cell_phone, :email, :website, :address_id)
+  end
+
+  def address_params
+    params.require(:address).permit(:address1, :address2, :city, :state, :zip, :home_phone, :contact1_id, :contact2_id, :address_type_id)
+  end
+
 end

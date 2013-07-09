@@ -1,0 +1,9 @@
+$('#content').html("<%= j render(:partial => 'deleted_contact') %>");
+<%= remove_from_list(@contact) %>
+<% address = @old_address || @contact.address %>
+
+<% if !@address_list.nil? %>
+  <%= update_list(address, @address_list, true) %>
+<% elsif !address.nil? %>
+  <%= update_list(address, nil) %>
+<% end %>

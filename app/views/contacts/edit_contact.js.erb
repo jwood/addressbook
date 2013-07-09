@@ -1,0 +1,8 @@
+$('#content').html("<%= j render(:partial => 'contact') %>");
+<%= update_list(@contact, @contact_list) %>
+
+<% address = @old_address || @contact.address %>
+<%= update_list(address, @address_list) unless address.nil? %>
+
+$('#top').focus();
+<%= highlight_in_list(@contact) if @saved %>

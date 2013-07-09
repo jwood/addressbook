@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
   end
 
   def update_address
-    @address = Address.new(params[:address])
+    @address = Address.new(settings_params[:address])
     @saved = true if Settings.save_home_address(@address)
     render 'address'
   end
@@ -21,15 +21,21 @@ class SettingsController < ApplicationController
   def update_login_credentials
     @demo = (ENV['DEMO'] == 'true')
     unless @demo
-      @username = params[:username]
-      @password = params[:password]
-      @password_confirmation = params[:password_confirmation]
-      @current_password = params[:current_password]
+      @username = settings_params[:username]
+      @password = settings_params[:password]
+      @password_confirmation = settings_params[:password_confirmation]
+      @current_password = settings_params[:current_password]
 
       message = Settings.update_login_credentials(@username, @password, @password_confirmation, @current_password)
       message.nil? ? @saved = true : flash.now[:notice] = message
     end
     render 'login_credentials'
+  end
+
+  private
+
+  def settings_params
+    params.permit({:address => [:address1, :address2, :city, :state, :zip]}, :username, :password, :password_confirmation, :current_password)
   end
 
 end

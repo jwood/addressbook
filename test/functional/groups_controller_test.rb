@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
   fixtures :all
-  
+
   context "on GET to :new" do
     setup { xhr :get, :new }
 
@@ -74,10 +74,10 @@ class GroupsControllerTest < ActionController::TestCase
       group.addresses << [ addresses(:chicago), addresses(:tinley_park), addresses(:alsip) ]
       group.save
 
-      get :create_labels, :id => group, :label_type => 'Avery__8660'
+      get :create_labels, :id => group, :label_type => 'Avery8660'
     end
 
     should respond_with :success
   end
-  
+
 end

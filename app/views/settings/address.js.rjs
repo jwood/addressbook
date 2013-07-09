@@ -1,2 +1,0 @@
-replace_html('#content', render(:partial => 'address'), page)
-page << "$('#edit_home_address').effect('highlight', {}, 2000);" if @saved

@@ -1,2 +1,0 @@
-replace_html('#content', render(:partial => 'deleted_address'), page)
-remove_from_list(@address, page)
