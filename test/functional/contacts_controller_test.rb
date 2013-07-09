@@ -90,7 +90,7 @@ class ContactsControllerTest < ActionController::TestCase
     should respond_with :success
     should render_template :find_contact
     should("return three contacts") { assert_equal 3, assigns(:contact_list).size }
-    should("return all contacts with the last name of 'Doe'") {  assert assigns(:contact_list).all { |c| c.last_name == 'Doe' } }
+    should("return all contacts with the last name of 'Doe'") {  assert assigns(:contact_list).all? { |c| c.last_name == 'Doe' } }
   end
 
   context "on POST to :update to associate a contact with the address of another contact" do
@@ -234,13 +234,13 @@ class ContactsControllerTest < ActionController::TestCase
     end
 
     should respond_with :success
-    should render_template :edit_contact
+    should render_template :edit_contact_with_shared_address
     should("indicate the record was saved") { assert_equal true, assigns(:saved) }
     should("not change any of the address information just yet...") do
       assert_equal(addresses(:alsip).id, assigns(:contact).address.id)
       assert_equal(addresses(:alsip), contacts(:john_doe).address)
       assert_equal(addresses(:alsip), contacts(:jane_doe).address)
-      assert_equal('Chicago', session[:changed_address].city)
+      assert_equal('Chicago', JSON.parse(session[:changed_address])['city'])
     end
   end
 
@@ -251,7 +251,7 @@ class ContactsControllerTest < ActionController::TestCase
 
       address = addresses(:alsip)
       address.update_attribute(:city, 'Chicago')
-      session[:changed_address] = address
+      session[:changed_address] = address.to_json
 
       xhr :post, :change_address, { :id => contacts(:john_doe), :submit_id => 'yes' }
     end
@@ -272,7 +272,7 @@ class ContactsControllerTest < ActionController::TestCase
 
       address = addresses(:alsip)
       address.update_attribute(:city, 'Chicago')
-      session[:changed_address] = address
+      session[:changed_address] = address.to_json
 
       xhr :post, :change_address, { :id => contacts(:john_doe), :submit_id => 'no' }
     end

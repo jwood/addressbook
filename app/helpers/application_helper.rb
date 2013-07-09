@@ -13,7 +13,7 @@ module ApplicationHelper
 
       html = "<div class='buttons'>"
       html << button_to("Cancel", object, :method => :get, :remote => true, :class => 'ajax_request regular')
-      html << button_to("Delete", object, :method => :delete, :remote => true, :confirm => confirm, :class => 'ajax_request negative')
+      html << button_to("Delete", object, :method => :delete, :remote => true, :data => { :confirm => confirm }, :class => 'ajax_request negative')
       html << "</div>"
       html.html_safe
     end
@@ -40,7 +40,7 @@ module ApplicationHelper
     html << '</li>'
     html.html_safe
   end
-  
+
   def update_list(object, object_list, force=false)
     if (!object.nil? && !object.id.blank?) || force
       obj_type = object.class.to_s.downcase
@@ -55,7 +55,7 @@ module ApplicationHelper
   def remove_from_list(object)
     "$('##{create_id_for(object)}').replaceWith('');".html_safe
   end
-  
+
   def highlight_in_list(object)
     "$('##{create_id_for(object)}').effect('highlight', {}, 2000);".html_safe
   end
@@ -67,5 +67,5 @@ module ApplicationHelper
   def put_or_post(object)
     object.ergo.id.nil? ? :post : :put
   end
-  
+
 end

@@ -25,7 +25,7 @@ module ContactHelper
       directions_link = 'http://maps.google.com/maps?' + directions_query
       html += " | <a href=\"#{directions_link}\" target=\"new\">Directions</a>"
     end
-    
+
     html.html_safe
   end
 
@@ -47,8 +47,8 @@ module ContactHelper
 
   private
 
-    def mobile_device?
-      respond_to?(:is_mobile_device?) && is_mobile_device?
-    end
-  
+  def mobile_device?
+    respond_to?(:is_mobile_device?) && is_mobile_device?
+  end
+
 end

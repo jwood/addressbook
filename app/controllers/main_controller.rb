@@ -5,5 +5,5 @@ class MainController < ApplicationController
     @contact_list = Contact.find_for_list
     @address_list = Address.find_for_list
   end
-  
+
 end

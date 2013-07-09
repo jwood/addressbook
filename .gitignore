@@ -1,4 +1,5 @@
 .bundle
+.powenv
 .ruby-version
 db/development.sqlite3
 db/schema.rb

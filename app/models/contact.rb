@@ -8,7 +8,7 @@ class Contact < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :prefix
   validate :validate_phone_numbers
 
-  scope :with_address, where('address_id is not null')
+  scope :with_address, -> { where('address_id is not null') }
 
   def self.find_for_list
     Contact.order('last_name, first_name')
@@ -41,29 +41,29 @@ class Contact < ActiveRecord::Base
 
   private
 
-    def link_contact_to_address
-      address.ergo.link_contact
+  def link_contact_to_address
+    address.ergo.link_contact
+  end
+
+  def sanitize_phone_numbers
+    self.cell_phone = Phone.sanitize(self.cell_phone)
+    self.work_phone = Phone.sanitize(self.work_phone)
+  end
+
+  def remove_contact_from_address
+    self.address = nil
+    save
+    Address.remove_contact(self)
+  end
+
+  def validate_phone_numbers
+    if !self.cell_phone.blank? && !Phone.valid?(self.cell_phone)
+      errors.add(:cell_phone, 'is not valid')
     end
 
-    def sanitize_phone_numbers
-      self.cell_phone = Phone.sanitize(self.cell_phone)
-      self.work_phone = Phone.sanitize(self.work_phone)
+    if !self.work_phone.blank? && !Phone.valid?(self.work_phone)
+      errors.add(:work_phone, 'is not valid')
     end
-
-    def remove_contact_from_address
-      self.address = nil
-      save
-      Address.remove_contact(self)
-    end
-
-    def validate_phone_numbers
-      if !self.cell_phone.blank? && !Phone.valid?(self.cell_phone)
-        errors.add(:cell_phone, 'is not valid')
-      end
-
-      if !self.work_phone.blank? && !Phone.valid?(self.work_phone)
-        errors.add(:work_phone, 'is not valid')
-      end
-    end
+  end
 
 end

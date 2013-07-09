@@ -31,8 +31,8 @@ class Group < ActiveRecord::Base
 
   private
 
-    def clear_address_associations
-      addresses.clear
-    end
+  def clear_address_associations
+    addresses.clear
+  end
 
 end

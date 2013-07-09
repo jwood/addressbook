@@ -21,11 +21,11 @@
       </td>
 
       <td id="maintainGroupControls">
-        <%= link_to_function '<<', 'excludeAllMembers();' %><br/>
-        <%= link_to_function '<', 'excludeSelectedMembers();' %><br/>
+        <%= link_to('<<', '#', :class => 'exclude_all_members_link') %>
+        <%= link_to('<', '#', :class => 'exclude_selected_members_link') %>
         <br/>
-        <%= link_to_function '>', 'includeSelectedMembers();' %><br/>
-        <%= link_to_function '>>', 'includeAllMembers();' %><br/>
+        <%= link_to('>', '#', :class => 'include_selected_members_link') %>
+        <%= link_to('>>', '#', :class => 'include_all_members_link') %>
       </td>
 
       <td id="includedListCell" class="groupListAddresses">

@@ -24,7 +24,7 @@
           </div>
         </ul>
 
-        <%= link_to_function 'Maintain Group Members', 'displayMaintainGroupMembers();' %>
+        <%= link_to('Maintain Group Members', '#', :class => 'maintain_group_members_link') %>
       </div>
 
       <div id="editGroupMembers" style="display:none;">
@@ -44,7 +44,7 @@
       </span>
     </div>
   <% end %>
-  
+
   <br />
   <div class="buttons">
     <%= submit_tag 'Save', :class => 'positive', :onclick => 'selectAllIncludedGroupMembers();' %>

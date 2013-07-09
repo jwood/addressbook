@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(params[:group])
+    @group = Group.new(group_params[:group])
     @saved = @group.save
     @group_list = Group.find_for_list
     include_common_data
@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group.attributes = params[:group]
+    @group.attributes = group_params[:group]
     @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
     @saved = @group.save
     include_common_data
@@ -43,14 +43,18 @@ class GroupsController < ApplicationController
 
   private
 
-    def load_group
-      @group = Group.find_by_id(params[:id])
-    end
+  def load_group
+    @group = Group.find_by_id(params[:id])
+  end
 
-    def include_common_data
-      @included = @group.addresses.includes([:contacts, :address_type])
-      @not_included = @group.addresses_not_included
-      @label_types = Prawn::Labels.types.keys.sort!
-    end
+  def include_common_data
+    @included = @group.addresses.includes([:contacts, :address_type])
+    @not_included = @group.addresses_not_included
+    @label_types = Prawn::Labels.types.keys.sort!
+  end
+
+  def group_params
+    params.permit(:group => [:name], :included => [])
+  end
 
 end

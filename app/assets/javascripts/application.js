@@ -109,8 +109,14 @@ function hideSpinner() {
   $('#spinner').css({"visibility":"hidden"});
 }
 
-$(".ajax_request, .button_to").
-  live('ajax:before', function() { showSpinner(); }).
-  live('ajax:complete', function() { hideSpinner(); });
+$(document).on('ajaxSend', showSpinner);
+$(document).on('ajaxComplete', hideSpinner);
 
+$(document).on('click', '.edit_address_link', editAddress);
+$(document).on('click', '.cancel_multiple_address_confirmation_link', closeFancybox);
+$(document).on('click', '.maintain_group_members_link', displayMaintainGroupMembers);
+$(document).on('click', '.exclude_all_members_link', excludeAllMembers);
+$(document).on('click', '.exclude_selected_members_link', excludeSelectedMembers);
+$(document).on('click', '.include_selected_members_link', includeSelectedMembers);
+$(document).on('click', '.include_all_members_link', includeAllMembers);
 

@@ -8,7 +8,7 @@ class AddressType < ActiveRecord::Base
     return :unmarried_couple if description == 'Unmarried Couple'
     return :single_parent if description == 'Single Parent'
   end
-  
+
   def self.individual
     AddressType.where("description = 'Individual'").first
   end
@@ -30,7 +30,7 @@ class AddressType < ActiveRecord::Base
       "#{address.primary_contact.last_name}, #{address.primary_contact.prefix} #{address.primary_contact.first_name} & Family"
     end
   end
-  
+
   def format_address_for_label(address)
     if get_type == :family
       "The #{address.primary_contact.last_name} Family"
@@ -51,7 +51,7 @@ class AddressType < ActiveRecord::Base
 
   def self.valid_address_types_for_address(address)
     if address.only_has_one_contact?
-      AddressType.where("description = 'Individual' or description = 'Single Parent'").all
+      AddressType.where("description = 'Individual' or description = 'Single Parent'")
     else
       AddressType.all
     end

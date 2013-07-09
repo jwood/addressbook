@@ -27,7 +27,7 @@
       </tr>
     </table>
   </div>
-  
+
   <h3>Contact Info</h3>
   <div class="section">
     <table>
@@ -75,7 +75,7 @@
         </p>
         <p class="addressOption">
           <%= select_tag :other_id, options_from_collection_for_select(
-                Contact.with_address.all(:order => 'last_name, first_name'), 'id', 'full_name_last_first') %>
+                Contact.with_address.order('last_name, first_name'), 'id', 'full_name_last_first') %>
         </p>
       <% end %>
 
@@ -91,10 +91,10 @@
 
     <% if @contact.has_address? %>
       <p>
-        <%= link_to_function 'Edit Address', 'editAddress();' %> |
+        <%= link_to('Edit Address', '#', :class => 'edit_address_link') %> |
         <%= link_to('Address Details', address, :method => :get, :remote => true, :class => 'ajax_request') %> |
         <%= link_to('Delete Address', remove_address_contact_path(@contact),
-                    :method => :post, :remote => true, :class => 'ajax_request', :confirm => "Are you sure you would like to delete the address for #{@contact.first_name} #{@contact.last_name}?") %> |
+                    :method => :post, :remote => true, :class => 'ajax_request', :data => { :confirm => "Are you sure you would like to delete the address for #{@contact.first_name} #{@contact.last_name}?" }) %> |
         <%= add_map_and_directions_links(@contact) %> <br />
       </p>
     <% end %>
