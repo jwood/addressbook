@@ -11,3 +11,4 @@ coverage
 .rvmrc
 Capfile
 config/deploy.rb
+config/application_config.yml
