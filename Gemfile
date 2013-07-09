@@ -12,8 +12,8 @@ gem 'rails_autolink'
 
 gem 'sass-rails'
 gem 'coffee-rails'
-gem 'jquery-rails', '2.0.3'
-gem 'jquery-ui-rails', '2.0.2'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'therubyracer'
 gem 'uglifier'
 
