@@ -5,14 +5,22 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
-* git clone git://github.com/jwood/addressbook.git
-* cd addressbook
-* gem install bundler
-* bundle install
-* Copy config/database.yml.template to config/database.yml and configure your database
-* rake db:migrate
+```
+git clone git://github.com/jwood/addressbook.git
+cd addressbook
+gem install bundler
+bundle install
 
-## Setup on [Heroku](http://heroku.com/) - Free hosting
+cp config/database.yml.template config/database.yml
+# configure your database
+
+cp config/application_config.yml.template config/application_config.yml
+# configure the application
+
+bundle exec rake db:migrate
+```
+
+## Setup on [Heroku](http://heroku.com/)
 * [Create your Heroku Account](http://heroku.com/signup) and [Install the Heroku gem](http://docs.heroku.com/heroku-command)
 * git clone git://github.com/jwood/addressbook.git
 * cd addressbook
