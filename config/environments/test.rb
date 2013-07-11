@@ -33,4 +33,6 @@ Addressbook::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  ENV['RAILS_SECRET_TOKEN'] = "supersecrettoken"
 end
