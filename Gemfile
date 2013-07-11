@@ -15,9 +15,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-group :development do
-  gem 'thin'
-end
+gem 'unicorn'
 
 group :test do
   gem 'simplecov'
