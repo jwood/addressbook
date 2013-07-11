@@ -20,17 +20,6 @@ cp config/application_config.yml.template config/application_config.yml
 bundle exec rake db:migrate
 ```
 
-## Setup on [Heroku](http://heroku.com/)
-* [Create your Heroku Account](http://heroku.com/signup) and [Install the Heroku gem](http://docs.heroku.com/heroku-command)
-* git clone git://github.com/jwood/addressbook.git
-* cd addressbook
-* heroku create
-* git push heroku master
-* heroku rake db:migrate
-
-## Demo
-[http://jwood-addressbook.heroku.com/](http://jwood-addressbook.heroku.com/)  
-
 ## Description
 Addressbook consists of 4 main sections:
 
