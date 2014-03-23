@@ -42,7 +42,7 @@ class Contact < ActiveRecord::Base
   private
 
   def link_contact_to_address
-    address.ergo.link_contact
+    address.ergo.link_contact unless self.destroyed?
   end
 
   def sanitize_phone_numbers
