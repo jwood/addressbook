@@ -12,3 +12,4 @@ coverage
 Capfile
 config/deploy.rb
 config/application_config.yml
+config/secrets.yml
