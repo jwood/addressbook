@@ -1,10 +1,9 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 
 class ContactHelperTest < ActionView::TestCase
-  fixtures :all
 
-  context "the ContactHelper" do
-    should "be able to generate map and address links" do
+  describe ContactHelper do
+    it "should be able to generate map and address links" do
       Settings.save_home_address(Address.new(:address1 => "123 South Ave", :city => "Chicago", :state => "IL", :zip => "60606"))
       contact = contacts(:john_doe)
       contact.update_attribute(:address, addresses(:alsip))

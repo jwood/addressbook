@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AddressTypeTest < ActiveSupport::TestCase
   fixtures :all
 
-  context "An Address Type" do
-    should "be able to return its type" do
+  describe "An Address Type" do
+    it "should be able to return its type" do
       assert_equal(address_types(:individual).get_type, :individual)
       assert_equal(address_types(:family).get_type, :family)
       assert_equal(address_types(:married_couple).get_type, :married_couple)
@@ -12,15 +12,15 @@ class AddressTypeTest < ActiveSupport::TestCase
       assert_equal(address_types(:single_parent).get_type, :single_parent)
     end
 
-    should "easily return the type for an individual" do
+    it "should easily return the type for an individual" do
       assert_equal(address_types(:individual), AddressType.individual)
     end
-    
-    should "easily return the type for a family" do
+
+    it "should easily return the type for a family" do
       assert_equal(address_types(:family), AddressType.family)
     end
 
-    should "be able to determine if an address type only should have one main contact" do
+    it "should be able to determine if an address type only should have one main contact" do
       assert(address_types(:individual).only_one_main_contact?)
       assert(address_types(:single_parent).only_one_main_contact?)
 
@@ -29,7 +29,7 @@ class AddressTypeTest < ActiveSupport::TestCase
       assert(!address_types(:unmarried_couple).only_one_main_contact?)
     end
 
-    should "be able to determine the address types for an address with one contact" do
+    it "should be able to determine the address types for an address with one contact" do
       contact = contacts(:john_doe)
       contact.assign_address(addresses(:chicago))
       contact.save
@@ -39,7 +39,7 @@ class AddressTypeTest < ActiveSupport::TestCase
       assert address_types.include?(:single_parent)
     end
 
-    should "be able to determine the address types for an address with multiple contacts" do
+    it "should be able to determine the address types for an address with multiple contacts" do
       contact = contacts(:john_doe)
       contact.assign_address(addresses(:chicago))
       contact.save

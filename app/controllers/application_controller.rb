@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
       if !username.blank? && !password.blank?
         authenticate_or_request_with_http_basic("Addressbook") do |http_username, http_password|
-          http_username == username && Password.encode(http_password) == password
+          http_username == username && Password.create_hash(http_password) == password
         end
       end
     end

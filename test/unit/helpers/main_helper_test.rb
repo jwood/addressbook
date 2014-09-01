@@ -2,8 +2,8 @@ require File.dirname(__FILE__) + '/../../test_helper'
 
 class MainHelperTest < ActionView::TestCase
 
-  context "The MainHelper class" do
-    should "be able to break the contact list into chunks of contacts by the first letter in their last name" do
+  describe MainHelper do
+    it "should be able to break the contact list into chunks of contacts by the first letter in their last name" do
       albertson = Contact.new(:last_name => 'Albertson')
       barry = Contact.new(:last_name => 'Barry')
       dixon = Contact.new(:last_name => 'Dixon')

@@ -11,7 +11,7 @@
         <ul>
           <div id="notIncludedList">
             <%=
-              @not_included.sort! { |x,y| x.compare_by_primary_contact(y) }
+              @not_included.to_a.sort! { |x,y| x.compare_by_primary_contact(y) }
               select_tag(:not_included,
                 options_for_group_members(@not_included),
                 :multiple => true, :class => 'selectGroupAddresses', :onDblclick => 'includeSelectedMembers();')
@@ -32,7 +32,7 @@
         <ul>
           <div id="includedList">
             <%=
-              @included.sort! { |x,y| x.compare_by_primary_contact(y) }
+              @included.to_a.sort! { |x,y| x.compare_by_primary_contact(y) }
               select_tag(:included,
                 options_for_group_members(@included),
                 :multiple => true, :class => 'selectGroupAddresses', :onDblclick => 'excludeSelectedMembers();')

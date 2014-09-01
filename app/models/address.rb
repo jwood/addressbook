@@ -53,7 +53,7 @@ class Address < ActiveRecord::Base
   end
 
   def self.find_for_list
-    address_list = Address.includes([:primary_contact, :secondary_contact, :address_type])
+    address_list = Address.includes([:primary_contact, :secondary_contact, :address_type]).to_a
     address_list.sort! do |a1, a2|
       if a1.primary_contact.nil?
         result = 1

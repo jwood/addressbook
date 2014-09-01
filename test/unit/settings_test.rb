@@ -2,22 +2,22 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SettingsTest < ActiveSupport::TestCase
 
-  context "Settings" do
-    should "be able to set the application's username" do
+  describe "Settings" do
+    it "should be able to set the application's username" do
       Settings.username = "bob"
       assert_equal "bob", Settings.username
     end
 
-    should "be able to set the application's password" do
+    it "should be able to set the application's password" do
       Settings.password = "mypass"
-      assert_equal Password.encode("mypass"), Settings.password
+      assert_equal Password.create_hash("mypass"), Settings.password
     end
 
-    should "not be able to save an invalid address" do
+    it "should not be able to save an invalid address" do
       assert !Settings.save_home_address(Address.new(:address1 => "123 South Ave", :city => "Chicago", :state => "IL"))
     end
 
-    should "be able to get the home address as an address object" do
+    it "should be able to get the home address as an address object" do
       Settings.save_home_address(Address.new(:address1 => "123 South Ave", :city => "Chicago", :state => "IL", :zip => "60606"))
       address = Settings.home_address
       assert_equal Address, address.class
@@ -27,27 +27,27 @@ class SettingsTest < ActiveSupport::TestCase
       assert_equal "60606", address.zip
     end
 
-    context "when working with login credentials" do
-      setup do
+    describe "when working with login credentials" do
+      before do
         Settings.username = 'bobby'
         Settings.password = 'pass'
       end
 
-      should "be able to update the login credentials" do
+      it "should be able to update the login credentials" do
         msg = Settings.update_login_credentials('bob', 'newpass', 'newpass', 'pass')
         assert_nil msg
         assert_equal 'bob', Settings.username
-        assert_equal Password.encode('newpass'), Settings.password
+        assert_equal Password.create_hash('newpass'), Settings.password
       end
 
-      should "reject if the current password specified is invalid" do
+      it "should reject if the current password specified is invalid" do
         msg = Settings.update_login_credentials('bob', 'newpass', 'newpass', 'wrongpass')
         assert_equal 'The current password specified is not valid', msg
         assert_equal 'bobby', Settings.username
-        assert_equal Password.encode('pass'), Settings.password
+        assert_equal Password.create_hash('pass'), Settings.password
       end
 
-      should "reject updates if not all of the required info has been specified" do
+      it "should reject updates if not all of the required info has been specified" do
         msg = Settings.update_login_credentials('', 'newpass', 'newpass', 'pass')
         assert_equal 'You must specify a username, password, and password confirmation', msg
 
@@ -58,14 +58,14 @@ class SettingsTest < ActiveSupport::TestCase
         assert_equal 'You must specify a username, password, and password confirmation', msg
 
         assert_equal 'bobby', Settings.username
-        assert_equal Password.encode('pass'), Settings.password
+        assert_equal Password.create_hash('pass'), Settings.password
       end
 
-      should "reject update if the password and password confirmation do not match" do
+      it "should reject update if the password and password confirmation do not match" do
         msg = Settings.update_login_credentials('bob', 'newpass', 'othernewpass', 'pass')
         assert_equal 'The password and password confirmation do not match', msg
         assert_equal 'bobby', Settings.username
-        assert_equal Password.encode('pass'), Settings.password
+        assert_equal Password.create_hash('pass'), Settings.password
       end
     end
   end

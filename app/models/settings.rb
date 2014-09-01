@@ -2,7 +2,7 @@ class Settings < ActiveRecord::Base
 
   def self.update_login_credentials(username, password, password_confirmation, current_password)
     actual_current_password = Settings.password
-    if !actual_current_password.blank? && Password.encode(current_password) != actual_current_password
+    if !actual_current_password.blank? && Password.create_hash(current_password) != actual_current_password
       'The current password specified is not valid'
     elsif (username.blank? || password.blank? || password_confirmation.blank?) && !(username.blank? && password.blank? && password_confirmation.blank?)
       'You must specify a username, password, and password confirmation'
@@ -44,7 +44,7 @@ class Settings < ActiveRecord::Base
   end
 
   def self.password=(data)
-    data = Password.encode(data) unless data.blank?
+    data = Password.create_hash(data) unless data.blank?
     Settings.update(:password, data)
   end
 

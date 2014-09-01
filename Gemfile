@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '4.0.3'
+gem 'rails', '~> 4.1.0'
 gem 'mysql2'
 
 gem 'capistrano', '~> 2.15'
@@ -22,7 +22,7 @@ group :development do
 end
 
 group :test do
+  gem 'minitest-rails'
   gem 'simplecov'
-  gem 'shoulda'
 end
 

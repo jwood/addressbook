@@ -1,75 +1,75 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class GroupsControllerTest < ActionController::TestCase
-  fixtures :all
+  tests GroupsController
 
-  context "on GET to :new" do
-    setup { xhr :get, :new }
+  describe "on GET to :new" do
+    before { xhr :get, :new }
 
-    should respond_with :success
-    should render_template :edit_group
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :edit_group }
   end
 
-  context "on POST to :create" do
-    setup do
+  describe "on POST to :create" do
+    before do
       xhr :post, :create, :group => { :name => 'Newly created group' }
     end
 
-    should respond_with :success
-    should render_template :edit_group
-    should("indicate the record was saved") { assert_equal true, assigns(:saved) }
-    should("create the group") { assert_equal 'Newly created group', assigns(:group).name }
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :edit_group }
+    it("should indicate the record was saved") { assert_equal true, assigns(:saved) }
+    it("should create the group") { assert_equal 'Newly created group', assigns(:group).name }
   end
 
-  context "on GET to :show" do
-    setup { xhr :get, :show, :id => groups(:group_1) }
+  describe "on GET to :show" do
+    before { xhr :get, :show, :id => groups(:group_1) }
 
-    should respond_with :success
-    should render_template :edit_group
-    should("return the specified group") { assert_equal groups(:group_1), assigns(:group) }
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :edit_group }
+    it("should return the specified group") { assert_equal groups(:group_1), assigns(:group) }
   end
 
-  context "on POST to :update" do
-    setup do
+  describe "on POST to :update" do
+    before do
       group = groups(:group_1)
       group.name = 'New Name'
       xhr :post, :update, :id => group, :group => group.attributes
     end
 
-    should respond_with :success
-    should render_template :edit_group
-    should("indicate the record was saved") { assert_equal true, assigns(:saved) }
-    should("modify the group") { assert_equal 'New Name', assigns(:group).name }
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :edit_group }
+    it("should indicate the record was saved") { assert_equal true, assigns(:saved) }
+    it("should modify the group") { assert_equal 'New Name', assigns(:group).name }
   end
 
-  context "on DELETE to destroy" do
-    setup do
+  describe "on DELETE to destroy" do
+    before do
       @group = groups(:group_1)
       xhr :delete, :destroy, :id => @group
     end
 
-    should respond_with :success
-    should render_template :delete_group
-    should("return the group that was deleted") { assert_equal @group, assigns(:group) }
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :delete_group }
+    it("should return the group that was deleted") { assert_equal @group, assigns(:group) }
   end
 
-  context "on POST to :update to modify the members of a group" do
-    setup do
+  describe "on POST to :update to modify the members of a group" do
+    before do
       group = groups(:group_1)
       xhr :post, :update, :id => group, :included => [addresses(:chicago).id, addresses(:alsip).id]
     end
 
-    should respond_with :success
-    should render_template :edit_group
-    should "include the specified addresses" do
+    it("should respond with success") { assert_response :success }
+    it("should render the proper template") { assert_template :edit_group }
+    it "should include the specified addresses" do
       assert assigns(:included).include?(addresses(:chicago))
       assert assigns(:included).include?(addresses(:alsip))
       assert assigns(:not_included).include?(addresses(:tinley_park))
     end
   end
 
-  context "on GET to :create_labels" do
-    setup do
+  describe "on GET to :create_labels" do
+    before do
       group = groups(:group_1)
       group.addresses << [ addresses(:chicago), addresses(:tinley_park), addresses(:alsip) ]
       group.save
@@ -77,7 +77,7 @@ class GroupsControllerTest < ActionController::TestCase
       get :create_labels, :id => group, :label_type => 'Avery8660'
     end
 
-    should respond_with :success
+    it("should respond with success") { assert_response :success }
   end
 
 end

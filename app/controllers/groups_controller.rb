@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @group.attributes = group_params[:group]
+    @group.attributes = group_params[:group] || {}
     @group.addresses = (params[:included].blank? ? [] : Address.find(params[:included]))
     @saved = @group.save
     include_common_data
