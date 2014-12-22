@@ -13,7 +13,6 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'therubyracer'
 gem 'uglifier'
 
 group :development do
