@@ -23,7 +23,7 @@ class Contact < ActiveRecord::Base
   end
 
   def assign_address(new_address)
-    self.address.ergo.unlink_contact(self)
+    self.address.unlink_contact(self) if self.address
     self.address = new_address
   end
 

@@ -49,7 +49,7 @@ module ApplicationHelper
       else
         "$('##{create_id_for(object)}').replaceWith('#{j create_link_to(object)}');"
       end
-    end.ergo.html_safe
+    end.try(:html_safe)
   end
 
   def remove_from_list(object)
@@ -65,7 +65,7 @@ module ApplicationHelper
   end
 
   def put_or_post(object)
-    object.ergo.id.nil? ? :post : :put
+    object.try(:id).nil? ? :post : :put
   end
 
 end

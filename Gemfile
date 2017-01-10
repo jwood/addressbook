@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.2.0'
 gem 'mysql2'
 
 gem 'capistrano', '~> 2.15'
@@ -15,12 +15,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'uglifier'
 
-group :development do
-  gem 'thin'
-end
-
 group :test do
   gem 'minitest-rails'
   gem 'simplecov'
 end
-

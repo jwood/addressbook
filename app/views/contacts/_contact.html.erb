@@ -1,5 +1,5 @@
 <%= error_messages_for :contact %>
-<% address = @contact.ergo.address %>
+<% address = @contact.try(:address) %>
 <%= form_tag(@contact, { :method => put_or_post(@contact), :remote => true, :class => 'ajax_request' }) do %>
 
   <h3>Personal Info</h3>
@@ -33,7 +33,7 @@
     <table>
       <tr>
         <td><label>Home Phone:</label></td>
-        <td><%= text_field_tag 'address[home_phone]', Phone.format(address.ergo.home_phone), :size => 20 %></td>
+        <td><%= text_field_tag 'address[home_phone]', Phone.format(address.try(:home_phone)), :size => 20 %></td>
         </td>
       </tr>
       <tr>
@@ -81,7 +81,7 @@
 
       <p>
         <%= radio_button_tag(:address_specification_type, :specified_address,
-              (!address.ergo.is_empty? || (!address.ergo.is_empty? && !address.ergo.valid?)), :id => 'specified_address') %>
+              (!address.try(:is_empty?) || (!address.try(:is_empty?) && !address.try(:valid?))), :id => 'specified_address') %>
         <%= label_tag :specified_address, 'Associate contact the specified address' %>
         <div class="addressOption">
           <%= render :partial => 'shared/address_fields' %>
@@ -122,4 +122,3 @@ $(document).ready(function() {
   $('#address_zip').keydown(function() { selectSpecifiedAddressOption(); });
 });
 </script>
-

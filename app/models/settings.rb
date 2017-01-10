@@ -67,7 +67,7 @@ class Settings < ActiveRecord::Base
   private
 
   def self.get(key)
-    Settings.find_by_key(key).ergo.value
+    Settings.find_by_key(key).try(:value)
   end
 
   def self.update(key, value)

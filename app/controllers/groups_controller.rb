@@ -30,7 +30,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    @group.ergo.destroy
+    @group.try(:destroy)
     include_common_data
     render 'delete_group'
   end

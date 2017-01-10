@@ -56,8 +56,8 @@ class ContactsController < ApplicationController
 
   def destroy
     @old_address = Address.new
-    @old_address.attributes = @contact.address.ergo.attributes || {}
-    @contact.ergo.destroy
+    @old_address.attributes = @contact.address.try(:attributes) || {}
+    @contact.try(:destroy)
     @address_list = Address.find_for_list if @contact.address.nil?
     render 'delete_contact'
   end

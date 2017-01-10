@@ -38,7 +38,7 @@ module ContactHelper
   end
 
   def has_contact_info_to_display?(contact)
-    !contact.address.ergo.home_phone.ergo.blank? ||
+    !contact.address.try(:home_phone).blank? ||
             !contact.work_phone.blank? ||
             !contact.cell_phone.blank? ||
             !contact.email.blank? ||

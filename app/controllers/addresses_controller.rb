@@ -13,7 +13,7 @@ class AddressesController < ApplicationController
   end
 
   def destroy
-    @address.ergo.destroy
+    @address.try(:destroy)
     render 'delete_address'
   end
 

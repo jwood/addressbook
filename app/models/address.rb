@@ -103,7 +103,7 @@ class Address < ActiveRecord::Base
   end
 
   def nullify_secondary_contact_if_address_type_only_has_one_main_contact
-    self.secondary_contact = nil if self.address_type.ergo.only_one_main_contact?
+    self.secondary_contact = nil if self.address_type.try(:only_one_main_contact?)
   end
 
   def validate_phone_numbers
