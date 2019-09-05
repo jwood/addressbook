@@ -1,4 +1,5 @@
 class MainController < ApplicationController
+  before_action :authenticate_user!
 
   def index
     @group_list = Group.find_for_list
