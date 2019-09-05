@@ -1,11 +1,11 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.0'
-gem 'mysql2'
+gem 'rails', '~> 4.2.1'
+gem 'pg', '~> 0.18'
 
 gem 'capistrano', '~> 2.15'
 gem 'prawn-labels'
-gem 'json'
+gem 'json', '~> 1.8.5'
 gem 'dynamic_form'
 gem 'rails_autolink'
 
@@ -19,3 +19,6 @@ group :test do
   gem 'minitest-rails'
   gem 'simplecov'
 end
+gem 'devise'
+gem 'omniauth'
+gem 'puma'

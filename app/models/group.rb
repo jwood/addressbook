@@ -1,6 +1,7 @@
 require 'prawn/labels'
 
 class Group < ActiveRecord::Base
+  belongs_to :user
   has_and_belongs_to_many :addresses
 
   before_destroy :clear_address_associations
