@@ -31,25 +31,7 @@ Contacts is used to manage your, you guessed it, contacts.  The contacts section
 you to view and edit all information for a given contact.
 
 ### Addresses
-Addresses is used to manage the addresses of your contacts.  Each address has
-an address type (Individual, Family, Married Couple, Unmarried Couple, etc).
-The address type is used to determine the "addressee" of the address.  For
-example, if Joe Smith and Jane Smith share an address, the addressee
-would be the following for the specific address types:
-
-"Individual" - "Mr. Joe Smith"  
-"Family" - "Mr. & Mrs. Joe & Jane Smith & Family"  
-"Married Couple" - "Mr. & Mrs. Joe & Jane Smith"  
-"Unmarried Couple" - "Mr. Joe Smith & Ms. Jane Smith"  
-"Single Parent" - "Mr. Joe Smith & Family"  
-
-The home phone is also stored along with the address, since home phones are
-specific to a home.  
- 
-You can specify the two main contacts for an address by selecting the primary
-and secondary contact on the address details page.  These contacts are used
-in constructing the addressee (see above).
- 
+Adding a new contact is done by posting the body in a newline separated format. It is then sent to the NLU module -- a thin wrapper around libsbook, TBH, and the parts are returned as Json. The entire thing is stored in the database as a contact, with the raw text as the text field, so that one can go back and correct it. 
 ### Groups
 Groups provide a way to organize your contacts.  Each group has a name, and 
 a list of members.  Members can be added via the "Maintain Group Members"
