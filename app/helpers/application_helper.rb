@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def create_cancel_delete_links(object)
     unless object.id.blank?
       confirm = "Are you sure you would like to delete this entry?"

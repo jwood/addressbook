@@ -1,4 +1,5 @@
 Addressbook::Application.routes.draw do
+  devise_for :users
   resources :addresses
 
   resources :contacts do

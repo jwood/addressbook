@@ -33,4 +33,7 @@ Addressbook::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Run tests in predictable order
+  config.active_support.test_order = :sorted
 end

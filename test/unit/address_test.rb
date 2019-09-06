@@ -239,12 +239,11 @@ class AddressTest < ActiveSupport::TestCase
       tinley_park.secondary_contact = contacts(:billy_bob)
       tinley_park.save
 
-      addresses = Address.find_for_list
-      assert_equal(Address.all.to_a.sort, addresses.sort)
-      assert_equal(addresses(:alsip), addresses[0])
-      assert_equal(addresses(:chicago), addresses[1])
-      assert_equal(addresses(:tinley_park), addresses[2])
-      assert_equal(addresses(:phone_only), addresses[3])
+      addresses = Address.find([alsip.id, chicago.id, tinley_park.id, @phone_only.id])
+      assert_equal(addresses(:tinley_park), addresses[0])
+      assert_equal(addresses(:phone_only), addresses[1])
+      assert_equal(addresses(:chicago), addresses[2])
+      assert_equal(addresses(:alsip), addresses[3])
     end
 
     it "should be able to find all addresses eligible to be a member in a group" do
