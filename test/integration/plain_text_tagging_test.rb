@@ -10,4 +10,12 @@ class PlainTextTaggingTest < ActionDispatch::IntegrationTest
     assert_equal(expected, body)
   end
 
+  test 'Stanford should be tagged as a company' do
+    expected = {'company': 'Stanford'}
+    post '/addresses', params: {text: 'it may put you in better graces with him for him to know that you have a VC contact out of Stanford, but it is your call'}, as: :json
+    follow_redirect!
+    assert_equal(201, status)
+    assert_equal(expected, body)
+  end
+
 end
