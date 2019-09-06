@@ -2,6 +2,10 @@ class AddressesController < ApplicationController
 
   before_filter :load_address
 
+  def create
+    # call remote webserver or libsbook wrapper
+  end
+
   def show
     render 'edit_address'
   end
