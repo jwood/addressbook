@@ -1,3 +1,4 @@
+require 'inline'
 module GroupHelper
 
   def get_label_options(label_types)
@@ -12,6 +13,12 @@ module GroupHelper
       html << "<option value='#{address.id}' title='#{address.mailing_address}'>#{address.addressee_for_display}</option>"
     end
     html.html_safe
+  end
+
+  def sbook
+    inline(:C) do |builder|
+      # put your C++ code here
+    end
   end
 
 end

@@ -22,3 +22,4 @@ end
 gem 'devise'
 gem 'omniauth'
 gem 'puma'
+gem 'RubyInline'
