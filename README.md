@@ -5,8 +5,8 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
-``
-git clone git://github.com/jwood/addressbook.git
+```
+git clone git@github.com:hasan/addressbook.git
 cd addressbook
 gem install bundler -v 1.8.0
 bundle install
