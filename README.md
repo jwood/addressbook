@@ -5,7 +5,7 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
-```
+``
 git clone git://github.com/jwood/addressbook.git
 cd addressbook
 gem install bundler
@@ -18,7 +18,7 @@ cp config/application_config.yml.template config/application_config.yml
 # configure the application
 
 bundle exec rake db:migrate
-```
+``
 
 ## Description
 Addressbook consists of 4 main sections:
