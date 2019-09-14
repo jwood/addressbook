@@ -55,7 +55,5 @@ perform any other types of margin alterations.
 MIT License.  See LICENCE for details.
 
 ## AUTHOR
-John Wood  
-[http://johnpwood.net](http://johnpwood.net)  
-[john@johnpwood.net](mailto:john@johnpwood.net)  
-
+Hasan Diwan <hasandiwan@gmail.com> https://github.com/hasandiwan
+Hyewon Joo <joo7875@gmail.com> https://github.com/joo7875
