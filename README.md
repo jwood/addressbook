@@ -8,7 +8,7 @@ and more.
 ```
 git clone git://github.com/jwood/addressbook.git
 cd addressbook
-gem install bundler
+gem install bundler -v 1.8.0
 bundle install
 
 cp config/database.yml.template config/database.yml
