@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~> 4.2.1'
-gem 'pg', '~> 0.18'
+gem 'pg', '0.20'
 
 gem 'prawn-labels'
 gem 'json', '~> 1.8.5'

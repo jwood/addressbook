@@ -115,7 +115,7 @@ GEM
       rack (>= 1.6.2, < 3)
     orm_adapter (0.5.0)
     pdf-core (0.7.0)
-    pg (0.21.0)
+    pg (0.20.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
