@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.1'
+gem 'rails', '5.0.0'
 gem 'pg', '0.20'
 
 gem 'prawn-labels'
@@ -32,6 +32,5 @@ gem 'omniauth'
 gem 'puma'
 gem 'RubyInline'
 gem 'figaro'
-gem 'tzinfo-data'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem "validate_url"
