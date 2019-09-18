@@ -32,3 +32,5 @@ gem 'omniauth'
 gem 'puma'
 gem 'RubyInline'
 gem 'figaro'
+gem 'tzinfo-data'
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
