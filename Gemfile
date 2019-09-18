@@ -32,9 +32,6 @@ gem 'omniauth'
 gem 'puma'
 gem 'RubyInline'
 gem 'figaro'
-<<<<<<< HEAD
 gem 'tzinfo-data'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
-=======
 gem "validate_url"
->>>>>>> 4815d46f095dddc195e691952f80db7686271efa
