@@ -32,3 +32,4 @@ gem 'omniauth'
 gem 'puma'
 gem 'RubyInline'
 gem 'figaro'
+gem "validate_url"

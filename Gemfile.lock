@@ -121,6 +121,7 @@ GEM
       ttfunk (~> 1.5)
     prawn-labels (1.2.6)
       prawn (>= 1.0.0, < 3.0.0)
+    public_suffix (4.0.1)
     puma (4.1.1)
       nio4r (~> 2.0)
     rack (1.6.11)
@@ -189,6 +190,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    validate_url (1.0.8)
+      activemodel (>= 3.0.0)
+      public_suffix
     warden (1.2.7)
       rack (>= 1.0)
 
@@ -211,7 +215,7 @@ DEPENDENCIES
   json (~> 1.8.5)
   minitest-rails
   omniauth
-  pg (~> 0.18)
+  pg (= 0.20)
   prawn-labels
   puma
   rails (~> 4.2.1)
@@ -219,6 +223,7 @@ DEPENDENCIES
   sass-rails
   simplecov
   uglifier
+  validate_url
 
 BUNDLED WITH
    1.17.3
