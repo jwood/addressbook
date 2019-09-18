@@ -11,11 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190905084603) do
+ActiveRecord::Schema.define(version: 20190917084148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "postgis"
 
   create_table "address_types", force: :cascade do |t|
     t.string "description"
@@ -74,11 +73,11 @@ ActiveRecord::Schema.define(version: 20190905084603) do
     t.datetime "updated_at"
   end
 
-  create_table "spatial_ref_sys", primary_key: "srid", force: :cascade do |t|
-    t.string  "auth_name", limit: 256
-    t.integer "auth_srid"
-    t.string  "srtext",    limit: 2048
-    t.string  "proj4text", limit: 2048
+  create_table "tags", force: :cascade do |t|
+    t.text     "tag"
+    t.text     "icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -89,6 +88,7 @@ ActiveRecord::Schema.define(version: 20190905084603) do
     t.datetime "remember_created_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.jsonb    "settings"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

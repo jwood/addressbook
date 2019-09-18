@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class MainControllerTest < ActionController::TestCase
   tests MainController
+  include Devise::Test::ControllerHelpers
 
   describe "on GET to :index" do
     before { get :index }

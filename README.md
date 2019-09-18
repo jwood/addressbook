@@ -5,8 +5,8 @@ your personal address book.  It manages phone numbers, birthdays, addresses,
 and more.
 
 ## Setup
-``
-git clone git://github.com/jwood/addressbook.git
+```
+git clone git@github.com:hasan/addressbook.git
 cd addressbook
 gem install bundler -v 1.8.0
 bundle install
@@ -17,8 +17,8 @@ cp config/database.yml.template config/database.yml
 cp config/application_config.yml.template config/application_config.yml
 # configure the application
 
-bundle exec rake db:migrate
-``
+bundle exec rake db:create db:migrate
+```
 
 ## Description
 Addressbook consists of 4 main sections:
@@ -31,7 +31,8 @@ Contacts is used to manage your, you guessed it, contacts.  The contacts section
 you to view and edit all information for a given contact.
 
 ### Addresses
-Adding a new contact is done by posting the body in a newline separated format. It is then sent to the NLU module -- a thin wrapper around libsbook, TBH, and the parts are returned as Json. The entire thing is stored in the database as a contact, with the raw text as the text field, so that one can go back and correct it. 
+Adding a new contact is done by posting the body in a newline separated format. It is then sent to the NLU module -- a thin wrapper around libsbook, and the parts are returned as Json. The entire thing is stored in the database as a contact, with the raw text as the text field, so that one can go back and correct it. 
+
 ### Groups
 Groups provide a way to organize your contacts.  Each group has a name, and 
 a list of members.  Members can be added via the "Maintain Group Members"
@@ -54,7 +55,5 @@ perform any other types of margin alterations.
 MIT License.  See LICENCE for details.
 
 ## AUTHOR
-John Wood  
-[http://johnpwood.net](http://johnpwood.net)  
-[john@johnpwood.net](mailto:john@johnpwood.net)  
-
+Hasan Diwan <hasandiwan@gmail.com> https://github.com/hasandiwan
+Hyewon Joo <joo7875@gmail.com> https://github.com/joo7875

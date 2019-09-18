@@ -240,10 +240,10 @@ class AddressTest < ActiveSupport::TestCase
       tinley_park.save
 
       addresses = Address.find([alsip.id, chicago.id, tinley_park.id, @phone_only.id])
-      assert_equal(addresses(:tinley_park), addresses[0])
-      assert_equal(addresses(:phone_only), addresses[1])
-      assert_equal(addresses(:chicago), addresses[2])
-      assert_equal(addresses(:alsip), addresses[3])
+      assert(tinley_park.in?(addresses))
+      assert(chicago.in?(addresses))
+      assert(@phone_only.in?(addresses))
+      assert(alsip.in?(addresses))
     end
 
     it "should be able to find all addresses eligible to be a member in a group" do

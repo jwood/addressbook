@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => :users
 
   def index
     @group_list = Group.find_for_list
@@ -7,4 +7,8 @@ class MainController < ApplicationController
     @address_list = Address.find_for_list
   end
 
+  def users
+    @user = User.pluck(:email)
+    return @user.to_json
+  end
 end
