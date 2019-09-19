@@ -25,6 +25,7 @@ end
 group :test do
   gem 'minitest-rails'
   gem 'simplecov'
+  gem 'rails-controller-testing'
 end
 
 gem 'devise'
