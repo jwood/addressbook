@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190917084148) do
+ActiveRecord::Schema.define(version: 20190918192314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,17 +53,15 @@ ActiveRecord::Schema.define(version: 20190917084148) do
   create_table "groups", force: :cascade do |t|
     t.string  "name"
     t.integer "user_id"
+    t.index ["user_id"], name: "index_groups_on_user_id", using: :btree
   end
-
-  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id"
     t.text     "data"
     t.datetime "updated_at"
+    t.index ["session_id"], name: "index_sessions_on_session_id", using: :btree
   end
-
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "key"
@@ -89,10 +86,13 @@ ActiveRecord::Schema.define(version: 20190917084148) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.jsonb    "settings"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "addresses", "address_types", name: "fk_address_address_type"
   add_foreign_key "addresses", "contacts", column: "contact1_id", name: "fk_address_contact1"
