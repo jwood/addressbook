@@ -26,7 +26,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
-  self.use_transactional_fixtures = true
+  self.use_transactional_tests = true
   self.use_instantiated_fixtures = true
 
   extend MiniTest::Spec::DSL
